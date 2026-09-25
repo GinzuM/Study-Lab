@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psicofarmacologia | Plataforma de Estudo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navegação Principal -->
+  <header>
+    <div class="logo">NeuroStudy</div>
+    <nav>
+      <button class="nav-btn active" data-tab="arvore">Mapa Mental</button>
+      <button class="nav-btn" data-tab="flashcards">Flashcards</button>
+      <button class="nav-btn" data-tab="quiz">Quiz</button>
+      <button class="nav-btn" data-tab="resumos">Explicações</button>
+    </nav>
+    <button id="theme-toggle" class="theme-btn" aria-label="Alternar Tema">
+      <!-- Ícone de Lua (Modo Claro) -->
+      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <!-- Ícone de Sol (Modo Escuro) -->
+      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. MAPA MENTAL -->
+    <section id="arvore" class="tab-content active">
+      <div class="section-header text-center">
+        <h2>Mapa Mental de Psicofarmacologia</h2>
+        <p class="text-muted">Explore a estrutura hierárquica do conteúdo. Selecione um nó para ler os detalhes.</p>
+      </div>
+      <div class="mindmap-container" id="mindmap-container">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </section>
+
+    <!-- 2. FLASHCARDS -->
+    <section id="flashcards" class="tab-content">
+      <div class="section-header text-center">
+        <h2>Revisão Ativa</h2>
+        <p class="text-muted">Utilize os flashcards para consolidação mnésica. Clique no cartão para revelar a resposta.</p>
+      </div>
+      <div class="flashcard-wrapper">
+        <div class="flashcard" id="flashcard">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="badge" id="fc-category">Categoria</span>
+              <p id="fc-question">A carregar pergunta...</p>
+              <span class="flip-hint">Clique para virar o cartão</span>
+            </div>
+            <div class="card-back">
+              <span class="badge correct-badge">Resposta</span>
+              <p id="fc-answer">A carregar resposta...</p>
+              <button class="btn-more" id="fc-more-btn">Estudar tópico em detalhe</button>
+            </div>
+          </div>
+        </div>
+        <div class="fc-controls">
+          <button id="fc-prev" class="btn secondary">Anterior</button>
+          <span id="fc-counter">1 / 30</span>
+          <button id="fc-next" class="btn primary">Próximo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. QUIZ -->
+    <section id="quiz" class="tab-content">
+      <!-- Configurações do Quiz -->
+      <div id="quiz-config" class="quiz-box">
+        <h2 class="text-center">Configurar Avaliação</h2>
+        
+        <div class="form-group">
+          <label>Modo de Avaliação</label>
+          <div class="radio-group mode-selector">
+            <label class="mode-card">
+              <input type="radio" name="quiz-mode" value="normal" checked> 
+              <span><strong>Clássico</strong><br><small>Número fixo de questões</small></span>
+            </label>
+            <label class="mode-card">
+              <input type="radio" name="quiz-mode" value="survival"> 
+              <span><strong>Sobrevivência</strong><br><small>Jogue até esgotar as vidas</small></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="config-normal">
+          <label for="quiz-count">Número de Questões (Máx: 20)</label>
+          <input type="number" id="quiz-count" min="1" max="20" value="10">
+        </div>
+
+        <div class="form-group" id="config-survival" style="display: none;">
+          <label for="quiz-lives">Vidas Iniciais</label>
+          <select id="quiz-lives" class="select-input">
+            <option value="3">3 Vidas (Rigoroso)</option>
+            <option value="5" selected>5 Vidas (Padrão)</option>
+            <option value="10">10 Vidas (Longo)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Limite de Tempo</label>
+          <div class="radio-group">
+            <label><input type="radio" name="timer-enable" value="no" checked> Sem limite</label>
+            <label><input type="radio" name="timer-enable" value="yes"> Com cronómetro</label>
+          </div>
+        </div>
+        
+        <div class="form-group" id="timer-val-group" style="display: none;">
+          <label for="quiz-seconds">Segundos por questão</label>
+          <input type="number" id="quiz-seconds" min="5" max="120" value="20">
+        </div>
+
+        <button id="btn-start-quiz" class="btn primary full-width mt-1">Iniciar Avaliação</button>
+      </div>
+
+      <!-- Área de Jogo do Quiz -->
+      <div id="quiz-play" class="quiz-box" style="display: none;">
+        <div class="quiz-topbar">
+          <div class="quiz-topbar-left">
+            <span id="quiz-progress-text" class="fw-600">Questão 1</span>
+            <span id="quiz-lives-display" class="lives-badge"></span>
+          </div>
+          <div class="quiz-stats">
+            <span id="quiz-timer-display" class="timer-badge">--</span>
+            <button id="btn-abort-quiz" class="btn outline small">Reiniciar</button>
+          </div>
+        </div>
+        
+        <h3 id="quiz-question-text" class="question-text">Texto da Pergunta</h3>
+
+        <div class="options-grid" id="quiz-options">
+          <!-- Alternativas geradas via JS -->
+        </div>
+
+        <div id="quiz-feedback" class="feedback-box" style="display: none;">
+          <p id="feedback-msg"></p>
+          <div class="feedback-actions">
+            <button id="btn-quiz-explain" class="btn-more outline">Estudar Tópico</button>
+            <button id="btn-quiz-next" class="btn primary">Avançar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tela Final de Resultados -->
+      <div id="quiz-result" class="quiz-box text-center" style="display: none;">
+        <h2 id="result-title">Avaliação Concluída</h2>
+        <p class="score-display">Resultado: <span id="final-score">0</span></p>
+        <p id="survival-stats" class="text-muted"></p>
+        <button id="btn-restart-quiz" class="btn primary mt-1">Nova Avaliação</button>
+      </div>
+    </section>
+
+    <!-- 4. EXPLICAÇÕES E RESUMOS -->
+    <section id="resumos" class="tab-content">
+      <div class="section-header text-center">
+        <h2>Base de Conhecimento</h2>
+        <p class="text-muted">Documentação detalhada e resumos estruturados.</p>
+      </div>
+      <div class="articles-grid" id="articles-container">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
