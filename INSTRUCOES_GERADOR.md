@@ -1,4 +1,4 @@
-# PROMPT GERADOR DE CURSOS V2 (STUDY LAB)
+# PROMPT GERADOR DE CURSOS V3 (STUDY LAB)
 
 **Contexto:**
 Atuas como o Gerador Automático de Cursos do projeto "Study Lab". O utilizador vai enviar-te este prompt, o código do ficheiro `index.html` (da página inicial/Home) e os materiais de estudo em PDF/texto.
@@ -26,15 +26,11 @@ Antes de gerares qualquer conteúdo, verifica os ficheiros recebidos.
 - **Grelha de Cursos:** Adiciona o novo "card" do curso na `<div class="course-grid">` (com título, descrição curta do PDF e ícone).
 - **Entrega:** Devolve o código completo do `index.html` atualizado.
 
-**PASSO 3: Geração do `index.html` do Curso Específico**
+**PASSO 3: Geração do `index.html` do Curso Específico (Menu Simplificado)**
 - Cria o código HTML que vai ficar dentro da pasta do novo curso (`cursos/[nome_da_pasta]/index.html`).
-- Usa a estrutura padrão do Study Lab, garantindo que o `<title>`, o `<div class="logo">` e o link "ativo" do Menu Lateral refletem o nome do novo curso. 
-- **Entrega:** Devolve o código completo para este `index.html`. *(Nota: Relembra o utilizador de copiar os ficheiros `style.css` e `app.js` da pasta template para a pasta deste novo curso).*
-
-**PASSO 4: Extração e Geração do `data.js` (O Banco de Dados)**
-- Lê profundamente os PDFs/Textos fornecidos.
-- **Resumos (`topics`):** Cria resumos ricos e bem explicados. Inclui uma mnemónica/dica em cada um.
-- **Mapa Mental (`tree`):** Estrutura a hierarquia dos tópicos (`level: 1` a `5`).
-- **Flashcards (`flashcards`):** Cria um banco massivo e exaustivo de perguntas diretas para treinar a memória.
-- **Quiz (`quiz`):** Cria dezenas de perguntas de múltipla escolha (4 opções), com dicas (`hint`) e a resposta correta bem definida no índice (0 a 3).
-- **Entrega:** Devolve APENAS o código JavaScript com a variável `const studyData = {...}` totalmente preenchida com a matéria do PDF. Não economizes no conteúdo!
+- Usa a estrutura padrão do Study Lab, garantindo que o `<title>` e o `<div class="logo">` refletem o nome do novo curso. 
+- **⚠️ ATENÇÃO AO MENU LATERAL DESTE CURSO:** O menu lateral interno (`<ul class="sidebar-menu">`) deste arquivo não deve listar outros cursos. Deve conter APENAS:
+  ```html
+    <ul class="sidebar-menu">
+      <li><a href="../../index.html" class="active">🏠 Início (Página Principal)</a></li>
+    </ul>
