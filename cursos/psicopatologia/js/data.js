@@ -141,7 +141,7 @@ const studyData = {
         "Alucinação cenestésica[cite: 22, 23].", 
         "Delírio hipocondríaco[cite: 25]."
       ], 
-      correct: 0 
+      correct: 2 
     },
     { 
       topicId: "delirios_tipo1", 
