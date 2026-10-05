@@ -42,7 +42,7 @@
   <!-- ================= TELA DE LOGIN ================= -->
   <div id="login-container">
     <h2>Acesso ao Study Lab</h2>
-    <form id="login-form" onsubmit="handleLogin(event)">
+    <form id="login-form" onsubmit="event.preventDefault(); handleLogin(event);">
       <input type="email" id="email" placeholder="E-mail" required>
       <input type="password" id="password" placeholder="Senha" required>
       <button type="submit" class="btn primary">Entrar</button>
