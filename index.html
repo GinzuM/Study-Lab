@@ -6,83 +6,131 @@
   <title>Study Lab | Hub de Cursos</title>
   <link rel="stylesheet" href="css/home.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Estilo básico para a tela de login -->
+  <style>
+    #login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: var(--bg-color, #f4f4f5);
+      color: var(--text-color, #18181b);
+    }
+    #login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 320px;
+      margin-top: 20px;
+    }
+    #login-form input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Overlay e Menu Lateral -->
-  <div id="sidebar-overlay" class="sidebar-overlay"></div>
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <h2>Study Lab</h2>
-      <button id="close-sidebar" class="btn-close">&times;</button>
-    </div>
-    <ul class="sidebar-menu">
-      <li><a href="index.html" class="active">🏠 Início</a></li>
-      <li class="menu-label">MEUS CURSOS</li>
-      <li><a href="./cursos/psicofarmacologia/index.html">🧠 Psicofarmacologia</a></li>
-      <li><a href="./cursos/epidemiologia/index.html">📊 Epidemiologia</a></li>
-      <li><a href="./cursos/psicopatologia/index.html">🧩 Psicopatologia</a></li>
-      <li><a href="./cursos/template_em_branco/index.html">📄 Template</a></li>
-    </ul>
-    <div class="sidebar-footer">
-       <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO&body=Ol%C3%A1%21%20Segue%20em%20anexo%20o%28s%29%20PDF%28s%29%20referente%28s%29%20ao%20assunto%20que%20desejo%20adicionar%20%C3%A0%20plataforma." class="btn primary full-width text-center" style="text-decoration:none; display:block;">➕ Adicionar Curso</a>
-    </div>
-  </aside>
+  <!-- ================= TELA DE LOGIN ================= -->
+  <div id="login-container">
+    <h2>Acesso ao Study Lab</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="E-mail" required>
+      <input type="password" id="password" placeholder="Senha" required>
+      <button type="submit" onclick="handleLogin(event)" class="btn primary">Entrar</button>
+    </form>
+  </div>
 
-  <!-- Cabeçalho -->
-  <header>
-    <div class="logo-container">
-      <button id="menu-toggle" class="menu-btn">☰</button>
-      <div class="logo">Study Lab</div>
-    </div>
-    <button id="theme-toggle" class="theme-btn" aria-label="Alternar Tema">
-      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-    </button>
-  </header>
-
-  <!-- Listagem de Cursos -->
-  <main class="container">
-    <div class="section-header">
-      <h2>Catálogo de Cursos</h2>
-      <p class="text-muted">Selecione um curso abaixo para aceder ao mapa mental, flashcards e quiz correspondentes.</p>
-    </div>
+  <!-- ================= CONTEÚDO DA PLATAFORMA (OCULTO) ================= -->
+  <div id="app-container" style="display: none;">
     
-    <div class="course-grid">
-      <!-- Curso Psicofarmacologia -->
-      <a href="./cursos/psicofarmacologia/index.html" class="course-card">
-        <div class="course-icon" style="background-color: rgba(99, 102, 241, 0.1); color: var(--brand-primary);">🧠</div>
-        <h3>Psicofarmacologia</h3>
-        <p>Estudo dirigido: Sinapses, neurotransmissores, depressão e intervenções farmacológicas.</p>
-        <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
-      </a>
+    <!-- Overlay e Menu Lateral -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h2>Study Lab</h2>
+        <button id="close-sidebar" class="btn-close">&times;</button>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="index.html" class="active">🏠 Início</a></li>
+        <li class="menu-label">MEUS CURSOS</li>
+        <li><a href="./cursos/psicofarmacologia/index.html">🧠 Psicofarmacologia</a></li>
+        <li><a href="./cursos/epidemiologia/index.html">📊 Epidemiologia</a></li>
+        <li><a href="./cursos/psicopatologia/index.html">🧩 Psicopatologia</a></li>
+        <li><a href="./cursos/template_em_branco/index.html">📄 Template</a></li>
+      </ul>
+      <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+         <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO" class="btn outline full-width text-center" style="text-decoration:none; display:block;">➕ Adicionar Curso</a>
+         <!-- Botão de Sair adicionado aqui -->
+         <button onclick="handleLogout()" class="btn primary full-width">Sair da Conta</button>
+      </div>
+    </aside>
 
-      <!-- Curso Epidemiologia -->
-      <a href="./cursos/epidemiologia/index.html" class="course-card">
-        <div class="course-icon" style="background-color: rgba(236, 72, 153, 0.1); color: #ec4899;">📊</div>
-        <h3>Epidemiologia e Saúde Coletiva</h3>
-        <p>A saúde como processo social: Determinantes sociais, modelos assistenciais e desafios do SUS.</p>
-        <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
-      </a>
-      
-      <!-- Curso Psicopatologia -->
-      <a href="./cursos/psicopatologia/index.html" class="course-card">
-        <div class="course-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">🧩</div>
-        <h3>Psicopatologia</h3>
-        <p>Estudo das alterações da sensopercepção, delírios, alucinações e transtornos de personalidade.</p>
-        <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
-      </a>
-      
-      <!-- Curso  (Template) -->
-      <a href="./cursos/template_em_branco/index.html" class="course-card">
-        <div class="course-icon" style="background-color: rgba(16, 185, 129, 0.1); color: #10b981;">📄</div>
-        <h3>Novo Curso</h3>
-        <p>Modelo estrutural em branco pronto para ser preenchido pela IA com novos PDFs e materiais.</p>
-        <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
-      </a>
-    </div>
-  </main>
+    <!-- Cabeçalho -->
+    <header>
+      <div class="logo-container">
+        <button id="menu-toggle" class="menu-btn">☰</button>
+        <div class="logo">Study Lab</div>
+      </div>
+      <button id="theme-toggle" class="theme-btn" aria-label="Alternar Tema">
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </header>
 
+    <!-- Listagem de Cursos -->
+    <main class="container">
+      <div class="section-header">
+        <h2>Catálogo de Cursos</h2>
+        <p class="text-muted">Selecione um curso abaixo para aceder ao mapa mental, flashcards e quiz correspondentes.</p>
+      </div>
+      
+      <div class="course-grid">
+        <a href="./cursos/psicofarmacologia/index.html" class="course-card">
+          <div class="course-icon" style="background-color: rgba(99, 102, 241, 0.1); color: var(--brand-primary);">🧠</div>
+          <h3>Psicofarmacologia</h3>
+          <p>Estudo dirigido: Sinapses, neurotransmissores, depressão e intervenções farmacológicas.</p>
+          <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
+        </a>
+
+        <a href="./cursos/epidemiologia/index.html" class="course-card">
+          <div class="course-icon" style="background-color: rgba(236, 72, 153, 0.1); color: #ec4899;">📊</div>
+          <h3>Epidemiologia e Saúde Coletiva</h3>
+          <p>A saúde como processo social: Determinantes sociais, modelos assistenciais e desafios do SUS.</p>
+          <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
+        </a>
+        
+        <a href="./cursos/psicopatologia/index.html" class="course-card">
+          <div class="course-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">🧩</div>
+          <h3>Psicopatologia</h3>
+          <p>Estudo das alterações da sensopercepção, delírios, alucinações e transtornos de personalidade.</p>
+          <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
+        </a>
+        
+        <a href="./cursos/template_em_branco/index.html" class="course-card">
+          <div class="course-icon" style="background-color: rgba(16, 185, 129, 0.1); color: #10b981;">📄</div>
+          <h3>Novo Curso</h3>
+          <p>Modelo estrutural em branco pronto para ser preenchido pela IA com novos PDFs e materiais.</p>
+          <span class="btn outline small mt-1">Aceder ao Curso ➡</span>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
   <script src="js/home.js"></script>
+  <script>
+    // Inicia a verificação de acesso informando que esta é a raiz do site
+    checkAuthStatus(true);
+  </script>
 </body>
 </html>

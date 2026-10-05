@@ -6,6 +6,7 @@
   <title>Psicofarmacologia | Study Lab</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -142,5 +143,12 @@
   </main>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <!-- TRAVA DE SEGURANÇA -->
+  <script src="../../js/auth.js"></script>
+  <script>
+    // O parâmetro "false" indica que não estamos na raiz. 
+    // Se não houver login, o auth.js redireciona para ../../index.html
+    checkAuthStatus(false);
+  </script>
 </body>
 </html>
