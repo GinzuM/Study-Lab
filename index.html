@@ -42,10 +42,10 @@
   <!-- ================= TELA DE LOGIN ================= -->
   <div id="login-container">
     <h2>Acesso ao Study Lab</h2>
-    <form id="login-form">
+    <form id="login-form" onsubmit="handleLogin(event)">
       <input type="email" id="email" placeholder="E-mail" required>
       <input type="password" id="password" placeholder="Senha" required>
-      <button type="submit" onclick="handleLogin(event)" class="btn primary">Entrar</button>
+      <button type="submit" class="btn primary">Entrar</button>
     </form>
   </div>
 
@@ -69,7 +69,6 @@
       </ul>
       <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
          <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO" class="btn outline full-width text-center" style="text-decoration:none; display:block;">➕ Adicionar Curso</a>
-         <!-- Botão de Sair adicionado aqui -->
          <button onclick="handleLogout()" class="btn primary full-width">Sair da Conta</button>
       </div>
     </aside>
