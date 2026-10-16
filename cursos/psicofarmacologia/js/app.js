@@ -1,88 +1,428 @@
+// =========================================================================
+// MOTOR UNIVERSAL: PSICOFARMACOLOGIA (STUDY LAB)
+// Gerencia Navegação, Mapa Mental, Flashcards, Quiz e Tema
+// =========================================================================
+
 document.addEventListener("DOMContentLoaded", () => {
-  /* TEMA E SIDEBAR */
+  // -----------------------------------------------------------------------
+  // 1. GERENCIAMENTO DE TEMA (CLARO / ESCURO)
+  // -----------------------------------------------------------------------
   const themeToggle = document.getElementById("theme-toggle");
-  const bodyEl = document.body;
-  const iconSun = document.getElementById("icon-sun");
   const iconMoon = document.getElementById("icon-moon");
-  const savedTheme = localStorage.getItem("theme");
-  
-  if (savedTheme === "dark") { 
-      bodyEl.setAttribute("data-theme", "dark"); 
-      if(iconSun && iconMoon) { iconMoon.style.display = "none"; iconSun.style.display = "block"; }
+  const iconSun = document.getElementById("icon-sun");
+
+  function applyTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add("theme-dark");
+      if (iconMoon) iconMoon.style.display = "none";
+      if (iconSun) iconSun.style.display = "block";
+    } else {
+      document.body.classList.remove("theme-dark");
+      if (iconMoon) iconMoon.style.display = "block";
+      if (iconSun) iconSun.style.display = "none";
+    }
   }
+
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(savedTheme === "dark" || (!savedTheme && prefersDark));
 
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
-      if (bodyEl.getAttribute("data-theme") === "dark") {
-        bodyEl.removeAttribute("data-theme");
-        localStorage.setItem("theme", "light");
-        if(iconSun && iconMoon) { iconSun.style.display = "none"; iconMoon.style.display = "block"; }
-      } else {
-        bodyEl.setAttribute("data-theme", "dark");
-        localStorage.setItem("theme", "dark");
-        if(iconSun && iconMoon) { iconMoon.style.display = "none"; iconSun.style.display = "block"; }
+      const isCurrentlyDark = document.body.classList.contains("theme-dark");
+      const targetDark = !isCurrentlyDark;
+      applyTheme(targetDark);
+      localStorage.setItem("theme", targetDark ? "dark" : "light");
+    });
+  }
+
+  // -----------------------------------------------------------------------
+  // 2. NAVEGAÇÃO ENTRE ABAS
+  // -----------------------------------------------------------------------
+  const navButtons = document.querySelectorAll(".nav-btn");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  function switchTab(tabId) {
+    navButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tabId));
+    tabContents.forEach(tab => tab.classList.toggle("active", tab.id === tabId));
+  }
+
+  navButtons.forEach(btn => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+
+  // -----------------------------------------------------------------------
+  // 3. MAPA MENTAL & EXPLICAÇÕES DINÂMICAS
+  // -----------------------------------------------------------------------
+  const mindmapContainer = document.getElementById("mindmap-container");
+  const articlesContainer = document.getElementById("articles-container");
+
+  function renderKnowledgeBase() {
+    if (!studyData || !studyData.topics) return;
+
+    // Renderiza artigos detalhados na aba de Explicações
+    if (articlesContainer) {
+      articlesContainer.innerHTML = "";
+      studyData.topics.forEach(t => {
+        const article = document.createElement("article");
+        article.className = "article-card";
+        article.id = `doc-${t.id}`;
+        
+        // Conversão leve de quebras de linha e negrito markdown
+        let parsedContent = t.content
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+
+        article.innerHTML = `
+          <h3>${t.title}</h3>
+          <div class="article-body">${parsedContent}</div>
+          ${t.mnemonic ? `<div class="mnemonic-tag">${t.mnemonic}</div>` : ""}
+        `;
+        articlesContainer.appendChild(article);
+      });
+    }
+
+    // Renderiza os nós do Mapa Mental organizado por níveis
+    if (mindmapContainer && studyData.tree) {
+      mindmapContainer.innerHTML = "";
+      
+      // Agrupa os itens por nível
+      const levels = {};
+      studyData.tree.forEach(node => {
+        if (!levels[node.level]) levels[node.level] = [];
+        levels[node.level].push(node);
+      });
+
+      Object.keys(levels).sort().forEach(lvl => {
+        const col = document.createElement("div");
+        col.className = "mindmap-level";
+        
+        levels[lvl].forEach(node => {
+          const item = document.createElement("div");
+          item.className = "mindmap-node";
+          item.dataset.id = node.id;
+          item.innerHTML = `
+            <strong>${node.title}</strong>
+            <span class="node-action">Ler Explicação ➔</span>
+          `;
+          item.addEventListener("click", () => {
+            switchTab("resumos");
+            const targetDoc = document.getElementById(`doc-${node.id}`);
+            if (targetDoc) {
+              targetDoc.scrollIntoView({ behavior: "smooth", block: "start" });
+              targetDoc.classList.add("highlight");
+              setTimeout(() => targetDoc.classList.remove("highlight"), 1800);
+            }
+          });
+          col.appendChild(item);
+        });
+
+        mindmapContainer.appendChild(col);
+      });
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // 4. MOTOR DE FLASHCARDS
+  // -----------------------------------------------------------------------
+  const flashcardEl = document.getElementById("flashcard");
+  const fcCategory = document.getElementById("fc-category");
+  const fcQuestion = document.getElementById("fc-question");
+  const fcAnswer = document.getElementById("fc-answer");
+  const fcCounter = document.getElementById("fc-counter");
+  const fcPrevBtn = document.getElementById("fc-prev");
+  const fcNextBtn = document.getElementById("fc-next");
+  const fcMoreBtn = document.getElementById("fc-more-btn");
+
+  let currentCardIndex = 0;
+
+  function updateFlashcardView() {
+    if (!studyData.flashcards || studyData.flashcards.length === 0) return;
+    
+    // Remove o giro antes de mudar a pergunta
+    flashcardEl.classList.remove("flipped");
+
+    const card = studyData.flashcards[currentCardIndex];
+    if (fcCategory) fcCategory.textContent = card.category || "Geral";
+    if (fcQuestion) fcQuestion.textContent = card.question;
+    if (fcAnswer) fcAnswer.textContent = card.answer;
+    if (fcCounter) fcCounter.textContent = `${currentCardIndex + 1} / ${studyData.flashcards.length}`;
+  }
+
+  if (flashcardEl) {
+    flashcardEl.addEventListener("click", (e) => {
+      if (e.target.id === "fc-more-btn") return;
+      flashcardEl.classList.toggle("flipped");
+    });
+  }
+
+  if (fcPrevBtn) {
+    fcPrevBtn.addEventListener("click", () => {
+      if (currentCardIndex > 0) {
+        currentCardIndex--;
+        updateFlashcardView();
       }
     });
   }
 
-  const menuToggle = document.getElementById("menu-toggle");
-  const sidebar = document.getElementById("sidebar");
-  const sidebarOverlay = document.getElementById("sidebar-overlay");
-  const closeSidebar = document.getElementById("close-sidebar");
+  if (fcNextBtn) {
+    fcNextBtn.addEventListener("click", () => {
+      if (currentCardIndex < studyData.flashcards.length - 1) {
+        currentCardIndex++;
+        updateFlashcardView();
+      }
+    });
+  }
 
-  function openMenu() { sidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
-  function closeMenu() { sidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
+  if (fcMoreBtn) {
+    fcMoreBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const card = studyData.flashcards[currentCardIndex];
+      switchTab("resumos");
+      const targetDoc = document.getElementById(`doc-${card.topicId}`);
+      if (targetDoc) {
+        targetDoc.scrollIntoView({ behavior: "smooth", block: "start" });
+        targetDoc.classList.add("highlight");
+        setTimeout(() => targetDoc.classList.remove("highlight"), 1800);
+      }
+    });
+  }
 
-  if(menuToggle) menuToggle.addEventListener("click", openMenu);
-  if(closeSidebar) closeSidebar.addEventListener("click", closeMenu);
-  if(sidebarOverlay) sidebarOverlay.addEventListener("click", closeMenu);
+  // -----------------------------------------------------------------------
+  // 5. MOTOR DO QUIZ (MODO NORMAL E SOBREVIVÊNCIA)
+  // -----------------------------------------------------------------------
+  const quizConfigBox = document.getElementById("quiz-config");
+  const quizPlayBox = document.getElementById("quiz-play");
+  const quizResultBox = document.getElementById("quiz-result");
 
-  /* TABS E RESUMOS */
-  const navBtns = document.querySelectorAll(".nav-btn"); const tabContents = document.querySelectorAll(".tab-content");
-  function switchTab(tabId) { tabContents.forEach(tab => tab.classList.remove("active")); navBtns.forEach(btn => btn.classList.remove("active")); const targetTab = document.getElementById(tabId); const targetBtn = document.querySelector(`[data-tab="${tabId}"]`); if (targetTab) targetTab.classList.add("active"); if (targetBtn) targetBtn.classList.add("active"); }
-  navBtns.forEach(btn => { btn.addEventListener("click", () => switchTab(btn.dataset.tab)); });
-  window.goToExplanation = function(topicId) { switchTab("resumos"); setTimeout(() => { const el = document.getElementById(`art-${topicId}`); if (el) { el.scrollIntoView({ behavior: "smooth", block: "start" }); el.style.borderColor = "var(--brand-primary)"; setTimeout(() => el.style.borderColor = "var(--border-color)", 2000); } }, 100); };
-  
-  const articlesContainer = document.getElementById("articles-container");
-  if (articlesContainer && typeof studyData !== 'undefined') { articlesContainer.innerHTML = studyData.topics.map(topic => `<article class="article-card" id="art-${topic.id}"><h3>${topic.title}</h3><p style="white-space: pre-line;">${topic.content}</p><div class="mnemonic-box">${topic.mnemonic}</div></article>`).join(""); }
-  
-  /* MAPA MENTAL */
-  const treeContainer = document.getElementById("mindmap-container");
-  function renderMindmap() { treeContainer.innerHTML = ""; const levels = {}; studyData.tree.forEach(node => { if (!levels[node.level]) levels[node.level] = []; levels[node.level].push(node); }); Object.keys(levels).forEach(level => { const levelDiv = document.createElement("div"); levelDiv.className = "map-level"; levels[level].forEach(node => { const nodeDiv = document.createElement("div"); nodeDiv.className = "map-node"; nodeDiv.innerHTML = `<h4>${node.title}</h4><p>Ver documentação</p>`; nodeDiv.addEventListener("click", () => window.goToExplanation(node.id)); levelDiv.appendChild(nodeDiv); }); treeContainer.appendChild(levelDiv); }); }
-  if (treeContainer && typeof studyData !== 'undefined') renderMindmap();
-  
-  /* FLASHCARDS */
-  let currentCardIndex = 0; const flashcardEl = document.getElementById("flashcard"); const fcCategory = document.getElementById("fc-category"); const fcQuestion = document.getElementById("fc-question"); const fcAnswer = document.getElementById("fc-answer"); const fcCounter = document.getElementById("fc-counter"); const fcMoreBtn = document.getElementById("fc-more-btn");
-  let shuffledFlashcards = [];
-  if(typeof studyData !== 'undefined') shuffledFlashcards = [...studyData.flashcards].sort(() => 0.5 - Math.random());
-  
-  function updateFlashcard() { if (shuffledFlashcards.length === 0) return; if (flashcardEl) flashcardEl.classList.remove("flipped"); const current = shuffledFlashcards[currentCardIndex]; if (fcCategory) fcCategory.textContent = current.category; if (fcQuestion) fcQuestion.textContent = current.question; if (fcAnswer) fcAnswer.textContent = current.answer; if (fcCounter) fcCounter.textContent = `${currentCardIndex + 1} / ${shuffledFlashcards.length}`; if (fcMoreBtn) { fcMoreBtn.onclick = (e) => { e.stopPropagation(); window.goToExplanation(current.topicId); }; } }
-  if (flashcardEl) { flashcardEl.addEventListener("click", () => flashcardEl.classList.toggle("flipped")); }
-  const fcPrev = document.getElementById("fc-prev"); if (fcPrev) { fcPrev.addEventListener("click", () => { currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : shuffledFlashcards.length - 1; updateFlashcard(); }); }
-  const fcNext = document.getElementById("fc-next"); if (fcNext) { fcNext.addEventListener("click", () => { currentCardIndex = (currentCardIndex < shuffledFlashcards.length - 1) ? currentCardIndex + 1 : 0; updateFlashcard(); }); }
-  if (shuffledFlashcards.length > 0) updateFlashcard();
-  
-  /* QUIZ */
-  const quizConfigBox = document.getElementById("quiz-config"); const quizPlayBox = document.getElementById("quiz-play"); const quizResultBox = document.getElementById("quiz-result"); const btnStartQuiz = document.getElementById("btn-start-quiz");
-  const timerGroup = document.getElementById("timer-val-group"); const configNormal = document.getElementById("config-normal"); const configSurvival = document.getElementById("config-survival");
-  document.querySelectorAll('input[name="quiz-mode"]').forEach(r => { r.addEventListener("change", (e) => { if (e.target.value === "survival") { if (configNormal) configNormal.style.display = "none"; if (configSurvival) configSurvival.style.display = "block"; } else { if (configNormal) configNormal.style.display = "block"; if (configSurvival) configSurvival.style.display = "none"; } }); });
-  document.querySelectorAll('input[name="timer-enable"]').forEach(r => { r.addEventListener("change", (e) => { if (timerGroup) timerGroup.style.display = e.target.value === "yes" ? "block" : "none"; }); });
-  
-  let activeQuizQuestions = []; let currentQuizIndex = 0; let score = 0; let lives = 0; let isSurvival = false; let timerInterval = null; let timeLeft = 0;
-  function abortQuiz() { clearInterval(timerInterval); if (quizPlayBox) quizPlayBox.style.display = "none"; if (quizResultBox) quizResultBox.style.display = "none"; if (quizConfigBox) quizConfigBox.style.display = "block"; }
-  const btnAbort = document.getElementById("btn-abort-quiz"); if (btnAbort) { btnAbort.addEventListener("click", abortQuiz); }
-  
-  if (btnStartQuiz && typeof studyData !== 'undefined') { btnStartQuiz.addEventListener("click", () => { const modeInput = document.querySelector('input[name="quiz-mode"]:checked'); isSurvival = modeInput ? modeInput.value === "survival" : false; const shuffledQuiz = [...studyData.quiz].sort(() => 0.5 - Math.random()); if (isSurvival) { activeQuizQuestions = shuffledQuiz; const livesEl = document.getElementById("quiz-lives"); lives = livesEl ? parseInt(livesEl.value) || 5 : 5; } else { const qCountEl = document.getElementById("quiz-count"); const qCount = qCountEl ? parseInt(qCountEl.value) || 10 : 10; activeQuizQuestions = shuffledQuiz.slice(0, Math.min(qCount, shuffledQuiz.length)); } currentQuizIndex = 0; score = 0; if (quizConfigBox) quizConfigBox.style.display = "none"; if (quizResultBox) quizResultBox.style.display = "none"; if (quizPlayBox) quizPlayBox.style.display = "block"; loadQuizQuestion(); }); }
-  
-  function updateLivesDisplay() { const livesDisplay = document.getElementById("quiz-lives-display"); if (livesDisplay) { if (isSurvival) { livesDisplay.style.display = "inline-flex"; livesDisplay.innerHTML = `<span style="color:var(--error); margin-right:4px;">❤️</span> ${lives}`; } else { livesDisplay.style.display = "none"; } } }
-  
-  function loadQuizQuestion() { clearInterval(timerInterval); updateLivesDisplay(); if (isSurvival && currentQuizIndex >= activeQuizQuestions.length) { currentQuizIndex = 0; activeQuizQuestions = activeQuizQuestions.sort(() => 0.5 - Math.random()); } const q = activeQuizQuestions[currentQuizIndex]; const progressText = document.getElementById("quiz-progress-text"); if (progressText) { progressText.textContent = isSurvival ? `Modo Sobrevivência | ${score} Acertos` : `Questão ${currentQuizIndex + 1} de ${activeQuizQuestions.length}`; } const questionText = document.getElementById("quiz-question-text"); if (questionText) questionText.textContent = q.question; const hintContainer = document.getElementById("hint-container"); if (hintContainer) { const hintText = document.getElementById("hint-text"); const btnShowHint = document.getElementById("btn-show-hint"); if (q.hint && hintText && btnShowHint) { hintContainer.style.display = "block"; hintText.style.display = "none"; hintText.textContent = q.hint; btnShowHint.onclick = () => hintText.style.display = "block"; } else { hintContainer.style.display = "none"; } } const timerInput = document.querySelector('input[name="timer-enable"]:checked'); const hasTimer = timerInput ? timerInput.value === "yes" : false; const timerDisplay = document.getElementById("quiz-timer-display"); if (hasTimer) { const secInput = document.getElementById("quiz-seconds"); timeLeft = secInput ? parseInt(secInput.value) || 20 : 20; if (timerDisplay) timerDisplay.innerHTML = `⏱️ ${timeLeft}s`; timerInterval = setInterval(() => { timeLeft--; if (timerDisplay) timerDisplay.innerHTML = `⏱️ ${timeLeft}s`; if (timeLeft <= 0) { clearInterval(timerInterval); handleAnswer(-1); } }, 1000); } else { if (timerDisplay) timerDisplay.textContent = "Tempo Livre"; } const optionsContainer = document.getElementById("quiz-options"); if (optionsContainer) { optionsContainer.innerHTML = ""; const feedbackBox = document.getElementById("quiz-feedback"); if (feedbackBox) feedbackBox.style.display = "none"; q.options.forEach((opt, idx) => { const btn = document.createElement("button"); btn.className = "option-btn"; btn.textContent = opt; btn.onclick = () => handleAnswer(idx); optionsContainer.appendChild(btn); }); } }
-  
-  function handleAnswer(selectedIndex) { clearInterval(timerInterval); const q = activeQuizQuestions[currentQuizIndex]; const optionBtns = document.querySelectorAll(".option-btn"); optionBtns.forEach(btn => btn.disabled = true); const feedbackBox = document.getElementById("quiz-feedback"); const feedbackMsg = document.getElementById("feedback-msg"); const btnExplain = document.getElementById("btn-quiz-explain"); if (feedbackBox) feedbackBox.style.display = "block"; if (selectedIndex === q.correct) { score++; if (optionBtns[selectedIndex]) optionBtns[selectedIndex].classList.add("correct"); if (feedbackMsg) { feedbackMsg.innerHTML = "Correto"; feedbackMsg.style.color = "var(--success)"; } } else { if (isSurvival) lives--; if (selectedIndex >= 0 && optionBtns[selectedIndex]) { optionBtns[selectedIndex].classList.add("wrong"); } if (optionBtns[q.correct]) optionBtns[q.correct].classList.add("correct"); if (feedbackMsg) { feedbackMsg.innerHTML = "Incorreto"; feedbackMsg.style.color = "var(--error)"; } } updateLivesDisplay(); if (btnExplain) btnExplain.onclick = () => window.goToExplanation(q.topicId); const btnNext = document.getElementById("btn-quiz-next"); if (btnNext) { if (isSurvival && lives <= 0) { btnNext.textContent = "Ver Resultados Finais"; } else { btnNext.textContent = "Avançar"; } } }
-  
-  const btnQuizNext = document.getElementById("btn-quiz-next"); if (btnQuizNext) { btnQuizNext.addEventListener("click", () => { if (isSurvival) { if (lives > 0) { currentQuizIndex++; loadQuizQuestion(); } else { endQuiz(); } } else { currentQuizIndex++; if (currentQuizIndex < activeQuizQuestions.length) { loadQuizQuestion(); } else { endQuiz(); } } }); }
-  
-  function endQuiz() { if (quizPlayBox) quizPlayBox.style.display = "none"; if (quizResultBox) quizResultBox.style.display = "block"; const finalScoreEl = document.getElementById("final-score"); if (finalScoreEl) finalScoreEl.textContent = score; const statsEl = document.getElementById("survival-stats"); const resultTitleEl = document.getElementById("result-title"); if (isSurvival) { if (resultTitleEl) resultTitleEl.textContent = "Sessão Terminada"; if (statsEl) statsEl.textContent = `Pontuação final: ${score} respostas corretas no Modo Sobrevivência.`; } else { if (resultTitleEl) resultTitleEl.textContent = "Avaliação Concluída"; if (statsEl) statsEl.textContent = `Respondeu corretamente a ${score} de ${activeQuizQuestions.length} questões.`; } }
-  
-  const btnRestart = document.getElementById("btn-restart-quiz"); if (btnRestart) { btnRestart.addEventListener("click", abortQuiz); }
+  const modeRadios = document.querySelectorAll('input[name="quiz-mode"]');
+  const timerRadios = document.querySelectorAll('input[name="timer-enable"]');
+  const configNormal = document.getElementById("config-normal");
+  const configSurvival = document.getElementById("config-survival");
+  const timerValGroup = document.getElementById("timer-val-group");
+
+  const startQuizBtn = document.getElementById("btn-start-quiz");
+  const abortQuizBtn = document.getElementById("btn-abort-quiz");
+  const restartQuizBtn = document.getElementById("btn-restart-quiz");
+
+  const questionText = document.getElementById("quiz-question-text");
+  const optionsGrid = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const feedbackMsg = document.getElementById("feedback-msg");
+  const quizNextBtn = document.getElementById("btn-quiz-next");
+  const quizExplainBtn = document.getElementById("btn-quiz-explain");
+  const quizProgressText = document.getElementById("quiz-progress-text");
+  const quizLivesDisplay = document.getElementById("quiz-lives-display");
+  const timerBadge = document.getElementById("quiz-timer-display");
+  const finalScoreEl = document.getElementById("final-score");
+  const survivalStatsEl = document.getElementById("survival-stats");
+
+  let activeQuizQuestions = [];
+  let quizIndex = 0;
+  let correctCount = 0;
+  let quizMode = "normal";
+  let lives = 5;
+  let isTimerOn = false;
+  let secondsPerQ = 20;
+  let timerInterval = null;
+  let currentTimeLeft = 0;
+
+  // Alterna visualizadores de configurações
+  modeRadios.forEach(r => {
+    r.addEventListener("change", (e) => {
+      quizMode = e.target.value;
+      if (configNormal) configNormal.style.display = quizMode === "normal" ? "block" : "none";
+      if (configSurvival) configSurvival.style.display = quizMode === "survival" ? "block" : "none";
+    });
+  });
+
+  timerRadios.forEach(r => {
+    r.addEventListener("change", (e) => {
+      isTimerOn = e.target.value === "yes";
+      if (timerValGroup) timerValGroup.style.display = isTimerOn ? "block" : "none";
+    });
+  });
+
+  function startQuiz() {
+    const rawBank = [...studyData.quiz];
+    if (rawBank.length === 0) return;
+
+    // Embaralha as questões
+    activeQuizQuestions = rawBank.sort(() => Math.random() - 0.5);
+
+    quizIndex = 0;
+    correctCount = 0;
+
+    if (quizMode === "normal") {
+      const countInput = document.getElementById("quiz-count");
+      const desiredCount = parseInt(countInput ? countInput.value : 10, 10);
+      activeQuizQuestions = activeQuizQuestions.slice(0, Math.min(desiredCount, activeQuizQuestions.length));
+      if (quizLivesDisplay) quizLivesDisplay.textContent = "";
+    } else {
+      const livesSelect = document.getElementById("quiz-lives");
+      lives = parseInt(livesSelect ? livesSelect.value : 5, 10);
+      updateLivesBadge();
+    }
+
+    if (isTimerOn) {
+      const sInput = document.getElementById("quiz-seconds");
+      secondsPerQ = parseInt(sInput ? sInput.value : 20, 10);
+      if (timerBadge) timerBadge.style.display = "inline-block";
+    } else {
+      if (timerBadge) timerBadge.style.display = "none";
+    }
+
+    quizConfigBox.style.display = "none";
+    quizResultBox.style.display = "none";
+    quizPlayBox.style.display = "block";
+
+    loadQuestion();
+  }
+
+  function updateLivesBadge() {
+    if (quizLivesDisplay) {
+      quizLivesDisplay.textContent = "❤️".repeat(Math.max(0, lives));
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    if (!isTimerOn) return;
+    currentTimeLeft = secondsPerQ;
+    if (timerBadge) timerBadge.textContent = `⏱️ ${currentTimeLeft}s`;
+
+    timerInterval = setInterval(() => {
+      currentTimeLeft--;
+      if (timerBadge) timerBadge.textContent = `⏱️ ${currentTimeLeft}s`;
+      if (currentTimeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleAnswer(-1); // Tempo esgotado
+      }
+    }, 1000);
+  }
+
+  function loadQuestion() {
+    resetTimer();
+    feedbackBox.style.display = "none";
+
+    const q = activeQuizQuestions[quizIndex];
+    if (quizProgressText) {
+      quizProgressText.textContent = quizMode === "normal"
+        ? `Questão ${quizIndex + 1} de ${activeQuizQuestions.length}`
+        : `Questão ${quizIndex + 1} (Acertos: ${correctCount})`;
+    }
+
+    if (questionText) questionText.textContent = q.question;
+    if (optionsGrid) {
+      optionsGrid.innerHTML = "";
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt;
+        btn.addEventListener("click", () => handleAnswer(idx));
+        optionsGrid.appendChild(btn);
+      });
+    }
+  }
+
+  function handleAnswer(selectedIndex) {
+    clearInterval(timerInterval);
+    const q = activeQuizQuestions[quizIndex];
+    const buttons = optionsGrid.querySelectorAll(".option-btn");
+    buttons.forEach(b => b.disabled = true);
+
+    const isCorrect = selectedIndex === q.correct;
+
+    if (isCorrect) {
+      correctCount++;
+      if (selectedIndex >= 0) buttons[selectedIndex].classList.add("correct");
+      feedbackMsg.textContent = "Excelente! Resposta correta.";
+      feedbackBox.className = "feedback-box success";
+    } else {
+      if (selectedIndex >= 0) buttons[selectedIndex].classList.add("incorrect");
+      if (q.correct < buttons.length) buttons[q.correct].classList.add("correct");
+      
+      feedbackMsg.textContent = selectedIndex === -1 
+        ? "Tempo esgotado! Veja a alternativa correta destacada em verde."
+        : `Incorreto. A opção adequada era: "${q.options[q.correct]}".`;
+      feedbackBox.className = "feedback-box danger";
+
+      if (quizMode === "survival") {
+        lives--;
+        updateLivesBadge();
+      }
+    }
+
+    feedbackBox.style.display = "flex";
+
+    // Botão de consultar resumo
+    if (quizExplainBtn) {
+      quizExplainBtn.onclick = () => {
+        switchTab("resumos");
+        const docEl = document.getElementById(`doc-${q.topicId}`);
+        if (docEl) {
+          docEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          docEl.classList.add("highlight");
+          setTimeout(() => docEl.classList.remove("highlight"), 1800);
+        }
+      };
+    }
+  }
+
+  if (quizNextBtn) {
+    quizNextBtn.addEventListener("click", () => {
+      if (quizMode === "survival" && lives <= 0) {
+        endQuiz(false);
+        return;
+      }
+
+      quizIndex++;
+      if (quizIndex < activeQuizQuestions.length) {
+        loadQuestion();
+      } else {
+        endQuiz(true);
+      }
+    });
+  }
+
+  function endQuiz(completedAll) {
+    clearInterval(timerInterval);
+    quizPlayBox.style.display = "none";
+    quizResultBox.style.display = "block";
+
+    if (finalScoreEl) {
+      finalScoreEl.textContent = `${correctCount} acertos`;
+    }
+
+    if (survivalStatsEl) {
+      if (quizMode === "survival") {
+        survivalStatsEl.textContent = completedAll 
+          ? "Incrível! Você respondeu a todo o banco sem perder todas as vidas!"
+          : "Fim das vidas! Revise os tópicos onde houve dúvidas e tente novamente.";
+      } else {
+        survivalStatsEl.textContent = `Aproveitamento: ${Math.round((correctCount / activeQuizQuestions.length) * 100)}%`;
+      }
+    }
+  }
+
+  if (startQuizBtn) startQuizBtn.addEventListener("click", startQuiz);
+  if (abortQuizBtn) {
+    abortQuizBtn.addEventListener("click", () => {
+      clearInterval(timerInterval);
+      quizPlayBox.style.display = "none";
+      quizConfigBox.style.display = "block";
+    });
+  }
+  if (restartQuizBtn) {
+    restartQuizBtn.addEventListener("click", () => {
+      quizResultBox.style.display = "none";
+      quizConfigBox.style.display = "block";
+    });
+  }
+
+  // -----------------------------------------------------------------------
+  // INICIALIZAÇÃO
+  // -----------------------------------------------------------------------
+  renderKnowledgeBase();
+  updateFlashcardView();
 });
