@@ -1,428 +1,411 @@
-// =========================================================================
-// MOTOR UNIVERSAL: PSICOFARMACOLOGIA (STUDY LAB)
-// Gerencia Navegação, Mapa Mental, Flashcards, Quiz e Tema
-// =========================================================================
-
 document.addEventListener("DOMContentLoaded", () => {
-  // -----------------------------------------------------------------------
-  // 1. GERENCIAMENTO DE TEMA (CLARO / ESCURO)
-  // -----------------------------------------------------------------------
-  const themeToggle = document.getElementById("theme-toggle");
+  
+  // LÓGICA DO MENU LATERAL (SIDEBAR)
+  const menuToggle = document.getElementById("menu-toggle");
+  const closeSidebar = document.getElementById("close-sidebar");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
+
+  function toggleMenu() {
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("show");
+  }
+
+  if(menuToggle) menuToggle.addEventListener("click", toggleMenu);
+  if(closeSidebar) closeSidebar.addEventListener("click", toggleMenu);
+  if(overlay) overlay.addEventListener("click", toggleMenu);
+
+  // 1. MODO ESCURO (DARK MODE) COM ÍCONES SVG
+  const themeBtn = document.getElementById("theme-toggle");
   const iconMoon = document.getElementById("icon-moon");
   const iconSun = document.getElementById("icon-sun");
-
-  function applyTheme(isDark) {
+  
+  function updateThemeIcons(isDark) {
+    if(!iconMoon || !iconSun) return;
     if (isDark) {
-      document.body.classList.add("theme-dark");
-      if (iconMoon) iconMoon.style.display = "none";
-      if (iconSun) iconSun.style.display = "block";
+      iconMoon.style.display = "none";
+      iconSun.style.display = "block";
     } else {
-      document.body.classList.remove("theme-dark");
-      if (iconMoon) iconMoon.style.display = "block";
-      if (iconSun) iconSun.style.display = "none";
+      iconMoon.style.display = "block";
+      iconSun.style.display = "none";
     }
   }
 
-  const savedTheme = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  applyTheme(savedTheme === "dark" || (!savedTheme && prefersDark));
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    updateThemeIcons(true);
+  }
 
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const isCurrentlyDark = document.body.classList.contains("theme-dark");
-      const targetDark = !isCurrentlyDark;
-      applyTheme(targetDark);
-      localStorage.setItem("theme", targetDark ? "dark" : "light");
+  if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      if (isDark) {
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("theme", "light");
+        updateThemeIcons(false);
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+        updateThemeIcons(true);
+      }
     });
   }
 
-  // -----------------------------------------------------------------------
   // 2. NAVEGAÇÃO ENTRE ABAS
-  // -----------------------------------------------------------------------
-  const navButtons = document.querySelectorAll(".nav-btn");
-  const tabContents = document.querySelectorAll(".tab-content");
+  const navBtns = document.querySelectorAll(".nav-btn");
+  const sections = document.querySelectorAll(".tab-content");
 
   function switchTab(tabId) {
-    navButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tabId));
-    tabContents.forEach(tab => tab.classList.toggle("active", tab.id === tabId));
+    navBtns.forEach(b => b.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
+
+    const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+    const activeSec = document.getElementById(tabId);
+    
+    if(activeBtn) activeBtn.classList.add("active");
+    if(activeSec) activeSec.classList.add("active");
   }
 
-  navButtons.forEach(btn => {
+  navBtns.forEach(btn => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
   });
 
-  // -----------------------------------------------------------------------
-  // 3. MAPA MENTAL & EXPLICAÇÕES DINÂMICAS
-  // -----------------------------------------------------------------------
-  const mindmapContainer = document.getElementById("mindmap-container");
-  const articlesContainer = document.getElementById("articles-container");
-
-  function renderKnowledgeBase() {
-    if (!studyData || !studyData.topics) return;
-
-    // Renderiza artigos detalhados na aba de Explicações
-    if (articlesContainer) {
-      articlesContainer.innerHTML = "";
-      studyData.topics.forEach(t => {
-        const article = document.createElement("article");
-        article.className = "article-card";
-        article.id = `doc-${t.id}`;
-        
-        // Conversão leve de quebras de linha e negrito markdown
-        let parsedContent = t.content
-          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-          .replace(/\n/g, "<br>");
-
-        article.innerHTML = `
-          <h3>${t.title}</h3>
-          <div class="article-body">${parsedContent}</div>
-          ${t.mnemonic ? `<div class="mnemonic-tag">${t.mnemonic}</div>` : ""}
-        `;
-        articlesContainer.appendChild(article);
-      });
-    }
-
-    // Renderiza os nós do Mapa Mental organizado por níveis
-    if (mindmapContainer && studyData.tree) {
-      mindmapContainer.innerHTML = "";
-      
-      // Agrupa os itens por nível
-      const levels = {};
-      studyData.tree.forEach(node => {
-        if (!levels[node.level]) levels[node.level] = [];
-        levels[node.level].push(node);
-      });
-
-      Object.keys(levels).sort().forEach(lvl => {
-        const col = document.createElement("div");
-        col.className = "mindmap-level";
-        
-        levels[lvl].forEach(node => {
-          const item = document.createElement("div");
-          item.className = "mindmap-node";
-          item.dataset.id = node.id;
-          item.innerHTML = `
-            <strong>${node.title}</strong>
-            <span class="node-action">Ler Explicação ➔</span>
-          `;
-          item.addEventListener("click", () => {
-            switchTab("resumos");
-            const targetDoc = document.getElementById(`doc-${node.id}`);
-            if (targetDoc) {
-              targetDoc.scrollIntoView({ behavior: "smooth", block: "start" });
-              targetDoc.classList.add("highlight");
-              setTimeout(() => targetDoc.classList.remove("highlight"), 1800);
-            }
-          });
-          col.appendChild(item);
-        });
-
-        mindmapContainer.appendChild(col);
-      });
+  function jumpToTopic(topicId) {
+    switchTab("resumos");
+    const targetCard = document.getElementById(`topic-${topicId}`);
+    if (targetCard) {
+      targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      targetCard.classList.add("highlight");
+      setTimeout(() => targetCard.classList.remove("highlight"), 1500);
     }
   }
 
-  // -----------------------------------------------------------------------
-  // 4. MOTOR DE FLASHCARDS
-  // -----------------------------------------------------------------------
-  const flashcardEl = document.getElementById("flashcard");
+  // 3. RENDERIZAR RESUMOS (EXPLICAÇÕES)
+  const articlesContainer = document.getElementById("articles-container");
+  if (articlesContainer && typeof studyData !== 'undefined') {
+    studyData.topics.forEach(topic => {
+      const card = document.createElement("div");
+      card.className = "article-card";
+      card.id = `topic-${topic.id}`;
+      
+      const formattedContent = topic.content
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\n/g, '<br>');
+
+      card.innerHTML = `
+        <h3>${topic.title}</h3>
+        <p>${formattedContent}</p>
+        <div class="mnemonic-box">${topic.mnemonic}</div>
+      `;
+      articlesContainer.appendChild(card);
+    });
+  }
+
+  // 4. RENDERIZAR MAPA MENTAL
+  const mindmapContainer = document.getElementById("mindmap-container");
+  if (mindmapContainer && typeof studyData !== 'undefined') {
+    const levels = {};
+    studyData.tree.forEach(node => {
+      if (!levels[node.level]) levels[node.level] = [];
+      levels[node.level].push(node);
+    });
+
+    Object.keys(levels).sort().forEach(levelNum => {
+      const levelRow = document.createElement("div");
+      levelRow.className = "mindmap-level";
+      
+      levels[levelNum].forEach(node => {
+        const nodeEl = document.createElement("div");
+        nodeEl.className = "mindmap-node";
+        nodeEl.innerHTML = `
+          <h4>${node.title}</h4>
+          <span>Ver documentação</span>
+        `;
+        nodeEl.addEventListener("click", () => jumpToTopic(node.id));
+        levelRow.appendChild(nodeEl);
+      });
+      mindmapContainer.appendChild(levelRow);
+    });
+  }
+
+  // 5. LÓGICA DOS FLASHCARDS
+  let currentFcIndex = 0;
+  const fcElement = document.getElementById("flashcard");
   const fcCategory = document.getElementById("fc-category");
   const fcQuestion = document.getElementById("fc-question");
   const fcAnswer = document.getElementById("fc-answer");
   const fcCounter = document.getElementById("fc-counter");
-  const fcPrevBtn = document.getElementById("fc-prev");
-  const fcNextBtn = document.getElementById("fc-next");
   const fcMoreBtn = document.getElementById("fc-more-btn");
 
-  let currentCardIndex = 0;
-
-  function updateFlashcardView() {
-    if (!studyData.flashcards || studyData.flashcards.length === 0) return;
-    
-    // Remove o giro antes de mudar a pergunta
-    flashcardEl.classList.remove("flipped");
-
-    const card = studyData.flashcards[currentCardIndex];
-    if (fcCategory) fcCategory.textContent = card.category || "Geral";
-    if (fcQuestion) fcQuestion.textContent = card.question;
-    if (fcAnswer) fcAnswer.textContent = card.answer;
-    if (fcCounter) fcCounter.textContent = `${currentCardIndex + 1} / ${studyData.flashcards.length}`;
+  function loadFlashcard(index) {
+    if (!fcElement || typeof studyData === 'undefined' || !studyData.flashcards.length) return;
+    fcElement.classList.remove("flipped");
+    setTimeout(() => {
+      const card = studyData.flashcards[index];
+      if(fcCategory) fcCategory.textContent = card.category;
+      if(fcQuestion) fcQuestion.textContent = card.question;
+      if(fcAnswer) fcAnswer.textContent = card.answer;
+      if(fcCounter) fcCounter.textContent = `${index + 1} / ${studyData.flashcards.length}`;
+      if(fcMoreBtn) fcMoreBtn.onclick = (e) => {
+        e.stopPropagation();
+        jumpToTopic(card.topicId);
+      };
+    }, 150);
   }
 
-  if (flashcardEl) {
-    flashcardEl.addEventListener("click", (e) => {
-      if (e.target.id === "fc-more-btn") return;
-      flashcardEl.classList.toggle("flipped");
+  if (fcElement) {
+    fcElement.addEventListener("click", () => fcElement.classList.toggle("flipped"));
+    document.getElementById("fc-prev")?.addEventListener("click", () => {
+      currentFcIndex = (currentFcIndex > 0) ? currentFcIndex - 1 : studyData.flashcards.length - 1;
+      loadFlashcard(currentFcIndex);
     });
-  }
-
-  if (fcPrevBtn) {
-    fcPrevBtn.addEventListener("click", () => {
-      if (currentCardIndex > 0) {
-        currentCardIndex--;
-        updateFlashcardView();
-      }
+    document.getElementById("fc-next")?.addEventListener("click", () => {
+      currentFcIndex = (currentFcIndex < studyData.flashcards.length - 1) ? currentFcIndex + 1 : 0;
+      loadFlashcard(currentFcIndex);
     });
+    loadFlashcard(0);
   }
 
-  if (fcNextBtn) {
-    fcNextBtn.addEventListener("click", () => {
-      if (currentCardIndex < studyData.flashcards.length - 1) {
-        currentCardIndex++;
-        updateFlashcardView();
-      }
-    });
-  }
+  // 6. LÓGICA DO QUIZ
+  let quizQuestions = [];
+  let currentQuizIndex = 0;
+  let score = 0;
+  let timerInterval = null;
+  let isTimerEnabled = false;
+  let timePerQuestion = 20;
+  let quizMode = "normal";
+  let lives = 3;
 
-  if (fcMoreBtn) {
-    fcMoreBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const card = studyData.flashcards[currentCardIndex];
-      switchTab("resumos");
-      const targetDoc = document.getElementById(`doc-${card.topicId}`);
-      if (targetDoc) {
-        targetDoc.scrollIntoView({ behavior: "smooth", block: "start" });
-        targetDoc.classList.add("highlight");
-        setTimeout(() => targetDoc.classList.remove("highlight"), 1800);
-      }
-    });
-  }
-
-  // -----------------------------------------------------------------------
-  // 5. MOTOR DO QUIZ (MODO NORMAL E SOBREVIVÊNCIA)
-  // -----------------------------------------------------------------------
-  const quizConfigBox = document.getElementById("quiz-config");
-  const quizPlayBox = document.getElementById("quiz-play");
-  const quizResultBox = document.getElementById("quiz-result");
-
-  const modeRadios = document.querySelectorAll('input[name="quiz-mode"]');
-  const timerRadios = document.querySelectorAll('input[name="timer-enable"]');
+  const quizConfig = document.getElementById("quiz-config");
+  const quizPlay = document.getElementById("quiz-play");
+  const quizResult = document.getElementById("quiz-result");
   const configNormal = document.getElementById("config-normal");
   const configSurvival = document.getElementById("config-survival");
-  const timerValGroup = document.getElementById("timer-val-group");
+  const livesDisplay = document.getElementById("quiz-lives-display");
 
-  const startQuizBtn = document.getElementById("btn-start-quiz");
-  const abortQuizBtn = document.getElementById("btn-abort-quiz");
-  const restartQuizBtn = document.getElementById("btn-restart-quiz");
-
-  const questionText = document.getElementById("quiz-question-text");
-  const optionsGrid = document.getElementById("quiz-options");
-  const feedbackBox = document.getElementById("quiz-feedback");
-  const feedbackMsg = document.getElementById("feedback-msg");
-  const quizNextBtn = document.getElementById("btn-quiz-next");
-  const quizExplainBtn = document.getElementById("btn-quiz-explain");
-  const quizProgressText = document.getElementById("quiz-progress-text");
-  const quizLivesDisplay = document.getElementById("quiz-lives-display");
-  const timerBadge = document.getElementById("quiz-timer-display");
-  const finalScoreEl = document.getElementById("final-score");
-  const survivalStatsEl = document.getElementById("survival-stats");
-
-  let activeQuizQuestions = [];
-  let quizIndex = 0;
-  let correctCount = 0;
-  let quizMode = "normal";
-  let lives = 5;
-  let isTimerOn = false;
-  let secondsPerQ = 20;
-  let timerInterval = null;
-  let currentTimeLeft = 0;
-
-  // Alterna visualizadores de configurações
-  modeRadios.forEach(r => {
-    r.addEventListener("change", (e) => {
+  document.querySelectorAll('input[name="quiz-mode"]').forEach(radio => {
+    radio.addEventListener("change", (e) => {
       quizMode = e.target.value;
-      if (configNormal) configNormal.style.display = quizMode === "normal" ? "block" : "none";
-      if (configSurvival) configSurvival.style.display = quizMode === "survival" ? "block" : "none";
+      if (quizMode === "normal") {
+        if(configNormal) configNormal.style.display = "block";
+        if(configSurvival) configSurvival.style.display = "none";
+      } else {
+        if(configNormal) configNormal.style.display = "none";
+        if(configSurvival) configSurvival.style.display = "block";
+      }
     });
   });
 
-  timerRadios.forEach(r => {
-    r.addEventListener("change", (e) => {
-      isTimerOn = e.target.value === "yes";
-      if (timerValGroup) timerValGroup.style.display = isTimerOn ? "block" : "none";
+  document.querySelectorAll('input[name="timer-enable"]').forEach(radio => {
+    radio.addEventListener("change", (e) => {
+      isTimerEnabled = e.target.value === "yes";
+      const timerGroup = document.getElementById("timer-val-group");
+      if(timerGroup) timerGroup.style.display = isTimerEnabled ? "block" : "none";
     });
   });
 
-  function startQuiz() {
-    const rawBank = [...studyData.quiz];
-    if (rawBank.length === 0) return;
+  function abortQuiz() {
+    clearInterval(timerInterval);
+    if(quizPlay) quizPlay.style.display = "none";
+    if(quizResult) quizResult.style.display = "none";
+    if(quizConfig) quizConfig.style.display = "block";
+  }
 
-    // Embaralha as questões
-    activeQuizQuestions = rawBank.sort(() => Math.random() - 0.5);
+  document.getElementById("btn-abort-quiz")?.addEventListener("click", abortQuiz);
+  document.getElementById("btn-restart-quiz")?.addEventListener("click", abortQuiz);
 
-    quizIndex = 0;
-    correctCount = 0;
+  document.getElementById("btn-start-quiz")?.addEventListener("click", () => {
+    if(typeof studyData === 'undefined' || !studyData.quiz.length) return;
+    score = 0;
+    currentQuizIndex = 0;
+    timePerQuestion = parseInt(document.getElementById("quiz-seconds")?.value) || 20;
+    
+    const shuffled = [...studyData.quiz].sort(() => 0.5 - Math.random());
 
     if (quizMode === "normal") {
-      const countInput = document.getElementById("quiz-count");
-      const desiredCount = parseInt(countInput ? countInput.value : 10, 10);
-      activeQuizQuestions = activeQuizQuestions.slice(0, Math.min(desiredCount, activeQuizQuestions.length));
-      if (quizLivesDisplay) quizLivesDisplay.textContent = "";
+      const qCount = parseInt(document.getElementById("quiz-count")?.value) || 10;
+      quizQuestions = shuffled.slice(0, Math.min(qCount, shuffled.length));
+      if(livesDisplay) livesDisplay.style.display = "none";
     } else {
-      const livesSelect = document.getElementById("quiz-lives");
-      lives = parseInt(livesSelect ? livesSelect.value : 5, 10);
-      updateLivesBadge();
-    }
-
-    if (isTimerOn) {
-      const sInput = document.getElementById("quiz-seconds");
-      secondsPerQ = parseInt(sInput ? sInput.value : 20, 10);
-      if (timerBadge) timerBadge.style.display = "inline-block";
-    } else {
-      if (timerBadge) timerBadge.style.display = "none";
-    }
-
-    quizConfigBox.style.display = "none";
-    quizResultBox.style.display = "none";
-    quizPlayBox.style.display = "block";
-
-    loadQuestion();
-  }
-
-  function updateLivesBadge() {
-    if (quizLivesDisplay) {
-      quizLivesDisplay.textContent = "❤️".repeat(Math.max(0, lives));
-    }
-  }
-
-  function resetTimer() {
-    clearInterval(timerInterval);
-    if (!isTimerOn) return;
-    currentTimeLeft = secondsPerQ;
-    if (timerBadge) timerBadge.textContent = `⏱️ ${currentTimeLeft}s`;
-
-    timerInterval = setInterval(() => {
-      currentTimeLeft--;
-      if (timerBadge) timerBadge.textContent = `⏱️ ${currentTimeLeft}s`;
-      if (currentTimeLeft <= 0) {
-        clearInterval(timerInterval);
-        handleAnswer(-1); // Tempo esgotado
+      lives = parseInt(document.getElementById("quiz-lives")?.value) || 5;
+      quizQuestions = shuffled; 
+      if(livesDisplay) {
+        livesDisplay.style.display = "inline-block";
+        updateLivesDisplay();
       }
-    }, 1000);
-  }
-
-  function loadQuestion() {
-    resetTimer();
-    feedbackBox.style.display = "none";
-
-    const q = activeQuizQuestions[quizIndex];
-    if (quizProgressText) {
-      quizProgressText.textContent = quizMode === "normal"
-        ? `Questão ${quizIndex + 1} de ${activeQuizQuestions.length}`
-        : `Questão ${quizIndex + 1} (Acertos: ${correctCount})`;
     }
 
-    if (questionText) questionText.textContent = q.question;
+    if(quizConfig) quizConfig.style.display = "none";
+    if(quizResult) quizResult.style.display = "none";
+    if(quizPlay) quizPlay.style.display = "block";
+    
+    renderQuestion();
+  });
+
+  function updateLivesDisplay() {
+    if(livesDisplay) livesDisplay.textContent = `Vidas: ${lives}`;
+  }
+
+  function renderQuestion() {
+    clearInterval(timerInterval);
+    const q = quizQuestions[currentQuizIndex];
+    
+    const progressText = document.getElementById("quiz-progress-text");
+    if (progressText) {
+      progressText.textContent = (quizMode === "normal") 
+        ? `Questão ${currentQuizIndex + 1} de ${quizQuestions.length}` 
+        : `Questão ${currentQuizIndex + 1}`;
+    }
+    
+    const qText = document.getElementById("quiz-question-text");
+    if(qText) qText.textContent = q.question;
+    
+    const feedbackBox = document.getElementById("quiz-feedback");
+    if(feedbackBox) feedbackBox.style.display = "none";
+
+    const hintContainer = document.getElementById("hint-container");
+    const hintText = document.getElementById("hint-text");
+    const btnShowHint = document.getElementById("btn-show-hint");
+    
+    if (hintContainer && hintText && btnShowHint) {
+      if (q.hint) {
+        hintContainer.style.display = "block";
+        hintText.style.display = "none";
+        hintText.textContent = q.hint;
+        btnShowHint.onclick = () => { hintText.style.display = "block"; };
+      } else {
+        hintContainer.style.display = "none";
+      }
+    }
+
+    const optionsGrid = document.getElementById("quiz-options");
     if (optionsGrid) {
       optionsGrid.innerHTML = "";
       q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
         btn.className = "option-btn";
         btn.textContent = opt;
-        btn.addEventListener("click", () => handleAnswer(idx));
+        btn.onclick = () => checkAnswer(idx, btn);
         optionsGrid.appendChild(btn);
       });
     }
+
+    const timerDisplay = document.getElementById("quiz-timer-display");
+    if (timerDisplay) {
+      if (isTimerEnabled) {
+        let timeLeft = timePerQuestion;
+        timerDisplay.textContent = `${timeLeft}s`;
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          timerDisplay.textContent = `${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            handleTimeOut();
+          }
+        }, 1000);
+      } else {
+        timerDisplay.textContent = "";
+      }
+    }
   }
 
-  function handleAnswer(selectedIndex) {
-    clearInterval(timerInterval);
-    const q = activeQuizQuestions[quizIndex];
-    const buttons = optionsGrid.querySelectorAll(".option-btn");
-    buttons.forEach(b => b.disabled = true);
+  function disableOptions() {
+    document.querySelectorAll(".option-btn").forEach(b => b.disabled = true);
+  }
 
-    const isCorrect = selectedIndex === q.correct;
+  function checkAnswer(selectedIndex, btnElement) {
+    clearInterval(timerInterval);
+    disableOptions();
+    const q = quizQuestions[currentQuizIndex];
+    const isCorrect = (selectedIndex === q.correct);
+    const allBtns = document.querySelectorAll(".option-btn");
 
     if (isCorrect) {
-      correctCount++;
-      if (selectedIndex >= 0) buttons[selectedIndex].classList.add("correct");
-      feedbackMsg.textContent = "Excelente! Resposta correta.";
-      feedbackBox.className = "feedback-box success";
+      btnElement.classList.add("correct");
+      score++;
+      showFeedback("Resposta Correta.", true, q.topicId);
     } else {
-      if (selectedIndex >= 0) buttons[selectedIndex].classList.add("incorrect");
-      if (q.correct < buttons.length) buttons[q.correct].classList.add("correct");
+      btnElement.classList.add("wrong");
+      if(allBtns[q.correct]) allBtns[q.correct].classList.add("correct");
       
-      feedbackMsg.textContent = selectedIndex === -1 
-        ? "Tempo esgotado! Veja a alternativa correta destacada em verde."
-        : `Incorreto. A opção adequada era: "${q.options[q.correct]}".`;
-      feedbackBox.className = "feedback-box danger";
-
       if (quizMode === "survival") {
         lives--;
-        updateLivesBadge();
+        updateLivesDisplay();
       }
-    }
-
-    feedbackBox.style.display = "flex";
-
-    // Botão de consultar resumo
-    if (quizExplainBtn) {
-      quizExplainBtn.onclick = () => {
-        switchTab("resumos");
-        const docEl = document.getElementById(`doc-${q.topicId}`);
-        if (docEl) {
-          docEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          docEl.classList.add("highlight");
-          setTimeout(() => docEl.classList.remove("highlight"), 1800);
-        }
-      };
+      showFeedback("Resposta Incorreta.", false, q.topicId);
     }
   }
 
-  if (quizNextBtn) {
-    quizNextBtn.addEventListener("click", () => {
-      if (quizMode === "survival" && lives <= 0) {
-        endQuiz(false);
-        return;
-      }
-
-      quizIndex++;
-      if (quizIndex < activeQuizQuestions.length) {
-        loadQuestion();
-      } else {
-        endQuiz(true);
-      }
-    });
+  function handleTimeOut() {
+    disableOptions();
+    const q = quizQuestions[currentQuizIndex];
+    const allBtns = document.querySelectorAll(".option-btn");
+    if(allBtns[q.correct]) allBtns[q.correct].classList.add("correct");
+    
+    if (quizMode === "survival") {
+      lives--;
+      updateLivesDisplay();
+    }
+    showFeedback("Limite de tempo excedido.", false, q.topicId);
   }
 
-  function endQuiz(completedAll) {
-    clearInterval(timerInterval);
-    quizPlayBox.style.display = "none";
-    quizResultBox.style.display = "block";
+  function showFeedback(msg, isSuccess, topicId) {
+    const fbBox = document.getElementById("quiz-feedback");
+    const fbMsg = document.getElementById("feedback-msg");
+    const btnNext = document.getElementById("btn-quiz-next");
 
-    if (finalScoreEl) {
-      finalScoreEl.textContent = `${correctCount} acertos`;
+    if(!fbBox || !fbMsg || !btnNext) return;
+
+    fbBox.style.display = "block";
+    fbMsg.textContent = msg;
+    fbMsg.style.color = isSuccess ? "var(--status-success)" : "var(--status-danger)";
+
+    const btnExplain = document.getElementById("btn-quiz-explain");
+    if(btnExplain) btnExplain.onclick = () => jumpToTopic(topicId);
+
+    if (quizMode === "survival" && lives <= 0) {
+      btnNext.textContent = "Ver Relatório Final";
+      btnNext.onclick = endQuiz;
+    } else {
+      btnNext.textContent = "Avançar";
+      btnNext.onclick = nextQuestion;
     }
+  }
 
-    if (survivalStatsEl) {
+  function nextQuestion() {
+    currentQuizIndex++;
+    if (currentQuizIndex < quizQuestions.length) {
+      renderQuestion();
+    } else {
       if (quizMode === "survival") {
-        survivalStatsEl.textContent = completedAll 
-          ? "Incrível! Você respondeu a todo o banco sem perder todas as vidas!"
-          : "Fim das vidas! Revise os tópicos onde houve dúvidas e tente novamente.";
+        const reshuffled = [...studyData.quiz].sort(() => 0.5 - Math.random());
+        quizQuestions = quizQuestions.concat(reshuffled);
+        renderQuestion();
       } else {
-        survivalStatsEl.textContent = `Aproveitamento: ${Math.round((correctCount / activeQuizQuestions.length) * 100)}%`;
+        endQuiz();
       }
     }
   }
 
-  if (startQuizBtn) startQuizBtn.addEventListener("click", startQuiz);
-  if (abortQuizBtn) {
-    abortQuizBtn.addEventListener("click", () => {
-      clearInterval(timerInterval);
-      quizPlayBox.style.display = "none";
-      quizConfigBox.style.display = "block";
-    });
-  }
-  if (restartQuizBtn) {
-    restartQuizBtn.addEventListener("click", () => {
-      quizResultBox.style.display = "none";
-      quizConfigBox.style.display = "block";
-    });
-  }
+  function endQuiz() {
+    if(quizPlay) quizPlay.style.display = "none";
+    if(quizResult) quizResult.style.display = "block";
+    
+    const resultTitle = document.getElementById("result-title");
+    const finalScore = document.getElementById("final-score");
+    const survivalStats = document.getElementById("survival-stats");
 
-  // -----------------------------------------------------------------------
-  // INICIALIZAÇÃO
-  // -----------------------------------------------------------------------
-  renderKnowledgeBase();
-  updateFlashcardView();
+    if (quizMode === "survival") {
+      if(resultTitle) resultTitle.textContent = "Sessão Terminada (Vidas Esgotadas)";
+      if(finalScore) finalScore.textContent = `${score} respostas corretas`;
+      if(survivalStats) survivalStats.textContent = `Total de questões enfrentadas: ${currentQuizIndex + 1}`;
+    } else {
+      if(resultTitle) resultTitle.textContent = "Avaliação Concluída";
+      if(finalScore) finalScore.textContent = `${score} / ${quizQuestions.length}`;
+      if(survivalStats) {
+        const pct = Math.round((score / quizQuestions.length) * 100);
+        survivalStats.textContent = `Aproveitamento global: ${pct}%`;
+      }
+    }
+  }
 });
