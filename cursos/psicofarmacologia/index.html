@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psicofarmacologia | Study Lab</title>
+  <!-- Consome o CSS único da raiz (DRY) -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Overlay e Menu Lateral Simplificado -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo">Study Lab</span>
+      <button id="close-sidebar" class="icon-btn" aria-label="Fechar Menu">✕</button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="../../index.html" class="active">🏠 Início (Página Principal)</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO&body=Ol%C3%A1!%20Segue%20em%20anexo%20o(s)%20PDF(s)%20referente(s)%20ao%20assunto%20que%20desejo%20adicionar%20%C3%A0%20plataforma." class="btn-add-course">
+        <span>+</span> Adicionar Curso
+      </a>
+      <button id="btn-logout" class="btn-logout">🚪 Sair da Conta</button>
+    </div>
+  </aside>
+
+  <!-- Cabeçalho do Curso -->
+  <header>
+    <div class="header-left">
+      <button id="open-sidebar" class="icon-btn" aria-label="Abrir Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <div class="logo">🧠 Psicofarmacologia</div>
+      <span class="course-badge">Saúde & Psicologia</span>
+    </div>
+
+    <nav>
+      <button class="nav-btn active" data-tab="mapa">Mapa Mental</button>
+      <button class="nav-btn" data-tab="flashcards">Flashcards</button>
+      <button class="nav-btn" data-tab="quiz">Quiz</button>
+      <button class="nav-btn" data-tab="simulado">Simulado</button>
+      <button class="nav-btn" data-tab="resumos">Explicações</button>
+    </nav>
+
+    <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
+      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  </header>
+
+  <main class="container">
+    <!-- ABA 1: MAPA MENTAL -->
+    <section id="mapa" class="tab-content active">
+      <div class="section-header text-center">
+        <h2>Mapa de Conceitos</h2>
+        <p class="text-muted">Clique em qualquer tópico abaixo para abrir sua explicação detalhada.</p>
+      </div>
+      <div class="mindmap-container" id="mindmap-container"></div>
+    </section>
+
+    <!-- ABA 2: FLASHCARDS (Botão de Ver Tópico na Frente) -->
+    <section id="flashcards" class="tab-content">
+      <div class="section-header text-center">
+        <h2>Flashcards de Revisão</h2>
+        <p class="text-muted">Clique no cartão para virar ou consulte o tópico antes de responder.</p>
+      </div>
+      <div class="flashcard-wrapper">
+        <div class="flashcard" id="flashcard">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="badge" id="fc-category">Categoria</span>
+              <p id="fc-question">Carregando...</p>
+              <div class="card-front-footer">
+                <button class="btn-more fc-topic-btn" id="fc-more-btn">📖 Estudar tópico antes de responder</button>
+                <span class="flip-hint">Clique no cartão para ver a resposta ↻</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <span class="badge correct-badge">Resposta</span>
+              <p id="fc-answer">...</p>
+              <button class="btn-more fc-topic-btn">📖 Revisar tópico completo</button>
+            </div>
+          </div>
+        </div>
+        <div class="fc-controls">
+          <button id="fc-prev" class="btn secondary">← Anterior</button>
+          <span id="fc-counter">1 / 21</span>
+          <button id="fc-next" class="btn primary">Próximo →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 3: QUIZ -->
+    <section id="quiz" class="tab-content">
+      <div id="quiz-config" class="quiz-box">
+        <div class="section-header">
+          <h2>Configurar Avaliação</h2>
+          <p class="text-muted">Personalize o formato do seu teste de conhecimentos.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Modo de Estudo</label>
+          <div class="mode-selector">
+            <label class="mode-card">
+              <input type="radio" name="quiz-mode" value="normal" checked>
+              <div>
+                <strong>Clássico</strong>
+                <small style="display:block; color:var(--text-muted);">Defina o total de questões</small>
+              </div>
+            </label>
+            <label class="mode-card">
+              <input type="radio" name="quiz-mode" value="survival">
+              <div>
+                <strong>Sobrevivência</strong>
+                <small style="display:block; color:var(--text-muted);">Jogue até perder as vidas</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="config-normal">
+          <label for="quiz-count">Número de Questões (Máx: 36)</label>
+          <input type="number" id="quiz-count" value="10" min="1" max="36">
+        </div>
+
+        <div class="form-group" id="config-survival" style="display: none;">
+          <label for="quiz-lives">Quantidade de Vidas (Erros permitidos)</label>
+          <select id="quiz-lives" class="select-input">
+            <option value="1">1 Vida (Morte Súbita)</option>
+            <option value="3">3 Vidas (Padrão)</option>
+            <option value="5" selected>5 Vidas (Estudo Longo)</option>
+            <option value="10">10 Vidas (Maratona)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Limite de Tempo por Pergunta</label>
+          <div class="radio-group">
+            <label><input type="radio" name="timer-enable" value="no" checked> Sem limite</label>
+            <label><input type="radio" name="timer-enable" value="yes"> Com cronômetro</label>
+          </div>
+        </div>
+
+        <div class="form-group" id="timer-val-group" style="display: none;">
+          <label for="quiz-seconds">Segundos por pergunta</label>
+          <input type="number" id="quiz-seconds" value="30" min="5" max="120">
+        </div>
+
+        <button id="btn-start-quiz" class="btn primary full-width">Iniciar Avaliação</button>
+      </div>
+
+      <div id="quiz-play" class="quiz-box" style="display: none;">
+        <div class="quiz-topbar">
+          <div class="quiz-topbar-left">
+            <button id="btn-abort-quiz" class="btn outline small">← Sair</button>
+            <span id="quiz-progress-text" class="fw-600">Questão 1 de 10</span>
+          </div>
+          <div class="quiz-stats">
+            <span id="quiz-lives-display" class="lives-badge" style="display: none;"></span>
+            <span id="quiz-timer-display" class="timer-badge">Tempo Livre</span>
+          </div>
+        </div>
+
+        <h3 id="quiz-question-text" class="question-text">Carregando pergunta...</h3>
+        <div id="quiz-options" class="options-grid"></div>
+
+        <div id="quiz-feedback" class="feedback-box" style="display: none;">
+          <p id="feedback-msg" class="fw-600"></p>
+          <div class="feedback-actions">
+            <button id="btn-quiz-explain" class="btn-more">📖 Ler resumo deste tema</button>
+            <button id="btn-quiz-next" class="btn primary">Avançar →</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="quiz-result" class="quiz-box text-center" style="display: none;">
+        <h2 id="result-title">Avaliação Concluída</h2>
+        <div class="score-display"><span id="final-score">0</span> acertos</div>
+        <p id="survival-stats" class="text-muted"></p>
+        <button id="btn-restart-quiz" class="btn primary mt-1">Nova Tentativa</button>
+      </div>
+    </section>
+
+    <!-- ABA 4: SIMULADO (Ativo com 10 Módulos / 50 Itens) -->
+    <section id="simulado" class="tab-content">
+      <div id="simulado-root"></div>
+    </section>
+
+    <!-- ABA 5: EXPLICAÇÕES / RESUMOS -->
+    <section id="resumos" class="tab-content">
+      <div class="section-header">
+        <h2>Base Teórica & Explicações</h2>
+        <p class="text-muted">Material de consulta aprofundado com exemplos práticos e Modo Simplificado.</p>
+      </div>
+      <div id="articles-container" class="articles-grid"></div>
+    </section>
+  </main>
+
+  <!-- Scripts de Dados Separados + Motor Global na Raiz -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/auth.js"></script>
+  <script src="dt_psicofarmacologia.js"></script>
+  <script src="q_psicofarmacologia.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
