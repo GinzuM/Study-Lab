@@ -3,8 +3,8 @@
 const supabaseUrl = 'https://sqhymzvkfqudmridwmop.supabase.co'
 const supabaseKey = 'sb_publishable_flOOhNjr0YJ8es0EtyLG5w_csXqh0n_'
 
-// Inicializa o cliente Supabase globalmente
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
+// Inicialização correta usando o objeto global do SDK v2
+const supabase = supabase.createClient(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
@@ -12,33 +12,34 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
   }
 });
 
-// Verifica a sessão ao carregar a página index
 async function checkAuth() {
   const { data: { session }, error } = await supabase.auth.getSession();
   
+  // Se houver erro ou nenhuma sessão ativa, manda pra tela de login
   if (error || !session) {
-    // Se não estiver logado, redireciona para a tela de login
     window.location.href = 'pages/login.html';
     return;
   }
 
-  // Se houver elemento do e-mail na tela, exibe
+  // Exibe o e-mail do usuário se o elemento existir na página
   const emailDisplay = document.getElementById('user-display-email');
   if (emailDisplay) {
     emailDisplay.textContent = session.user.email;
   }
 }
 
-// Executa a checagem imediatamente
+// Executa a verificação assim que o script carrega
 checkAuth();
 
-// Evento do botão de logout (caso exista na página)
-document.addEventListener('DOMContentLoaded', () => {
-  const logoutBtn = document.getElementById('btn-logout');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', async () => {
-      await supabase.auth.signOut();
+// Delegação de evento para o botão de logout funcionar independente do menu
+document.addEventListener('click', async (e) => {
+  if (e.target && (e.target.id === 'btn-logout' || e.target.closest('#btn-logout'))) {
+    e.preventDefault();
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
       window.location.href = 'pages/login.html';
-    });
+    } else {
+      alert('Erro ao sair da conta: ' + error.message);
+    }
   }
 });
