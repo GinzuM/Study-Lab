@@ -1,10 +1,10 @@
 // js/auth.js
 
-const supabaseUrl = 'https://sqhymzvkfqudmridwmop.supabase.co'
-const supabaseKey = 'sb_publishable_flOOhNjr0YJ8es0EtyLG5w_csXqh0n_'
+const SUPABASE_URL = 'https://sqhymzvkfqudmridwmop.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_flOOhNjr0YJ8es0EtyLG5w_csXqh0n_';
 
-// Inicialização correta usando o objeto global do SDK v2
-const supabase = supabase.createClient(supabaseUrl, supabaseKey, {
+// Inicializa o cliente global do Supabase
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
@@ -12,34 +12,35 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey, {
   }
 });
 
+// Verifica a sessão na página principal (index.html)
 async function checkAuth() {
-  const { data: { session }, error } = await supabase.auth.getSession();
+  // Pega a sessão atual do localStorage
+  const { data: { session }, error } = await supabaseClient.auth.getSession();
   
-  // Se houver erro ou nenhuma sessão ativa, manda pra tela de login
+  // Se não houver sessão, expulsa imediatamente para o login
   if (error || !session) {
-    window.location.href = 'pages/login.html';
+    window.location.replace('/pages/login.html');
     return;
   }
 
-  // Exibe o e-mail do usuário se o elemento existir na página
+  // Se estiver logado, exibe o e-mail caso o elemento exista
   const emailDisplay = document.getElementById('user-display-email');
   if (emailDisplay) {
     emailDisplay.textContent = session.user.email;
   }
 }
 
-// Executa a verificação assim que o script carrega
-checkAuth();
+// Executa a verificação apenas se estivermos na página principal (index.html)
+if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+  checkAuth();
+}
 
-// Delegação de evento para o botão de logout funcionar independente do menu
+// Configura o botão de logout globalmente
 document.addEventListener('click', async (e) => {
-  if (e.target && (e.target.id === 'btn-logout' || e.target.closest('#btn-logout'))) {
+  const logoutBtn = e.target.closest('#btn-logout');
+  if (logoutBtn) {
     e.preventDefault();
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      window.location.href = 'pages/login.html';
-    } else {
-      alert('Erro ao sair da conta: ' + error.message);
-    }
+    await supabaseClient.auth.signOut();
+    window.location.replace('/pages/login.html');
   }
 });
