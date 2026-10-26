@@ -1,105 +1,800 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study Lab | Hub de Estudos</title>
-  <link rel="stylesheet" href="css/home.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Doc's Lab</title>
+  <!-- Favicon SVG Exclusivo do Doc (Corvo Chibi Médico da Peste) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='54' r='44' fill='%231e1b4b' stroke='%23090d16' stroke-width='3'/%3E%3Cpath d='M 16 74 C 12 56, 24 46, 50 46 C 76 46, 86 58, 82 76 C 78 88, 66 93, 50 93 C 30 93, 19 86, 16 74 Z' fill='%23141419' stroke='%23090d16' stroke-width='3'/%3E%3Cpath d='M 78 82 C 85 84, 91 79, 93 72 L 90 71 L 96 64 L 98 73 L 95 73 C 92 83, 84 89, 75 87 Z' fill='%23141419' stroke='%23090d16' stroke-width='2'/%3E%3Cpath d='M 25 38 C 25 22, 72 22, 72 40 C 72 51, 59 56, 46 55 C 36 55, 29 59, 25 65 C 23 56, 26 48, 25 38 Z' fill='%23f8fafc' stroke='%23090d16' stroke-width='3'/%3E%3Ccircle cx='33' cy='40' r='7.5' fill='%23090d16'/%3E%3Ccircle cx='57' cy='40' r='8' fill='%23090d16'/%3E%3Cellipse cx='50' cy='26' rx='33' ry='6.5' transform='rotate(4 50 25)' fill='%2327272a' stroke='%23090d16' stroke-width='3'/%3E%3Cpath d='M 34 25 L 36 6 C 45 3, 57 3, 66 6 L 65 25 Z' transform='rotate(4 50 25)' fill='%233f3f46' stroke='%23090d16' stroke-width='3'/%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <!-- Container de Notificações Flutuantes (+XP / +Moedas) -->
+  <div id="dopamine-toast-container" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-2"></div>
 
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <span class="logo">Study Lab</span>
-      <button id="close-sidebar" class="icon-btn" aria-label="Fechar Menu">✕</button>
-    </div>
-    <ul class="sidebar-menu">
-      <li><a href="index.html" class="active">🏠 Início (Todos os Cursos)</a></li>
-      <li class="menu-label">MEUS CURSOS</li>
-      <li><a href="cursos/psicofarmacologia/index.html">🧠 Psicofarmacologia</a></li>
-      <li><a href="cursos/epidemiologia/index.html">📊 Epidemiologia</a></li>
-      <li><a href="cursos/psicopatologia/index.html">🧩 Psicopatologia</a></li>
-    </ul>
-    <div class="sidebar-footer">
-      <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO&body=Ol%C3%A1%21%20Segue%20em%20anexo%20o%28s%29%20PDF%28s%29%20referente%28s%29%20ao%20assunto%20que%20desejo%20adicionar%20%C3%A0%20plataforma." class="btn-add-course">
-        <span>+</span> Adicionar Curso
-      </a>
-      <a href="mailto:rphsaraiva@gmail.com?subject=RELATAR%20BUG%20-%20Study%20Lab&body=Olá%21%20Encontrei%20um%20bug%20no%20sistema.%0A%0ADescrição%20do%20problema:%20" class="btn-add-course" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); margin-top: 8px;">
-        <span>🐛</span> Contactar Suporte
-      </a>
-      <button id="btn-logout" class="btn-logout">
-        🚪 Sair da Conta
-      </button>
-    </div>
-  </aside>
+  <div class="app-shell">
 
-  <header>
-    <div class="header-left">
-      <button id="open-sidebar" class="icon-btn" aria-label="Abrir Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      </button>
-      <div class="logo">Study Lab</div>
-    </div>
+    <!-- ===================================================================
+         COLUNA 1: SIDEBAR DESKTOP (>= 1024px)
+         =================================================================== -->
+    <aside class="desktop-sidebar">
+      <div class="space-y-6">
+        <!-- Logo com Mascote Único Doc -->
+        <div onclick="goToHomeCatalog()" class="flex items-center gap-3 px-2 cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-slate-900 border-2 border-emerald-500 flex items-center justify-center shadow overflow-hidden group-hover:scale-105 transition doc-mascot-slot"></div>
+          <div>
+            <h1 class="text-2xl font-bold text-emerald-400 tracking-wide leading-none">Doc's Lab</h1>
+            <span class="text-[11px] font-bold opacity-60">Hub Gamificado</span>
+          </div>
+        </div>
 
-    <div class="header-right">
-      <span id="user-display-email" class="user-email"></span>
-      <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
-        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-      </button>
-    </div>
-  </header>
+        <!-- Menu Principal Contextual -->
+        <nav class="space-y-2.5">
+          <button onclick="handlePrimaryNavClick()" id="deskNavTrilha" class="w-full btn-3d btn-green py-3.5 px-4 text-left justify-start text-sm">
+            <i id="deskNavTrilhaIcon" class="fa-solid fa-house text-base w-6"></i>
+            <span id="deskNavTrilhaLabel">Início (Cursos)</span>
+          </button>
 
-  <main class="container">
-    <section class="hero">
-      <h1>Seus Roteiros de Estudo</h1>
-      <p>Selecione uma disciplina abaixo para acessar mapas mentais, flashcards, quizzes e simulados interativos.</p>
-      
-      <div class="search-bar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" id="course-search" placeholder="Buscar curso ou disciplina...">
+          <!-- Grimório: Oculto na Home, visível apenas dentro de um curso -->
+          <button onclick="switchMainTab('grimorio')" id="deskNavGrimorio" class="hidden w-full btn-3d btn-surface py-3.5 px-4 text-left justify-start text-sm">
+            <i class="fa-solid fa-book-skull text-base w-6 text-purple-400"></i>
+            <span>Grimório do Curso</span>
+          </button>
+
+          <button onclick="switchMainTab('perfil')" id="deskNavPerfil" class="w-full btn-3d btn-surface py-3.5 px-4 text-left justify-start text-sm">
+            <i class="fa-solid fa-user-astronaut text-base w-6 text-amber-400"></i>
+            <span>Perfil, Placar & Loja</span>
+          </button>
+        </nav>
       </div>
-    </section>
 
-    <section class="courses-grid" id="courses-grid">
-      <a href="cursos/psicofarmacologia/index.html" class="course-card" data-title="psicofarmacologia neurociencia">
-        <div class="card-badge">Saúde & Psicologia</div>
-        <h3>🧠 Psicofarmacologia</h3>
-        <p>Sinapses químicas, neurotransmissores, hipóteses da depressão, antidepressivos, antipsicóticos e simulado completo.</p>
-        <div class="card-footer">
-          <span>6 Tópicos • 21 Flashcards • 36 Questões • Simulado</span>
-          <span class="arrow">→</span>
+      <!-- Rodapé da Sidebar -->
+      <div class="space-y-2 pt-4 border-t border-slate-700/50">
+        <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO%20-%20Doc's%20Lab&body=Ol%C3%A1!%20Segue%20em%20anexo%20o%20material%20referente%20ao%20assunto%20que%20desejo%20adicionar%20ao%20Doc's%20Lab." class="w-full btn-3d btn-purple py-2.5 px-3 text-xs flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i> Sugerir Novo Curso
+        </a>
+
+        <a href="mailto:rphsaraiva@gmail.com?subject=RELATAR%20BUG%20-%20Doc's%20Lab&body=Ol%C3%A1!%20Encontrei%20um%20erro%20no%20sistema:%0A%0ADescri%C3%A7%C3%A3o:%20" class="w-full btn-3d btn-surface py-2.5 px-3 text-xs flex items-center justify-center gap-2">
+          <i class="fa-solid fa-bug text-amber-400"></i> Reportar Erro / Suporte
+        </a>
+
+        <button onclick="openApkModal()" class="w-full btn-3d btn-surface py-2 px-3 text-xs flex items-center justify-between opacity-85 hover:opacity-100">
+          <span class="flex items-center gap-2">
+            <i class="fa-brands fa-android text-emerald-400 text-sm"></i> App Android
+          </span>
+          <span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase">WIP</span>
+        </button>
+
+        <div class="flex items-center justify-between px-2 pt-1">
+          <span id="user-display-email" class="user-display-email text-[11px] truncate max-w-[145px] opacity-70">estudante@docslab.com</span>
+          <button id="btn-logout" class="text-xs font-bold text-red-400 hover:underline flex items-center gap-1 cursor-pointer">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair
+          </button>
         </div>
-      </a>
+      </div>
+    </aside>
 
-      <a href="cursos/epidemiologia/index.html" class="course-card" data-title="epidemiologia saude coletiva sus">
-        <div class="card-badge">Saúde Coletiva</div>
-        <h3>📊 Epidemiologia</h3>
-        <p>Saúde Pública vs. Coletiva, Reforma Sanitária, Art. 196, Determinantes Sociais, Canguilhem e Modelos de Atenção.</p>
-        <div class="card-footer">
-          <span>8 Tópicos • 19 Flashcards • 32 Questões</span>
-          <span class="arrow">→</span>
+    <!-- ===================================================================
+         COLUNA 2: VIEWPORT CENTRAL
+         =================================================================== -->
+    <div class="main-viewport">
+
+      <!-- TOPBAR FIXA -->
+      <header class="sticky top-0 z-30 backdrop-blur-md bg-opacity-90 border-b border-slate-700/60 px-4 py-3 flex items-center justify-between gap-2" style="background-color: var(--bg-glass);">
+        <div class="flex items-center gap-2.5">
+          <button onclick="goToHomeCatalog()" id="topBackToHomeBtn" class="hidden btn-3d btn-surface px-3 py-1.5 rounded-2xl flex items-center gap-2 text-xs">
+            <i class="fa-solid fa-arrow-left text-emerald-400"></i>
+            <span class="font-extrabold">Mudar Curso</span>
+          </button>
+
+          <div id="topContextBadge" class="flex items-center gap-2 px-2">
+            <span id="topContextIcon" class="text-lg">🏠</span>
+            <span id="topContextTitle" class="font-extrabold text-sm sm:text-base tracking-tight">Central de Cursos</span>
+          </div>
         </div>
-      </a>
 
-      <a href="cursos/psicopatologia/index.html" class="course-card" data-title="psicopatologia semiologia dalgalarrondo jaspers">
-        <div class="card-badge">Clínica & Saúde Mental</div>
-        <h3>🧩 Psicopatologia</h3>
-        <p>Semiologia psicopatológica, Karl Jaspers, Dalgalarrondo, formas e conteúdos dos sintomas e avaliação clínica.</p>
-        <div class="card-footer">
-          <span>8 Tópicos • 15 Flashcards • 25 Questões</span>
-          <span class="arrow">→</span>
+        <div class="flex items-center gap-2">
+          <button onclick="openAdminModal()" id="topAdminBtn" class="hidden btn-3d btn-amber px-2.5 py-1.5 rounded-xl text-xs font-extrabold" title="Painel exclusivo do Administrador">
+            👑 ADM
+          </button>
+
+          <div class="flex items-center gap-1 bg-amber-500/15 border border-amber-500/40 px-2.5 py-1.5 rounded-xl text-xs font-extrabold text-amber-400" title="XP Total">
+            <i class="fa-solid fa-bolt"></i> <span id="topXpValue">0</span>
+          </div>
+          <div class="flex items-center gap-1 bg-purple-500/15 border border-purple-500/40 px-2.5 py-1.5 rounded-xl text-xs font-extrabold text-purple-300" title="Moedas de Alquimia">
+            <i class="fa-solid fa-flask"></i> <span id="topCoinsValue">120</span>
+          </div>
+          <button onclick="toggleTheme()" class="btn-3d btn-surface w-9 h-9 rounded-xl text-sm" title="Alternar Modo Claro / Escuro">
+            <i id="themeToggleIcon" class="fa-solid fa-sun text-amber-400"></i>
+          </button>
         </div>
-      </a>
-    </section>
-  </main>
+      </header>
 
+      <main class="p-4 flex-1 space-y-6">
+
+        <!-- ===============================================================
+             ABA 1: HOME (GRID DE APPS) OU TRILHA DO CURSO ATIVO
+             =============================================================== -->
+        <section id="secTrilha" class="space-y-6">
+
+          <!-- VISÃO 1A: HOME PRINCIPAL -->
+          <div id="homeCatalogView" class="space-y-6">
+            <div class="duo-card bg-gradient-to-br from-emerald-950/40 to-slate-900/60 border-emerald-500/40">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="space-y-1.5 text-center sm:text-left">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full">
+                    Escolha seu App de Estudo
+                  </span>
+                  <h2 class="text-2xl sm:text-3xl font-bold">Seus Cursos</h2>
+                  <p class="text-xs sm:text-sm opacity-80">
+                    Toque em um card abaixo para abrir a trilha e o grimório da disciplina com o Doc.
+                  </p>
+                </div>
+
+                <!-- Mascote Único: Doc (Corvo Chibi Médico da Peste) -->
+                <div onclick="mascotSpeak()" class="w-20 h-20 bg-slate-950/70 p-1.5 rounded-3xl border-2 border-slate-700/80 shrink-0 cursor-pointer hover:border-emerald-400 transition anim-breathe doc-mascot-slot" title="Toque no Doc para uma dica!"></div>
+              </div>
+
+              <!-- Busca Rápida -->
+              <div class="relative mt-4">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 opacity-50 text-sm"></i>
+                <input type="text" id="homeCourseSearch" oninput="filterHomeCourses()" placeholder="Filtrar disciplinas..."
+                       class="w-full pl-10 pr-4 py-2.5 rounded-2xl border-2 border-slate-700 bg-slate-900/90 text-xs sm:text-sm font-bold focus:outline-none focus:border-emerald-400">
+              </div>
+            </div>
+
+            <!-- GRID DE CARDS ESTILO APPS -->
+            <div id="homeCoursesGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4"></div>
+
+            <!-- Atalhos de Suporte Mobile -->
+            <div class="lg:hidden grid grid-cols-2 gap-2.5 pt-2">
+              <a href="mailto:rphsaraiva@gmail.com?subject=ADICIONAR%20CURSO%20-%20Doc's%20Lab" class="btn-3d btn-purple py-3 px-3 text-xs text-center">
+                <i class="fa-solid fa-plus"></i> Sugerir Curso
+              </a>
+              <a href="mailto:rphsaraiva@gmail.com?subject=RELATAR%20BUG%20-%20Doc's%20Lab" class="btn-3d btn-surface py-3 px-3 text-xs text-center">
+                <i class="fa-solid fa-bug text-amber-400"></i> Reportar Bug
+              </a>
+            </div>
+          </div>
+
+          <!-- VISÃO 1B: TRILHA DE DESENVOLVIMENTO DO CURSO SELECIONADO -->
+          <div id="courseTrailView" class="hidden space-y-6">
+            <div class="duo-card relative overflow-hidden">
+              <div class="flex items-center justify-between border-b border-slate-700/60 pb-3 mb-3">
+                <span id="bannerCourseCategory" class="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full">
+                  Clínica & Saúde Mental
+                </span>
+                <button onclick="switchMainTab('grimorio')" class="btn-3d btn-purple px-3 py-1.5 text-xs">
+                  <i class="fa-solid fa-book-skull"></i> Abrir Grimório
+                </button>
+              </div>
+
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1 flex-1">
+                  <h2 id="bannerCourseTitle" class="text-xl sm:text-2xl font-bold">🧩 Psicopatologia</h2>
+                  <p id="bannerCourseDesc" class="text-xs opacity-80 leading-relaxed">
+                    Complete as 4 etapas de cada módulo para destravar o próximo módulo e ganhar +25 XP e +15 🧪 de bônus!
+                  </p>
+                </div>
+                <div onclick="mascotSpeak()" class="w-16 h-16 bg-slate-950/70 p-1 rounded-2xl border border-slate-700 shrink-0 self-center cursor-pointer anim-breathe doc-mascot-slot" title="Toque no Doc!"></div>
+              </div>
+
+              <div id="mascotSpeechBubble" class="mt-3 bg-slate-900/70 border border-slate-700/80 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-amber-300 flex items-center gap-2">
+                <i class="fa-solid fa-comment-dots"></i>
+                <span id="mascotSpeechText">"Doc diz: Para trocar de matéria, basta clicar em 'Mudar Curso' lá no topo para voltar à Home!"</span>
+              </div>
+            </div>
+
+            <div id="trilhaNodesContainer" class="path-container"></div>
+          </div>
+
+        </section>
+
+        <!-- ===============================================================
+             ABA 2: GRIMÓRIO TEÓRICO
+             =============================================================== -->
+        <section id="secGrimorio" class="hidden space-y-5">
+          <div class="duo-card bg-gradient-to-br from-purple-900/30 to-slate-900/40">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+              <button onclick="switchMainTab('trilha')" class="btn-3d btn-surface px-3 py-1.5 text-xs">
+                <i class="fa-solid fa-arrow-left"></i> Voltar à Trilha
+              </button>
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-400">Biblioteca do Doc</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-slate-950 border-2 border-purple-400 flex items-center justify-center shrink-0 overflow-hidden doc-mascot-slot"></div>
+              <div>
+                <h2 class="text-xl font-bold" id="grimorioCourseHeader">Grimório de Psicopatologia</h2>
+                <p class="text-xs opacity-75">Os capítulos são liberados conforme você conclui os módulos da Trilha.</p>
+              </div>
+            </div>
+            <div class="relative mt-4">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 opacity-50 text-sm"></i>
+              <input type="text" id="grimorioSearchInput" oninput="renderGrimorioList()" placeholder="Pesquisar nos capítulos desbloqueados..." class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-700 bg-slate-900/80 text-sm font-bold focus:outline-none focus:border-purple-400">
+            </div>
+          </div>
+
+          <div id="grimorioTopicsList" class="space-y-3"></div>
+        </section>
+
+        <!-- ===============================================================
+             ABA 3: PERFIL, PLACAR, CONQUISTAS, CALENDÁRIO & ADMIN
+             =============================================================== -->
+        <section id="secPerfil" class="hidden space-y-6">
+          <div class="duo-card">
+            <div class="flex flex-col sm:flex-row items-center gap-5">
+              <div class="relative group cursor-pointer shrink-0" onclick="openAvatarStudio()">
+                <div id="profileAvatarBox" class="w-28 h-28 rounded-3xl border-4 border-emerald-400 shadow-xl overflow-hidden bg-slate-900"></div>
+                <span class="absolute -bottom-2 right-1 bg-purple-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full border-2 border-slate-900 shadow">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Editar
+                </span>
+              </div>
+
+              <div class="flex-1 text-center sm:text-left space-y-2 w-full">
+                <div class="flex items-center justify-center sm:justify-start gap-2">
+                  <h2 id="profileDisplayName" class="text-2xl font-bold">Estudante</h2>
+                  <button onclick="openChangeNameModal()" class="btn-3d btn-surface px-2.5 py-1 rounded-xl text-xs" title="Mudar Apelido (50 Moedas)">
+                    <i class="fa-solid fa-pen"></i> <span class="text-[10px] text-purple-400 font-bold">50 🧪</span>
+                  </button>
+                </div>
+
+                <p class="text-xs font-extrabold text-emerald-400 uppercase tracking-wide">
+                  Nível <span id="profileLevelNum">1</span> • <span id="profileLastCourseBadge">🧩 Psicopatologia</span>
+                </p>
+
+                <div class="grid grid-cols-3 gap-2 pt-2">
+                  <div class="bg-slate-900/60 border border-slate-700/70 p-2.5 rounded-2xl text-center">
+                    <div class="text-[10px] uppercase font-bold opacity-60">XP Total</div>
+                    <div id="profileStatXp" class="text-base font-extrabold text-amber-400">0</div>
+                  </div>
+                  <div class="bg-slate-900/60 border border-slate-700/70 p-2.5 rounded-2xl text-center">
+                    <div class="text-[10px] uppercase font-bold opacity-60">Moedas</div>
+                    <div id="profileStatCoins" class="text-base font-extrabold text-purple-400">120 🧪</div>
+                  </div>
+                  <div class="bg-slate-900/60 border border-slate-700/70 p-2.5 rounded-2xl text-center">
+                    <div class="text-[10px] uppercase font-bold opacity-60">Dias Ativos</div>
+                    <div id="profileStatDays" class="text-base font-extrabold text-emerald-400">0 Dias</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-slate-700/50 flex flex-wrap gap-2">
+              <button onclick="openAvatarStudio()" class="flex-1 btn-3d btn-purple py-3 px-4 text-xs sm:text-sm">
+                <i class="fa-solid fa-masks-theater text-base"></i> Abrir Ateliê de Personagem & Loja
+              </button>
+              <button onclick="openAdminModal()" id="profileAdminBtn" class="hidden btn-3d btn-amber py-3 px-4 text-xs sm:text-sm">
+                <i class="fa-solid fa-crown"></i> Painel ADM
+              </button>
+              <button id="btn-logout" class="lg:hidden btn-3d btn-red py-3 px-4 text-xs">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 bg-slate-900/70 p-1.5 rounded-2xl border-2 border-slate-700/70">
+            <button onclick="switchProfileSubTab('placar')" id="subBtnPlacar" class="btn-3d btn-green py-2.5 text-xs">
+              <i class="fa-solid fa-trophy"></i> Placar
+            </button>
+            <button onclick="switchProfileSubTab('conquistas')" id="subBtnConquistas" class="btn-3d btn-surface py-2.5 text-xs">
+              <i class="fa-solid fa-medal"></i> Conquistas
+            </button>
+            <button onclick="switchProfileSubTab('calendario')" id="subBtnCalendario" class="btn-3d btn-surface py-2.5 text-xs">
+              <i class="fa-solid fa-calendar-check"></i> Dias
+            </button>
+          </div>
+
+          <!-- PLACAR -->
+          <div id="profileSubPlacar" class="duo-card space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-base font-bold">Classificação de Estudantes</h3>
+                <p class="text-xs opacity-70">Sincronizado em tempo real entre PC e Celular via Supabase.</p>
+              </div>
+              <button onclick="fetchSupabaseLeaderboard()" class="btn-3d btn-surface px-2.5 py-1.5 text-xs" title="Atualizar Placar">
+                <i class="fa-solid fa-rotate"></i>
+              </button>
+            </div>
+            <div id="leaderboardList" class="space-y-2.5 pt-2"></div>
+          </div>
+
+          <!-- CONQUISTAS EVOLUTIVAS -->
+          <div id="profileSubConquistas" class="hidden space-y-4">
+            <div class="duo-card space-y-3">
+              <h3 class="text-base font-bold text-amber-400"><i class="fa-solid fa-crown mr-1"></i> Insígnias Gerais do Doc's Lab</h3>
+              <div id="generalAchievementsContainer" class="space-y-3"></div>
+            </div>
+            <div class="duo-card space-y-3">
+              <h3 class="text-base font-bold text-purple-400"><i class="fa-solid fa-graduation-cap mr-1"></i> Insígnias por Disciplina</h3>
+              <div id="courseAchievementsContainer" class="space-y-3"></div>
+            </div>
+          </div>
+
+          <!-- CALENDÁRIO -->
+          <div id="profileSubCalendario" class="hidden duo-card space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-base font-bold text-emerald-400">Calendário de Consistência</h3>
+                <p class="text-xs opacity-75">Nunca zera se você faltar! Conclua qualquer etapa para marcar seu dia.</p>
+              </div>
+              <span id="calendarMonthLabel" class="text-xs font-extrabold uppercase opacity-70 shrink-0">Outubro 2026</span>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1.5 text-center pt-2">
+              <div class="text-[11px] font-extrabold opacity-60">DOM</div>
+              <div class="text-[11px] font-extrabold opacity-60">SEG</div>
+              <div class="text-[11px] font-extrabold opacity-60">TER</div>
+              <div class="text-[11px] font-extrabold opacity-60">QUA</div>
+              <div class="text-[11px] font-extrabold opacity-60">QUI</div>
+              <div class="text-[11px] font-extrabold opacity-60">SEX</div>
+              <div class="text-[11px] font-extrabold opacity-60">SÁB</div>
+            </div>
+
+            <div id="calendarGridContainer" class="grid grid-cols-7 gap-1.5"></div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- ===================================================================
+         COLUNA 3: PAINEL DIREITO DESKTOP (>= 1024px)
+         =================================================================== -->
+    <aside class="desktop-right-panel">
+      <div class="duo-card space-y-3">
+        <div class="flex items-center gap-3">
+          <div id="deskMiniAvatar" class="w-16 h-16 rounded-2xl border-2 border-emerald-400 overflow-hidden shrink-0 cursor-pointer bg-slate-900" onclick="openAvatarStudio()"></div>
+          <div class="min-w-0 flex-1">
+            <h3 id="deskProfileName" class="font-bold text-base truncate">Estudante</h3>
+            <p class="text-xs text-emerald-400 font-bold">Nível <span id="deskLevel">1</span></p>
+            <button onclick="openAvatarStudio()" class="text-[11px] text-purple-400 font-extrabold hover:underline mt-0.5">
+              Personalizar Visual →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo-card space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-sm"><i class="fa-solid fa-trophy text-amber-400 mr-1"></i> Classificação</h3>
+          <button onclick="switchMainTab('perfil'); switchProfileSubTab('placar');" class="text-xs font-bold text-emerald-400 hover:underline">Ver Tudo</button>
+        </div>
+        <div id="deskMiniLeaderboard" class="space-y-2"></div>
+      </div>
+
+      <div class="duo-card space-y-2 text-xs">
+        <h4 class="font-bold text-amber-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-info"></i> Bônus de Módulos
+        </h4>
+        <ul class="space-y-1.5 opacity-80">
+          <li>🔓 <strong>Novo Módulo Desbloqueado:</strong> +25 XP e +15 🧪 de Bônus!</li>
+          <li>🎯 <strong>100% de Acerto no Quiz:</strong> XP Completo!</li>
+          <li>🏅 <strong>Insígnias Evolutivas:</strong> Suba seus emblemas do Nível I ao V!</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- BARRA INFERIOR MOBILE -->
+  <nav class="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-40 border-t-2 border-slate-800 px-6 py-2 flex items-center justify-around" style="background-color: var(--bg-glass); backdrop-filter: blur(12px);">
+    <button onclick="handlePrimaryNavClick()" id="mobNavTrilha" class="flex flex-col items-center gap-1 text-emerald-400 font-extrabold">
+      <div class="w-12 h-8 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
+        <i id="mobNavTrilhaIcon" class="fa-solid fa-house text-base"></i>
+      </div>
+      <span id="mobNavTrilhaLabel" class="text-[11px]">Início</span>
+    </button>
+
+    <button onclick="switchMainTab('grimorio')" id="mobNavGrimorio" class="hidden flex-col items-center gap-1 opacity-60 font-bold">
+      <div class="w-12 h-8 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-book-skull text-base"></i></div>
+      <span class="text-[11px]">Grimório</span>
+    </button>
+
+    <button onclick="switchMainTab('perfil')" id="mobNavPerfil" class="flex flex-col items-center gap-1 opacity-60 font-bold">
+      <div class="w-12 h-8 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-user-astronaut text-base"></i></div>
+      <span class="text-[11px]">Perfil</span>
+    </button>
+  </nav>
+
+  <!-- =====================================================================
+       MODAL 0: ONBOARDING DE PRIMEIRO ACESSO
+       ===================================================================== -->
+  <div id="onboardingModal" class="fixed inset-0 bg-black/95 z-[70] hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-slate-900 border-2 border-emerald-400 rounded-3xl p-6 text-center space-y-5 shadow-2xl text-slate-100">
+      <div class="w-24 h-24 mx-auto rounded-3xl border-4 border-emerald-400 overflow-hidden bg-slate-950 shadow-lg" id="onboardingAvatarPreview"></div>
+      <div class="space-y-1">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-3 py-0.5 rounded-full">Primeiro Acesso</span>
+        <h3 class="text-xl font-bold">Crie sua Identidade no Doc's Lab!</h3>
+        <p class="text-xs opacity-80">Escolha seu apelido para o Placar (grátis no 1º acesso) e personalize seu personagem em seguida.</p>
+      </div>
+      <div class="text-left space-y-1.5">
+        <label class="text-[11px] font-extrabold uppercase opacity-70">Seu Apelido no Ranking</label>
+        <input type="text" id="onboardingNameInput" maxlength="22" placeholder="Digite o seu apelido..."
+               class="w-full p-3.5 rounded-2xl bg-slate-950 border-2 border-slate-700 font-bold text-sm text-white focus:outline-none focus:border-emerald-400">
+      </div>
+      <button onclick="completeOnboardingStep1()" class="w-full btn-3d btn-green py-3.5 text-xs sm:text-sm uppercase tracking-wider">
+        Salvar Nome e Personalizar Boneco →
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 1: ATELIÊ DE PERSONAGEM (COM TRAVA ANTI-EXPLOIT)
+       ===================================================================== -->
+  <div id="avatarStudioModal" class="fixed inset-0 bg-black/85 z-50 hidden flex flex-col justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="max-w-2xl w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl overflow-hidden flex flex-col max-h-[95vh] shadow-2xl">
+      <div class="p-3.5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+        <button onclick="closeAvatarStudio()" class="btn-3d btn-surface w-9 h-9 rounded-xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="text-center">
+          <h3 class="font-bold text-base text-purple-400">Ateliê de Personagem</h3>
+          <span class="text-[11px] opacity-70">Use os quadradinhos ao lado para mudar a cor da parte selecionada!</span>
+        </div>
+        <div class="flex items-center gap-1.5 bg-purple-500/20 border border-purple-500/40 px-3 py-1 rounded-xl text-xs font-extrabold text-purple-300">
+          <i class="fa-solid fa-flask"></i> <span id="studioCoinsDisplay">120</span>
+        </div>
+      </div>
+
+      <!-- Palco Central + Paletas Laterais -->
+      <div class="p-4 bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800 flex flex-col items-center">
+        <div class="flex items-center justify-center gap-3 sm:gap-5 w-full">
+          
+          <!-- Coluna Esquerda: Cores de Fundo -->
+          <div class="flex flex-col items-center gap-1.5 bg-slate-900/90 p-2 rounded-2xl border border-slate-800">
+            <span class="text-[9px] font-extrabold uppercase opacity-60 tracking-wider">Fundo</span>
+            <div id="studioBgColorSwatches" class="flex flex-col gap-1.5 max-h-[175px] overflow-y-auto pr-0.5"></div>
+          </div>
+
+          <!-- Foto Grande -->
+          <div class="flex flex-col items-center">
+            <div id="studioStageContainer" class="avatar-stage-large">
+              <div id="studioAvatarSvgBox" class="w-full h-full"></div>
+              <div id="studioTryOnBadge" class="preview-badge-tryon hidden">👀 Testando</div>
+            </div>
+            <button onclick="toggleAvatarZoom()" class="mt-2 text-[11px] font-bold text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> Zoom
+            </button>
+          </div>
+
+          <!-- Coluna Direita: Cor Contextual -->
+          <div class="flex flex-col items-center gap-1.5 bg-slate-900/90 p-2 rounded-2xl border border-slate-800">
+            <span id="studioContextColorLabel" class="text-[9px] font-extrabold uppercase text-purple-400 tracking-wider">Cabelo</span>
+            <div id="studioContextColorSwatches" class="flex flex-col gap-1.5 max-h-[175px] overflow-y-auto pr-0.5"></div>
+          </div>
+
+        </div>
+
+        <div class="w-full max-w-md mt-3 flex gap-2">
+          <button onclick="saveEquippedAvatar()" id="btnSaveAvatar" class="w-full btn-3d btn-green py-2.5 text-xs sm:text-sm">
+            <i class="fa-solid fa-check"></i> Salvar Meu Visual
+          </button>
+          <button onclick="buyPreviewedItem()" id="btnBuyTryOnItem" class="hidden w-full btn-3d btn-amber py-2.5 text-xs sm:text-sm">
+            <i class="fa-solid fa-cart-shopping"></i> Desbloquear (<span id="buyItemCost">50</span> 🧪)
+          </button>
+        </div>
+      </div>
+
+      <!-- Abas de Peças -->
+      <div class="flex overflow-x-auto border-b border-slate-800 bg-slate-950 px-3 py-2 gap-1.5 justify-start sm:justify-center">
+        <button onclick="selectStudioCategory('head')" id="catBtn_head" class="studio-cat-btn btn-3d btn-purple px-3.5 py-1.5 text-xs shrink-0">
+          <i class="fa-solid fa-user"></i> Cabelo & Máscara
+        </button>
+        <button onclick="selectStudioCategory('eyes')" id="catBtn_eyes" class="studio-cat-btn btn-3d btn-surface px-3.5 py-1.5 text-xs shrink-0">
+          <i class="fa-solid fa-eye"></i> Olhos
+        </button>
+        <button onclick="selectStudioCategory('mouth')" id="catBtn_mouth" class="studio-cat-btn btn-3d btn-surface px-3.5 py-1.5 text-xs shrink-0">
+          <i class="fa-solid fa-face-smile"></i> Boca
+        </button>
+        <button onclick="selectStudioCategory('hat')" id="catBtn_hat" class="studio-cat-btn btn-3d btn-surface px-3.5 py-1.5 text-xs shrink-0">
+          <i class="fa-solid fa-hat-wizard"></i> Chapéu
+        </button>
+        <button onclick="selectStudioCategory('body')" id="catBtn_body" class="studio-cat-btn btn-3d btn-surface px-3.5 py-1.5 text-xs shrink-0">
+          <i class="fa-solid fa-shirt"></i> Roupas
+        </button>
+        <button onclick="selectStudioCategory('skinTone')" id="catBtn_skinTone" class="studio-cat-btn btn-3d btn-surface px-3.5 py-1.5 text-xs shrink-0">
+          <i class="fa-solid fa-palette"></i> Tons de Pele
+        </button>
+      </div>
+
+      <div id="studioItemsGrid" class="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 flex-1"></div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: LEITOR PAGINADO COM O MASCOTE ÚNICO "DOC"
+       ===================================================================== -->
+  <div id="grimorioReaderModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col justify-center p-2 sm:p-6">
+    <div class="max-w-2xl w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl overflow-hidden flex flex-col max-h-[92vh] shadow-2xl text-slate-100">
+      <div class="p-4 bg-slate-950 border-b border-slate-800 space-y-2">
+        <div class="flex items-center justify-between">
+          <button onclick="closeGrimorioReader()" class="btn-3d btn-surface px-3 py-1.5 text-xs">
+            <i class="fa-solid fa-xmark"></i> Fechar
+          </button>
+          <span id="readerBadgeCode" class="text-xs font-extrabold text-purple-400 uppercase tracking-widest">ETAPA DE LEITURA</span>
+          <span id="readerPageCounter" class="text-xs font-extrabold text-emerald-400">Página 1</span>
+        </div>
+        <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden p-0.5">
+          <div id="readerProgressBar" class="h-full bg-gradient-to-r from-sky-400 to-emerald-400 rounded-full transition-all duration-300" style="width: 25%;"></div>
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-7 overflow-y-auto flex-1 space-y-5">
+        <h2 id="readerTitle" class="text-lg sm:text-xl font-bold text-emerald-400 border-b border-slate-800 pb-2">Título do Tópico</h2>
+
+        <!-- Explicação Principal com o Mascote Único Doc -->
+        <div class="flex flex-col sm:flex-row items-start gap-4 bg-slate-950/90 border-2 border-emerald-500/40 rounded-3xl p-4 sm:p-5 shadow-lg">
+          <div class="w-20 h-20 rounded-2xl bg-slate-900 border-2 border-slate-700 flex items-center justify-center shrink-0 self-center sm:self-start anim-breathe overflow-hidden doc-mascot-slot"></div>
+          <div class="space-y-2 flex-1">
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">
+              <i class="fa-solid fa-feather-pointed mr-1"></i> Doc explica:
+            </div>
+            <div id="readerStepContent" class="text-sm sm:text-base leading-relaxed font-medium"></div>
+          </div>
+        </div>
+
+        <!-- Nota de Alquimia / Bizu de Fixação do Doc -->
+        <div class="flex items-start gap-3.5 bg-amber-950/30 border-2 border-amber-500/40 rounded-3xl p-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-lg text-amber-300 shrink-0">
+            <i class="fa-solid fa-flask"></i>
+          </div>
+          <div class="space-y-1 flex-1">
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-400">
+              Bizu de Alquimia do Doc (Memorização):
+            </div>
+            <p id="readerCrowComment" class="text-xs sm:text-sm text-amber-100 leading-relaxed italic"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between gap-3">
+        <button onclick="prevReaderPage()" id="btnReaderPrev" class="btn-3d btn-surface px-4 py-3 text-xs">
+          ← Anterior
+        </button>
+        <span class="text-[11px] font-bold opacity-75 text-center hidden sm:inline">
+          Avance pelas páginas para concluir a etapa!
+        </span>
+        <button onclick="nextReaderPage()" id="btnReaderNext" class="btn-3d btn-green px-6 py-3 text-xs sm:text-sm">
+          Próxima Página →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 3: MOTOR DE QUIZ (COM REFAZER OU CONSULTAR SEM XP)
+       ===================================================================== -->
+  <div id="lessonQuizModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col justify-center p-2 sm:p-6">
+    <div class="max-w-2xl w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl overflow-hidden flex flex-col max-h-[95vh] shadow-2xl text-slate-100">
+      <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center gap-3">
+        <button onclick="closeLessonQuiz()" class="btn-3d btn-surface w-9 h-9 rounded-xl shrink-0">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="flex-1 h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
+          <div id="quizProgressBar" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 20%;"></div>
+        </div>
+        <span id="quizXpModeBadge" class="text-[11px] font-extrabold bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-xl border border-amber-500/40 shrink-0">
+          30 XP
+        </span>
+      </div>
+
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-5">
+        <div class="flex items-start gap-3">
+          <div class="w-14 h-14 rounded-2xl bg-slate-950 border border-emerald-500/40 flex items-center justify-center shrink-0 overflow-hidden doc-mascot-slot"></div>
+          <div class="space-y-1 flex-1">
+            <span id="quizStepCounter" class="text-[11px] font-extrabold uppercase text-emerald-400">Questão 1</span>
+            <h3 id="quizQuestionTitle" class="text-base sm:text-lg font-bold leading-snug">Carregando questão...</h3>
+            <p id="quizHintText" class="text-xs text-amber-300/90 italic"></p>
+          </div>
+        </div>
+
+        <div id="quizOptionsList" class="space-y-2.5"></div>
+
+        <div id="quizFeedbackContainer" class="hidden p-4 rounded-2xl border-2 space-y-3">
+          <h4 id="quizFeedbackHeader" class="font-bold text-sm sm:text-base"></h4>
+          <p id="quizDetailedExplanation" class="text-xs sm:text-sm leading-relaxed"></p>
+
+          <div id="quizWrongActions" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
+            <button onclick="openTheoryFromWrongQuestion()" class="btn-3d btn-purple py-2.5 px-3 text-xs">
+              <i class="fa-solid fa-book-open"></i> Ler Teoria (Sem XP)
+            </button>
+            <button onclick="retryCurrentQuestion()" class="btn-3d btn-amber py-2.5 px-3 text-xs">
+              <i class="fa-solid fa-rotate-right"></i> Tentar Novamente
+            </button>
+            <button onclick="skipWrongQuestionWithPenalty()" class="btn-3d btn-surface py-2.5 px-3 text-xs text-red-300 border-red-500/40">
+              Pular (-XP) →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-950 border-t border-slate-800">
+        <button onclick="checkQuizAnswer()" id="btnVerifyAnswer" class="w-full btn-3d btn-green py-3.5 text-sm uppercase tracking-wider">
+          Verificar Resposta
+        </button>
+        <button onclick="advanceQuizQuestion()" id="btnNextQuestion" class="hidden w-full btn-3d btn-green py-3.5 text-sm uppercase tracking-wider">
+          Continuar →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3.1: CONSULTA CIRÚRGICA DE DÚVIDA (ZERO XP) -->
+  <div id="questionTheoryLookupModal" class="fixed inset-0 bg-black/95 z-[60] hidden flex flex-col justify-center p-3 sm:p-6">
+    <div class="max-w-xl w-full mx-auto bg-slate-900 border-2 border-purple-500 rounded-3xl overflow-hidden flex flex-col max-h-[88vh] shadow-2xl text-slate-100">
+      <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+        <span class="text-xs font-extrabold uppercase text-purple-400">
+          <i class="fa-solid fa-magnifying-glass-chart mr-1"></i> Consulta Rápida com o Doc (Sem XP de Leitura)
+        </span>
+        <button onclick="closeQuestionTheoryLookup()" class="btn-3d btn-surface px-3 py-1 text-xs">Voltar à Questão</button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-4 text-sm leading-relaxed">
+        <h3 id="lookupTopicTitle" class="text-lg font-bold text-emerald-400"></h3>
+        <div id="lookupFocusedExplanation" class="p-4 rounded-2xl bg-emerald-950/40 border-2 border-emerald-500/50 text-emerald-100 font-semibold"></div>
+        <div id="lookupTopicBody" class="space-y-2.5 text-xs sm:text-sm opacity-90"></div>
+      </div>
+      <div class="p-4 bg-slate-950 border-t border-slate-800">
+        <button onclick="closeQuestionTheoryLookup()" class="w-full btn-3d btn-green py-3 text-xs sm:text-sm">
+          <i class="fa-solid fa-check"></i> Entendi! Voltar e Responder Corretamente
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 4: FLASHCARDS DA TRILHA
+       ===================================================================== -->
+  <div id="flashcardsModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col justify-center p-3 sm:p-6">
+    <div class="max-w-lg w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl p-5 space-y-4 shadow-2xl text-slate-100">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="font-bold text-base text-purple-400"><i class="fa-solid fa-layer-group mr-1"></i> Desafio de Flashcards</h3>
+          <p class="text-[11px] opacity-70">Domine os cartões deste módulo para concluir a etapa!</p>
+        </div>
+        <button onclick="closeFlashcardsModal()" class="btn-3d btn-surface w-8 h-8 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden p-0.5">
+        <div id="fcBatchProgressBar" class="h-full bg-purple-400 rounded-full transition-all duration-300" style="width: 15%;"></div>
+      </div>
+
+      <div id="fcCardBox" onclick="flipCurrentFlashcard()" class="min-h-[250px] rounded-3xl border-4 p-6 flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-200 shadow-xl bg-indigo-950 border-indigo-400">
+        <div class="w-full flex items-center justify-between">
+          <span id="fcModalCategory" class="text-[10px] font-extrabold uppercase bg-black/30 px-3 py-1 rounded-full">Conceito</span>
+          <span id="fcSideBadge" class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-indigo-500/30 text-indigo-200">
+            ❓ PERGUNTA (FRENTE)
+          </span>
+        </div>
+
+        <p id="fcModalMainText" class="text-base sm:text-lg font-bold my-4 leading-relaxed"></p>
+
+        <div class="w-full pt-3 border-t border-white/10 text-xs font-bold opacity-80">
+          <span id="fcModalSideLabel">Toque no cartão para revelar a resposta ↻</span>
+        </div>
+      </div>
+
+      <div id="fcEvalButtons" class="hidden grid grid-cols-2 gap-3 pt-1">
+        <button onclick="markFlashcardResult(false)" class="btn-3d btn-red py-3 text-xs">
+          <i class="fa-solid fa-rotate-left"></i> Tive Dúvida (Repetir)
+        </button>
+        <button onclick="markFlashcardResult(true)" class="btn-3d btn-green py-3 text-xs">
+          <i class="fa-solid fa-check"></i> Lembrei Bem!
+        </button>
+      </div>
+
+      <div id="fcFlipPromptBtn" class="pt-1">
+        <button onclick="flipCurrentFlashcard()" class="w-full btn-3d btn-purple py-3 text-xs uppercase tracking-wider">
+          Virar Cartão para Ver a Resposta ↻
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 5: SIMULADO FINAL DA TRILHA
+       ===================================================================== -->
+  <div id="simuladoModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col justify-center p-2 sm:p-6">
+    <div class="max-w-3xl w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl overflow-hidden flex flex-col h-[92vh] shadow-2xl text-slate-100">
+      <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-base text-amber-400"><i class="fa-solid fa-trophy mr-1"></i> Etapa Final: Simulado Oficial</h3>
+          <p class="text-[11px] opacity-70">Responda às questões integradoras do curso!</p>
+        </div>
+        <button onclick="closeSimuladoModal()" class="btn-3d btn-surface w-9 h-9 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="simuladoModalBody" class="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6"></div>
+      <div class="p-4 bg-slate-950 border-t border-slate-800 flex justify-end">
+        <button onclick="finishSimuladoStage()" class="btn-3d btn-green px-6 py-3 text-xs sm:text-sm">
+          <i class="fa-solid fa-flag-checkered"></i> Concluir Simulado
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 7: ALTERAR NOME (50 MOEDAS)
+       ===================================================================== -->
+  <div id="changeNameModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="max-w-sm w-full bg-slate-900 border-2 border-slate-700 rounded-3xl p-5 space-y-4 shadow-2xl text-slate-100">
+      <h3 class="font-bold text-lg">Mudar Apelido no Placar</h3>
+      <p class="text-xs opacity-80">Alterar seu nome no ranking custa <strong>50 Moedas de Alquimia (🧪)</strong>.</p>
+      <input type="text" id="newNameInput" maxlength="22" placeholder="Digite seu novo apelido..." class="w-full p-3 rounded-2xl bg-slate-950 border-2 border-slate-700 font-bold text-sm text-white focus:outline-none focus:border-emerald-400">
+      <div class="flex gap-2">
+        <button onclick="closeChangeNameModal()" class="flex-1 btn-3d btn-surface py-2.5 text-xs">Cancelar</button>
+        <button onclick="confirmNameChange()" class="flex-1 btn-3d btn-amber py-2.5 text-xs">Pagar 50 🧪 e Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 8: APK ANDROID (WIP)
+       ===================================================================== -->
+  <div id="apkDownloadModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="max-w-sm w-full bg-slate-900 border-2 border-amber-500/50 rounded-3xl p-6 text-center space-y-4 shadow-2xl text-slate-100">
+      <div class="w-16 h-16 rounded-3xl bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-3xl text-amber-400 mx-auto">
+        <i class="fa-solid fa-hammer"></i>
+      </div>
+      <div class="inline-block bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider">
+        WIP • Work In Progress
+      </div>
+      <h3 class="font-bold text-lg">App Android em Construção</h3>
+      <p class="text-xs opacity-80 leading-relaxed">
+        Estamos focados em deixar a versão Web 100% impecável primeiro! Logo em seguida empacotaremos o instalador <strong>.APK</strong>.
+      </p>
+      <button onclick="closeApkModal()" class="w-full btn-3d btn-green py-3 text-xs uppercase tracking-wider">
+        Entendido!
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 9: PAINEL EXCLUSIVO DO ADMINISTRADOR (rphsaraiva@gmail.com)
+       ===================================================================== -->
+  <div id="adminPanelModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-slate-900 border-2 border-amber-400 rounded-3xl p-6 space-y-4 shadow-2xl text-slate-100">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2 text-amber-400 font-bold text-base">
+          <i class="fa-solid fa-crown"></i> Console Exclusivo Admin
+        </div>
+        <button onclick="closeAdminModal()" class="btn-3d btn-surface w-8 h-8 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <p class="text-xs opacity-80">
+        Logado como Administrador (<strong class="text-emerald-400">rphsaraiva@gmail.com</strong>). Você pode manipular livremente seu XP, Moedas e Visibilidade no Placar sem afetar os estudantes.
+      </p>
+
+      <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+        <div>
+          <div class="text-xs font-extrabold">Ocultar minha conta do Placar</div>
+          <div class="text-[10px] opacity-70">Fique fora do ranking para testar sem atrapalhar os alunos</div>
+        </div>
+        <button onclick="adminToggleLeaderboardVisibility()" id="adminHideToggleBtn" class="btn-3d btn-green px-3 py-1.5 text-xs">
+          Invisível: SIM
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <button onclick="adminModifyResources(100, 100)" class="btn-3d btn-amber py-2.5 text-xs">+100 XP / +100 🧪</button>
+        <button onclick="adminModifyResources(500, 500)" class="btn-3d btn-purple py-2.5 text-xs">+500 XP / +500 🧪</button>
+        <button onclick="adminResetMyResources()" class="btn-3d btn-surface py-2.5 text-xs text-red-300">Zerar Meu XP/Moedas</button>
+        <button onclick="adminUnlockAllModules()" class="btn-3d btn-green py-2.5 text-xs">Liberar Todo Grimório</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS MODULARES (Clean Architecture / SoC) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/avatar_catalog.js"></script>
+  <script src="js/avatar_engine.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/study_engines.js"></script>
+  <script src="js/app.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/home.js"></script>
 </body>
 </html>

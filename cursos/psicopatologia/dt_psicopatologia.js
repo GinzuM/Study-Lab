@@ -1,140 +1,123 @@
 // =========================================================================
-// DADOS TEÓRICOS (dt_psicopatologia.js): TÓPICOS, MAPA MENTAL E FLASHCARDS
-// Revisado integralmente para Português do Brasil (PT-BR)
+// DADOS TEÓRICOS (dt_psicopatologia.js) — Doc's Lab
+// Revisado integralmente: Espelhamento pedagógico exato com o Quiz e Simulado
 // =========================================================================
 
 const studyData = {
-  // 1. RESUMOS E TÓPICOS (Com exemplos práticos e Modo Simplificado)
   topics: [
     {
       id: "conceito_objeto",
-      title: "1. Conceito e Objeto da Psicopatologia",
-      content: `A Psicopatologia é o ramo da ciência que estuda a natureza essencial da doença ou do sofrimento mental: suas causas, mudanças estruturais e formas de manifestação. Diferencia-se da Psiquiatria por ser uma ciência estritamente teórica e descritiva (não tem como foco primário medicar ou curar imediatamente, mas sim compreender os fenômenos psíquicos patológicos). Seu fundador moderno é Karl Jaspers (1913), que estabeleceu que o verdadeiro objeto da psicopatologia é o acontecimento psíquico consciente — aquilo que o sujeito realmente vivencia —, mas alertou que "nunca podemos reduzir inteiramente o ser humano a conceitos psicopatológicos".
-      
-      **Exemplo Prático:** Enquanto o psiquiatra foca em qual medicamento prescrever para controlar um surto psicótico (prática médica), o psicopatólogo investiga como a consciência, a percepção e o pensamento daquele paciente estão estruturados naquele momento.
-      
-      **Modo Simplificado:** A Psiquiatria é a arte prática de tratar o paciente; a Psicopatologia é a ciência que estuda e descreve o funcionamento da mente em sofrimento, sem nunca reduzir a pessoa a um rótulo.`,
-      mnemonic: "💡 Mnemônico: Psicopatologia = Ciência/Estudo. Psiquiatria = Prática/Tratamento. Jaspers = Nunca reduzir o humano ao diagnóstico."
+      title: "1. Conceito, Objeto e a Advertência de Jaspers",
+      content: `A Psicopatologia é a ciência autônoma teórica e descritiva que investiga a natureza essencial, as causas e as formas de manifestação do sofrimento mental. Diferencia-se da Psiquiatria porque esta última constitui uma prática médica pragmática focada na intervenção, diagnóstico nosológico e tratamento farmacológico.
+
+O fundador da Psicopatologia Fenomenológica Moderna, Karl Jaspers (1913), estabeleceu que o verdadeiro **objeto da psicopatologia é o acontecimento psíquico consciente**, ou seja, aquilo que o paciente vivencia subjetivamente. 
+
+⚠️ **A Advertência Ética Central de Jaspers:** Jaspers deixou expresso que **nunca podemos reduzir inteiramente o ser humano aos conceitos psicopatológicos**. O indivíduo é sempre maior e transcende qualquer diagnóstico ou rótulo clínico.
+
+* **Exemplo Prático:** O médico prescreve lítio para conter a euforia de um paciente (Psiquiatria). O psicopatólogo analisa como a vivência do tempo, do espaço e do eu se alterou durante esse episódio maníaco (Psicopatologia).`,
+      mnemonic: "💡 Mnemônico: Psicopatologia = Ciência descritiva do vivido. Psiquiatria = Prática médica curativa. Jaspers = A pessoa transcende o diagnóstico."
     },
     {
       id: "normal_patologico",
-      title: "2. Critérios de Normalidade em Psicopatologia",
-      content: `Definir o que é "normal" e "patológico" em saúde mental é complexo e exige múltiplos critérios (Dalgalarrondo):
-      - **Normalidade como ausência de doença:** Critério falho e redundante (define o normal pelo que ele não é).
-      - **Normalidade estatística:** Identifica o normal com o que é mais frequente na curva de Gauss (média). Problema: algo muito frequente pode ser patológico (ex: cárie, ansiedade leve) e algo raro pode ser saudável (ex: genialidade).
-      - **Normalidade funcional:** É patológico aquilo que produz sofrimento para o próprio indivíduo ou prejuízo para o seu grupo social.
-      - **Normalidade como processo:** Considera a dinâmica evolutiva e a faixa etária (o que é normal em uma criança de 3 anos pode ser patológico em um adulto de 30).
-      - **Normalidade subjetiva:** A autopercepção do sujeito sobre seu estado (limitada em casos de mania ou psicose, onde falta crítica da doença).
-      
-      **Exemplo Prático:** Um adulto falar sozinho com um amigo imaginário no trabalho foge da normalidade evolutiva/processo, mas uma criança de 4 anos fazer exatamente o mesmo enquanto brinca é perfeitamente normal.
-      
-      **Modo Simplificado:** Não existe um único critério de normalidade. Na clínica, o mais importante é avaliar se há sofrimento real, perda de liberdade interna e prejuízo funcional, considerando a idade e a cultura.`,
-      mnemonic: "💡 Mnemônico: Estatística = Média numérica. Funcional = Causa sofrimento/prejuízo. Processo = Depende da idade/fase da vida."
+      title: "2. Critérios de Normalidade em Saúde Mental",
+      content: `Definir normalidade na mente humana exige múltiplos critérios integrados (Dalgalarrondo):
+      1. **Normalidade Estatística:** Baseia-se na frequência matemática (Curva de Gauss). O que está na média é normal; o que se afasta muito é patológico. *Falha:* Fenômenos comuns podem ser patológicos (cárie dentária, ansiedade leve) e traços raros podem ser saudáveis (genialidade artística).
+      2. **Normalidade como Processo (Dinâmica do Desenvolvimento):** Considera a faixa etária e a etapa evolutiva. O que é normal e esperado em uma criança de 3 anos pode ser altamente disfuncional em um adulto de 35 anos.
+      3. **Normalidade Subjetiva:** O indivíduo avalia o próprio estado de saúde. *Falha:* Em quadros psicóticos graves ou mania avançada, o paciente sente-se "perfeito" e nega absolutamente a doença (ausência de crítica).
+      4. **Normalidade Funcional:** Considera o grau de prejuízo adaptativo e o sofrimento gerado para o indivíduo ou para o seu grupo social.
+
+* **Exemplo Prático:** Uma criança de 4 anos conversar com um amigo invisível está dentro do normal para a etapa criativa do processo de desenvolvimento; um adulto de 40 anos manter conversas verbais diárias com esse mesmo amigo invisível evidencia rompimento funcional.`,
+      mnemonic: "💡 Mnemônico: Estatística = Frequência da média; Processo = Idade/fase evolutiva; Subjetiva = Autopercepção; Funcional = Prejuízo/Sofrimento."
     },
     {
       id: "forma_conteudo",
-      title: "3. Forma vs. Conteúdo dos Sintomas",
-      content: `Segundo Jaspers e Dalgalarrondo, todo sintoma psicopatológico possui dois aspectos fundamentais:
-      - **Forma:** É a estrutura básica, a "arquitetura" psicopatológica universal em que o fenômeno se apresenta (ex: alucinação auditiva, ideia delirante, obsessão, fobia). A forma é relativamente constante e ligada ao substrato neurobiológico/estrutural, sendo decisiva para o diagnóstico.
-      - **Conteúdo:** É o tema que preenche essa estrutura (ex: culpa religiosa, perseguição pela polícia ou por alienígenas, medo de contaminação por vírus). O conteúdo depende diretamente da história de vida, da época e da cultura do paciente.
-      
-      **Exemplo Prático:** Dois pacientes têm esquizofrenia: no século XVIII, um acreditava ser perseguido por demônios; em 2026, outro acredita ser monitorado por satélites e inteligência artificial. A **forma** é idêntica (delírio persecutório), mas o **conteúdo** mudou conforme a cultura.
-      
-      **Modo Simplificado:** A **Forma** é o "pote" (delírio, alucinação, fobia) e serve para fechar o diagnóstico. O **Conteúdo** é o "recheio" (religião, tecnologia, política) e vem da história e cultura da pessoa.`,
-      mnemonic: "💡 Mnemônico: Forma = Pote/Estrutura (Biologia/Diagnóstico). Conteúdo = Recheio/Tema (Cultura/História de vida)."
+      title: "3. A Distinção entre Forma e Conteúdo dos Sintomas",
+      content: `Todo sintoma psicopatológico desdobra-se em duas dimensões fundamentais:
+      * **A Forma do Sintoma:** É a estrutura psiquiátrica universal, a arquitetura básica do fenômeno (ex: delírio, alucinação, obsessão, fobia). A forma decorre da alteração estrutural da função mental e é **decisiva para o diagnóstico**.
+      * **O Conteúdo do Sintoma:** É o tema particular, o enredo biográfico, religioso, político ou cultural que preenche aquela estrutura (ex: achar que a polícia secreta espiona pelos dentes, ou que demônios vigiam a casa). O conteúdo varia amplamente conforme a cultura e a época.
+
+* **Exemplo Prático:** Dois pacientes com esquizofrenia apresentam a mesma *forma* (delírio persecutório). Contudo, o paciente do século XIX sentia-se perseguido por espíritos malignos feudais, enquanto o paciente atual sente-se perseguido por satélites de inteligência artificial. A forma é idêntica; o conteúdo mudou com a tecnologia.`,
+      mnemonic: "💡 Mnemônico: Forma = Pote estrutural universal (Diagnóstico). Conteúdo = Recheio cultural e biográfico."
     },
     {
       id: "semiologia",
-      title: "4. Semiologia Psicopatológica: Sinais, Sintomas e Síndromes",
-      content: `A Semiologia é o estudo dos signos (sinais e sintomas) dos transtornos mentais. Divide-se em **Semiotécnica** (a técnica de coletar os dados, como conduzir a entrevista e fazer perguntas) e **Semiogênese** (a análise da origem, mecanismo e significado dos sintomas).
-      - **Sinal:** Manifestação objetiva, diretamente observável pelo examinador (ex: agitação psicomotora, choro, tremor, fala acelerada).
-      - **Sintoma:** Vivência subjetiva relatada pelo paciente, não observável diretamente de fora (ex: dor, angústia, tristeza interna, ouvir vozes sem reagir externamente).
-      - **Síndrome:** Conjunto de sinais e sintomas que se agrupam de forma recorrente no mesmo momento, mas que podem ter várias causas diferentes (ex: síndrome depressiva, síndrome delirante-alucinatória).
+      title: "4. Semiologia: Sinais, Sintomas e Síndromes",
+      content: `A Semiologia estuda os signos dos transtornos mentais através de dois eixos técnicos:
+      * **Semiotécnica:** O conjunto de procedimentos, técnicas de entrevista e observação clínica para coletar dados.
+      * **Semiogênese:** A investigação da origem, dos mecanismos e do significado dos sintomas.
       
-      **Exemplo Prático:** O paciente chega tremendo e falando muito rápido (Sinais observados pelo clínico) e relata que sente um medo terrível de morrer (Sintoma subjetivo contado por ele). Juntos, formam uma Síndrome Ansiosa.
-      
-      **Modo Simplificado:** Sinal = O que você vê no paciente. Sintoma = O que o paciente sente e te conta. Síndrome = O pacote de sinais e sintomas juntos.`,
-      mnemonic: "💡 Mnemônico: SINal = Visível de fora. SINtoma = Sentido por dentro (relato). SÍNdrome = Pacote de sinais e sintomas."
+      No registro clínico, distinguimos:
+      * **Sinal:** Dado **objetivo**, diretamente observável pelo examinador (ex: taquilalia, choro, tremores, agitação psicomotora).
+      * **Sintoma:** Vivência **subjetiva** relatada pelo paciente, não observável diretamente de fora (ex: angústia, tristeza profunda interna, sensação de desrealização).
+      * **Síndrome:** Agrupamento recorrente de múltiplos sinais e sintomas que aparecem juntos de forma constante, mas que podem ser causados por diferentes etiologias subjacentes.`,
+      mnemonic: "💡 Mnemônico: Sinal = Visto de fora (Objetivo). Sintoma = Sentido por dentro (Subjetivo). Síndrome = Pacote clínico associado."
     },
     {
       id: "jaspers_compreender_explicar",
-      title: "5. Psicopatologia Fenomenológica: Compreender vs. Explicar",
-      content: `Karl Jaspers introduziu na Psicopatologia Geral a distinção metodológica fundamental entre **Explicar** (*Erklären*) e **Compreender** (*Verstehen*):
-      - **Explicar (Causalidade das Ciências Naturais):** Consiste em buscar causas objetivas, orgânicas e biológicas de fora para dentro (ex: explicar o delirium tremens pela abstinência de álcool ou uma demência pela atrofia cerebral).
-      - **Compreender (Conexão de Sentido Psicológica):** Consiste em colocar-se empaticamente no lugar do outro para captar, de dentro para fora, como um estado mental surge de outro com sentido lógico-emocional (ex: compreender a tristeza profunda de alguém após perder um filho).
-      Para Jaspers, os delírios primários verdadeiros da esquizofrenia são psicologicamente **incompreensíveis** (não derivam de uma lógica afetiva comum), exigindo uma explicação causal neurobiológica.
+      title: "5. Fenomenologia: Explicar vs. Compreender",
+      content: `Karl Jaspers separou rigorosamente dois métodos em psicopatologia:
+      * **Explicar (Erklären - Ciências Naturais):** Busca de causas objetivas e orgânicas de *fora para dentro*. Relaciona um fenômeno a uma causa física (ex: delirium causado por infecção urinária e febre; demência por atrofia cortical).
+      * **Compreender (Verstehen - Ciências do Espírito):** Imersão empática de *dentro para fora* para captar a conexão de sentido lógico-emocional entre vivências (ex: compreender o luto profundo após a perda de um ente querido).
       
-      **Exemplo Prático:** Se alguém fica triste porque foi demitido, nós **compreendemos** o sentido emocional. Se alguém desenvolve perda de memória porque sofreu um traumatismo craniano, nós **explicamos** pela lesão física no cérebro.
-      
-      **Modo Simplificado:** **Explicar** é achar a causa física/biológica no cérebro (de fora). **Compreender** é entender o motivo emocional e humano por empatia (de dentro).`,
-      mnemonic: "💡 Mnemônico: Explicar = Causa Biológica (Cérebro). Compreender = Sentido Empático (Coração/História)."
+      * **O Delírio Primário:** Para Jaspers, o delírio autêntico da esquizofrenia é psicologicamente **incompreensível**, pois surge como uma mudança total e inexplicável da vivência, sem derivar logicamente de um trauma ou tristeza comum.`,
+      mnemonic: "💡 Mnemônico: Explicar = Causa orgânica cerebral (De fora). Compreender = Sentido empático e humano (De dentro)."
     },
     {
       id: "abordagens",
-      title: "6. Principais Perspectivas em Psicopatologia",
-      content: `O fenômeno mental patológico pode ser lido por diferentes matrizes teóricas:
-      - **Descritiva / Categorial (DSM e CID):** Foca na descrição objetiva e ateórica de sinais e sintomas observáveis para classificar diagnósticos padronizados.
-      - **Psicodinâmica / Psicanalítica:** Enxerga o sintoma não como um mero defeito biológico, mas como uma formação de compromisso resultante de conflitos inconscientes, desejos recalcados e mecanismos de defesa.
-      - **Comportamental-Cognitiva:** Foca em comportamentos aprendidos disfuncionais, esquemas cognitivos rígidos e distorções no processamento da informação.
-      - **Biológica / Neurociências:** Enfatiza alterações genéticas, de neurotransmissores e de circuitos cerebrais.
-      
-      **Exemplo Prático:** Diante de um Transtorno Obsessivo-Compulsivo (TOC), a visão Descritiva lista os critérios diagnósticos; a Biológica olha para a serotonina e núcleos da base; a Cognitiva trabalha as crenças de responsabilidade exagerada; e a Psicodinâmica investiga o conflito inconsciente e a culpa subjacente.
-      
-      **Modo Simplificado:** Descritiva = Lista sintomas (DSM/CID). Biológica = Olha o cérebro. Cognitiva = Olha os pensamentos distorcidos. Psicodinâmica = Olha o inconsciente.`,
-      mnemonic: "💡 Mnemônico: Descritiva = O quê (Critérios). Biológica = Onde (Cérebro). Psicodinâmica = Por quê oculto (Inconsciente)."
+      title: "6. Principais Perspectivas Teóricas em Psicopatologia",
+      content: `Os transtornos mentais são interpretados por diferentes lentes:
+      * **Perspectiva Descritiva / Categorial (DSM / CID):** Foca na catalogação ateórica de critérios observáveis para padronizar diagnósticos globais.
+      * **Perspectiva Psicodinâmica (Psicanalítica):** Vê o sintoma como uma formação de compromisso contra conflitos inconscientes, desejos recalcados e defesas psíquicas.
+      * **Perspectiva Cognitivo-Comportamental:** Enfatiza crenças disfuncionais, esquemas cognitivos rígidos e distorções no processamento da informação.
+      * **Perspectiva Biológica:** Foca em desequilíbrios de neurotransmissores e circuitos neuroanatômicos.`,
+      mnemonic: "💡 Mnemônico: Descritiva = Catálogo de sintomas; Psicodinâmica = Conflito inconsciente; Cognitiva = Pensamentos disfuncionais."
     },
     {
       id: "funcoes_psiquicas",
-      title: "7. As Funções Psíquicas e a Totalidade Mental",
-      content: `Para fins didáticos e de Exame Psíquico, dividimos a mente em **funções psíquicas** (consciência, atenção, orientação, memória, sensopercepção, pensamento, linguagem, afetividade, vontade e psicomotricidade). Contudo, Dalgalarrondo enfatiza que não existem funções psíquicas isoladas na vida real: quem adoece é a pessoa inteira em sua totalidade. Quando uma função se altera, todas as outras são impactadas em cadeia.
-      
-      **Exemplo Prático:** Um paciente com depressão grave apresenta alteração primária da **afetividade** (humor triste e apatia), mas isso deixa a sua **atenção** reduzida, a sua **memória** falha, o seu **pensamento** lento e a sua **psicomotricidade** inibida.
-      
-      **Modo Simplificado:** Nós separamos a mente em "gavetas" (memória, atenção, humor, pensamento) apenas para estudar e avaliar melhor, mas na prática o cérebro funciona como uma orquestra integrada.`,
-      mnemonic: "💡 Mnemônico: A divisão das funções psíquicas é apenas didática; o adoecimento é sempre global."
+      title: "7. As Funções Psíquicas e a Totalidade da Mente",
+      content: `A divisão da mente em funções (consciência, atenção, memória, pensamento, afetividade, vontade) é um recurso puramente **didático e semiológico**. Na realidade clínica, **quem adoece é a pessoa inteira em sua totalidade**. Uma alteração intensa em uma função impacta imediatamente todas as demais.
+
+* **Exemplo Prático:** Um paciente com depressão severa tem alteração primária no humor (afetividade triste), mas isso paralisa sua atenção, desorganiza sua memória operacional e lentifica todo o seu pensamento.`,
+      mnemonic: "💡 Mnemônico: A mente é uma orquestra integrada; separar em funções serve apenas para estudar."
     },
     {
       id: "avaliacao_exame",
-      title: "8. Avaliação Clínica: Anamnese e Exame do Estado Mental",
-      content: `A avaliação clínica apoia-se em dois grandes pilares complementares:
-      - **Anamnese (Histórico Clínico):** É o corte **longitudinal** (ao longo do tempo). Reúne a queixa principal, História da Doença Atual (HDA), antecedentes pessoais e familiares, desenvolvimento desde a infância e contexto psicossocial.
-      - **Exame do Estado Mental (Exame Psíquico):** É o corte **transversal** ("fotografia" do momento atual da entrevista). Avalia sistematicamente a aparência, atitude, consciência, atenção, orientação, memória, pensamento, sensopercepção, humor/afeto, volição e juízo crítico de realidade do paciente no exato momento da consulta.
+      title: "8. Avaliação Clínica: Anamnese vs. Exame do Estado Mental",
+      content: `Dois pilares formam a avaliação psiquiátrica e psicológica:
+      * **Anamnese:** Corte **longitudinal** (o "filme" da vida do paciente: história pregressa, infância, antecedentes familiares e evolução até o presente).
+      * **Exame do Estado Mental (Exame Psíquico):** Corte **transversal** (a "fotografia" de como a mente do paciente está funcionando exatamente agora na consulta: orientação, humor, sensopercepção, pensamento e insight/crítica).
       
-      **Exemplo Prático:** Perguntar "Quando começaram essas crises e como foi sua infância?" faz parte da **Anamnese** (filme da vida). Observar que agora, na cadeira do consultório, o paciente está lúcido, orientado no tempo, mas com humor choroso e fala lenta faz parte do **Exame do Estado Mental** (foto do agora).
-      
-      **Modo Simplificado:** Anamnese = O filme da história do paciente (passado até hoje). Exame do Estado Mental = A fotografia exata de como a mente dele está funcionando agora na consulta.`,
-      mnemonic: "💡 Mnemônico: Anamnese = Longitudinal (Filme da história). Exame Psíquico = Transversal (Foto do presente)."
+      * **Consciência de Morbidade (Insight):** Capacidade de o paciente reconhecer que seus sintomas (alucinações ou delírios) são fruto de uma doença mental e não da realidade externa.`,
+      mnemonic: "💡 Mnemônico: Anamnese = Filme longitudinal do passado. Exame Psíquico = Fotografia transversal do presente."
     }
   ],
 
-  // 2. MAPA MENTAL
   tree: [
-    { id: "conceito_objeto", title: "1. Conceito e Objeto (Jaspers)", level: 1, unlocked: true },
-    { id: "normal_patologico", title: "2. Normal vs. Patológico", level: 1, unlocked: true },
-    { id: "forma_conteudo", title: "3. Forma vs. Conteúdo", level: 2, unlocked: true },
+    { id: "conceito_objeto", title: "1. Conceito e Objeto", level: 1, unlocked: true },
+    { id: "normal_patologico", title: "2. Normal vs Patológico", level: 1, unlocked: true },
+    { id: "forma_conteudo", title: "3. Forma vs Conteúdo", level: 2, unlocked: true },
     { id: "semiologia", title: "4. Sinais, Sintomas e Síndromes", level: 2, unlocked: true },
-    { id: "jaspers_compreender_explicar", title: "5. Compreender vs. Explicar", level: 3, unlocked: true },
-    { id: "abordagens", title: "6. Abordagens Psicopatológicas", level: 3, unlocked: true },
+    { id: "jaspers_compreender_explicar", title: "5. Explicar vs Compreender", level: 3, unlocked: true },
+    { id: "abordagens", title: "6. Abordagens Teóricas", level: 3, unlocked: true },
     { id: "funcoes_psiquicas", title: "7. Funções Psíquicas", level: 4, unlocked: true },
     { id: "avaliacao_exame", title: "8. Anamnese e Exame Psíquico", level: 5, unlocked: true }
   ],
 
-  // 3. FLASHCARDS (15 cartões revisados em PT-BR)
   flashcards: [
-    { topicId: "conceito_objeto", category: "Fundamentos", question: "Qual é a diferença principal entre a Psicopatologia e a Psiquiatria?", answer: "A Psicopatologia é uma ciência autônoma descritiva e compreensiva do sofrimento mental; a Psiquiatria é uma prática médica voltada ao tratamento e intervenção." },
-    { topicId: "conceito_objeto", category: "História", question: "Quem é considerado o fundador da Psicopatologia Moderna em 1913?", answer: "O filósofo e psiquiatra alemão Karl Jaspers, autor da obra 'Psicopatologia Geral'." },
-    { topicId: "normal_patologico", category: "Normalidade", question: "Qual é a principal limitação do critério estatístico de normalidade?", answer: "Confunde o normal com o mais frequente na média, ignorando que fenômenos muito comuns podem ser patológicos (ex: cárie) e raros podem ser saudáveis (ex: genialidade)." },
-    { topicId: "normal_patologico", category: "Normalidade", question: "O que define o critério de 'normalidade como processo'?", answer: "Avalia o comportamento de forma dinâmica conforme a etapa do desenvolvimento e a faixa etária do indivíduo." },
-    { topicId: "forma_conteudo", category: "Sintomatologia", question: "Na psicopatologia, qual a diferença entre Forma e Conteúdo do sintoma?", answer: "A Forma é a estrutura psicopatológica básica (ex: delírio, alucinação); o Conteúdo é o tema cultural e biográfico que a preenche (ex: perseguição por satélites)." },
-    { topicId: "forma_conteudo", category: "Sintomatologia", question: "Para o diagnóstico psicopatológico, qual elemento é mais constante e decisivo: a forma ou o conteúdo?", answer: "A forma do sintoma." },
-    { topicId: "semiologia", category: "Semiologia", question: "Qual a diferença entre Semiotécnica e Semiogênese?", answer: "Semiotécnica é a técnica de coleta e observação dos sintomas; Semiogênese é o estudo da origem e do significado desses sintomas." },
-    { topicId: "semiologia", category: "Semiologia", question: "Qual a diferença clínica entre Sinal e Sintoma?", answer: "Sinal é um dado objetivo observável pelo examinador (ex: tremor); Sintoma é uma vivência subjetiva relatada pelo paciente (ex: angústia)." },
-    { topicId: "semiologia", category: "Semiologia", question: "O que é uma Síndrome em psicopatologia?", answer: "Um agrupamento recorrente de sinais e sintomas que ocorrem juntos no mesmo momento, podendo ter diversas causas." },
-    { topicId: "jaspers_compreender_explicar", category: "Fenomenologia", question: "Segundo Karl Jaspers, qual a diferença entre 'Explicar' e 'Compreender'?", answer: "Explicar é apontar a causa orgânica/biológica de fora para dentro; Compreender é captar empaticamente o sentido psicológico de dentro para fora." },
-    { topicId: "jaspers_compreender_explicar", category: "Fenomenologia", question: "Por que o delírio primário verdadeiro é considerado 'incompreensível' por Jaspers?", answer: "Porque surge como uma intuição ou percepção imediata sem derivação lógica ou emocional compreensível a partir da história do sujeito." },
-    { topicId: "abordagens", category: "Perspectivas", question: "Como a psicopatologia psicodinâmica (psicanalítica) enxerga o sintoma mental?", answer: "Como uma expressão simbólica e formação de compromisso resultante de conflitos inconscientes e mecanismos de defesa." },
-    { topicId: "funcoes_psiquicas", category: "Exame Psíquico", question: "Por que dizemos que a divisão das funções psíquicas (memória, atenção, afeto) é apenas didática?", answer: "Porque a mente funciona como uma totalidade integrada: o adoecimento em uma função repercute em todas as demais." },
-    { topicId: "avaliacao_exame", category: "Avaliação", question: "Qual a diferença temporal entre Anamnese e Exame do Estado Mental?", answer: "A Anamnese é longitudinal (história ao longo da vida); o Exame do Estado Mental é transversal (fotografia do funcionamento psíquico no momento da consulta)." },
-    { topicId: "avaliacao_exame", category: "Avaliação", question: "O que é avaliado no Exame do Estado Mental (Exame Psíquico)?", answer: "Aparência, atitude, consciência, atenção, orientação, memória, sensopercepção, pensamento, linguagem, afetividade, volição e juízo crítico no momento presente." }
+    { topicId: "conceito_objeto", category: "Fundamentos", question: "Qual a diferença central entre Psicopatologia e Psiquiatria?", answer: "A Psicopatologia é a ciência teórica e descritiva do sofrimento mental; a Psiquiatria é a prática médica de intervenção e tratamento." },
+    { topicId: "conceito_objeto", category: "Karl Jaspers", question: "O que diz a advertência ética fundamental de Karl Jaspers?", answer: "Que nunca podemos reduzir inteiramente o ser humano aos conceitos psicopatológicos." },
+    { topicId: "normal_patologico", category: "Normalidade", question: "Qual a falha do critério estatístico de normalidade?", answer: "Confunde o normal com a média; ignora que doenças comuns são frequentes e traços raros podem ser geniais." },
+    { topicId: "normal_patologico", category: "Normalidade", question: "O que avalia a normalidade como processo?", answer: "A faixa etária e a etapa do desenvolvimento evolutivo do indivíduo." },
+    { topicId: "forma_conteudo", category: "Sintomatologia", question: "Qual a diferença entre a Forma e o Conteúdo do sintoma?", answer: "A Forma é a estrutura universal (ex: delírio); o Conteúdo é o enredo cultural e biográfico que a preenche." },
+    { topicId: "forma_conteudo", category: "Diagnóstico", question: "Para o diagnóstico, qual elemento é decisivo: a forma ou o conteúdo?", answer: "A forma do sintoma." },
+    { topicId: "semiologia", category: "Semiologia", question: "Qual a diferença entre Sinal e Sintoma?", answer: "Sinal é objetivo e observável de fora (ex: tremor); Sintoma é subjetivo e sentido por dentro (ex: angústia)." },
+    { topicId: "semiologia", category: "Semiologia", question: "O que caracteriza uma Síndrome clínica?", answer: "Um agrupamento recorrente de múltiplos sinais e sintomas que ocorrem juntos no mesmo momento." },
+    { topicId: "jaspers_compreender_explicar", category: "Fenomenologia", question: "Segundo Jaspers, o que diferencia Explicar de Compreender?", answer: "Explicar busca a causa orgânica de fora para dentro; Compreender capta o sentido empático de dentro para fora." },
+    { topicId: "jaspers_compreender_explicar", category: "Fenomenologia", question: "Como Jaspers classifica o delírio primário verdadeiro da esquizofrenia?", answer: "Como psicologicamente incompreensível, pois surge sem derivar logicamente da biografia." },
+    { topicId: "abordagens", category: "Perspectivas", question: "Como a abordagem psicodinâmica interpreta o sintoma?", answer: "Como uma formação de compromisso contra conflitos inconscientes e desejos recalcados." },
+    { topicId: "abordagens", category: "Perspectivas", question: "O que enfatiza a abordagem cognitivo-comportamental?", answer: "As crenças disfuncionais e as distorções no processamento da informação." },
+    { topicId: "funcoes_psiquicas", category: "Exame Psíquico", question: "Por que dizemos que a divisão das funções psíquicas é apenas didática?", answer: "Porque a mente funciona como uma totalidade integrada; quem adoece é a pessoa inteira." },
+    { topicId: "avaliacao_exame", category: "Avaliação", question: "Qual a diferença temporal entre Anamnese e Exame do Estado Mental?", answer: "Anamnese é longitudinal (história de vida); Exame Psíquico é transversal (estado mental atual na consulta)." },
+    { topicId: "avaliacao_exame", category: "Avaliação", question: "O que significa 'consciência de morbidade' (insight)?", answer: "A capacidade de o paciente reconhecer que seus sintomas são decorrentes de um transtorno mental." }
   ]
 };

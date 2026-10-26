@@ -1,0 +1,336 @@
+/* =========================================================================
+   css/main.css — Design System Doc's Lab (Duolingo 3D + Dark/Light + PC/Mobile)
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&display=swap');
+
+:root[data-theme="dark"] {
+  --bg-app: #0b0f19;
+  --bg-surface: #151d2e;
+  --bg-elevated: #1e293b;
+  --bg-glass: rgba(21, 29, 46, 0.92);
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-ui: #28354e;
+  --border-shadow: #090d16;
+
+  --brand-green: #22c55e;
+  --brand-green-shadow: #15803d;
+  --brand-purple: #8b5cf6;
+  --brand-purple-shadow: #6d28d9;
+  --brand-amber: #f59e0b;
+  --brand-amber-shadow: #b45309;
+  --brand-red: #ef4444;
+  --brand-red-shadow: #b91c1c;
+  --brand-blue: #38bdf8;
+  --brand-blue-shadow: #0284c7;
+}
+
+:root[data-theme="light"] {
+  --bg-app: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f8fafc;
+  --bg-glass: rgba(255, 255, 255, 0.94);
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --border-ui: #cbd5e1;
+  --border-shadow: #94a3b8;
+
+  --brand-green: #22c55e;
+  --brand-green-shadow: #16a34a;
+  --brand-purple: #7c3aed;
+  --brand-purple-shadow: #5b21b6;
+  --brand-amber: #f59e0b;
+  --brand-amber-shadow: #d97706;
+  --brand-red: #ef4444;
+  --brand-red-shadow: #dc2626;
+  --brand-blue: #0ea5e9;
+  --brand-blue-shadow: #0369a1;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Fredoka', cursive, sans-serif;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* =========================================================================
+   LAYOUT RESPONSIVO: MOBILE (< 1024px) vs DESKTOP (>= 1024px)
+   ========================================================================= */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Sidebar Esquerda (Oculta no Mobile, Fixa no PC) */
+.desktop-sidebar {
+  display: none;
+}
+
+/* Painel Lateral Direito (Oculto no Mobile, Fixo no PC) */
+.desktop-right-panel {
+  display: none;
+}
+
+/* Conteúdo Central */
+.main-viewport {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding-bottom: 96px; /* Espaço para a barra inferior no mobile */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Versão Computador (Duolingo Web 3 Colunas) */
+@media (min-width: 1024px) {
+  .app-shell {
+    grid-template-columns: 260px 1fr 340px;
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 28px 16px;
+    border-right: 2px solid var(--border-ui);
+  }
+
+  .desktop-right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 24px 0;
+    overflow-y: auto;
+  }
+
+  .main-viewport {
+    max-width: 760px;
+    padding-bottom: 40px;
+  }
+
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+/* =========================================================================
+   BOTÕES 3D ESTILO DUOLINGO
+   ========================================================================= */
+
+.btn-3d {
+  border: none;
+  border-radius: 18px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-3d:active:not(:disabled) {
+  transform: translateY(4px);
+}
+
+.btn-3d:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-green {
+  background-color: var(--brand-green);
+  color: #052e16;
+  box-shadow: 0 5px 0 var(--brand-green-shadow);
+}
+.btn-green:active:not(:disabled) { box-shadow: 0 1px 0 var(--brand-green-shadow); }
+
+.btn-purple {
+  background-color: var(--brand-purple);
+  color: #ffffff;
+  box-shadow: 0 5px 0 var(--brand-purple-shadow);
+}
+.btn-purple:active:not(:disabled) { box-shadow: 0 1px 0 var(--brand-purple-shadow); }
+
+.btn-amber {
+  background-color: var(--brand-amber);
+  color: #1e1b4b;
+  box-shadow: 0 5px 0 var(--brand-amber-shadow);
+}
+.btn-amber:active:not(:disabled) { box-shadow: 0 1px 0 var(--brand-amber-shadow); }
+
+.btn-red {
+  background-color: var(--brand-red);
+  color: #ffffff;
+  box-shadow: 0 5px 0 var(--brand-red-shadow);
+}
+.btn-red:active:not(:disabled) { box-shadow: 0 1px 0 var(--brand-red-shadow); }
+
+.btn-surface {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  border: 2px solid var(--border-ui);
+  box-shadow: 0 4px 0 var(--border-ui);
+}
+.btn-surface:active:not(:disabled) { box-shadow: 0 1px 0 var(--border-ui); }
+
+/* =========================================================================
+   CARDS E CONTAINERS
+   ========================================================================= */
+
+.duo-card {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-ui);
+  box-shadow: 0 6px 0 var(--border-ui);
+  border-radius: 26px;
+  padding: 20px;
+}
+
+/* =========================================================================
+   TRILHA DE NÍVEIS EM ZIGUE-ZAGUE
+   ========================================================================= */
+
+.path-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  padding: 24px 0 40px;
+  position: relative;
+}
+
+.path-node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.path-node-btn {
+  width: 78px;
+  height: 72px;
+  border-radius: 50%;
+  font-size: 26px;
+  position: relative;
+  border: 4px solid rgba(255,255,255,0.2);
+}
+
+.path-node-btn.node-completed {
+  background-color: var(--brand-green);
+  box-shadow: 0 7px 0 var(--brand-green-shadow);
+  color: #052e16;
+}
+
+.path-node-btn.node-current {
+  background-color: var(--brand-amber);
+  box-shadow: 0 7px 0 var(--brand-amber-shadow);
+  color: #1e1b4b;
+  animation: pulseBounce 2s infinite ease-in-out;
+}
+
+.path-node-btn.node-available {
+  background-color: var(--brand-purple);
+  box-shadow: 0 7px 0 var(--brand-purple-shadow);
+  color: #ffffff;
+}
+
+@keyframes pulseBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* =========================================================================
+   ATELIÊ DE AVATAR AMPLIADO (COM PREVIEW ANTES DE COMPRAR)
+   ========================================================================= */
+
+.avatar-stage-large {
+  width: 220px;
+  height: 220px;
+  border-radius: 36px;
+  border: 4px solid var(--brand-purple);
+  box-shadow: 0 10px 0 var(--border-ui), 0 15px 35px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: #1e1b4b;
+}
+
+.avatar-stage-large.zoomed {
+  transform: scale(1.22);
+  z-index: 30;
+}
+
+.preview-badge-tryon {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(245, 158, 11, 0.95);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  white-space: nowrap;
+}
+
+/* =========================================================================
+   ANIMAÇÕES DE DOPAMINA & FLOATING XP
+   ========================================================================= */
+
+@keyframes floatUpDopamine {
+  0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+  20% { opacity: 1; transform: translateY(-6px) scale(1.1); }
+  80% { opacity: 1; transform: translateY(-28px) scale(1); }
+  100% { opacity: 0; transform: translateY(-42px) scale(0.9); }
+}
+
+.dopamine-pop {
+  animation: floatUpDopamine 1.3s forwards ease-out;
+}
+
+@keyframes mascotBreathe {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+}
+
+.anim-breathe {
+  animation: mascotBreathe 3s infinite ease-in-out;
+}

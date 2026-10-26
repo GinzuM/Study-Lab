@@ -1,117 +1,72 @@
 // =========================================================================
-// CAMADA DE DADOS TEÓRICOS (dt_psicofarmacologia.js)
-// Tópicos, Mapa Mental e Flashcards revisados para Português do Brasil (PT-BR)
+// CAMADA DE DADOS TEÓRICOS (dt_psicofarmacologia.js) — Doc's Lab
+// Revisado integralmente: Espelhamento pedagógico exato com o Quiz e Simulado
 // =========================================================================
 
 const studyData = {
   topics: [
     {
       id: "sinapse",
-      title: "1. Comunicação Neural & Fisiologia da Sinapse Química",
-      content: `A transmissão da informação no Sistema Nervoso Central (SNC) ocorre prioritariamente por sinapses químicas. As etapas sequenciais são:
-      1. **Despolarização Pré-Sináptica:** A chegada do potencial de ação ao terminal axonal despolariza a membrana.
-      2. **Influxo de Cálcio:** Abrem-se canais de Cálcio dependentes de voltagem (Ca²⁺). O influxo rápido deste íon é o gatilho biofísico mandatório.
-      3. **Exocitose Vesicular:** O Ca²⁺ interage com proteínas do complexo SNARE, provocando a fusão das vesículas sinápticas e liberação dos neurotransmissores na fenda.
-      4. **Ativação Pós-Sináptica:** Os ligantes acoplam-se a receptores específicos gerando eventos elétricos:
-         - **PPSE (Potencial Pós-Sináptico Excitatório):** Influxo de cátions (como o Sódio - Na⁺), despolarizando a membrana e aproximando o neurônio do limiar de disparo.
-         - **PPSI (Potencial Pós-Sináptico Inibitório):** Influxo de ânions (Cloreto - Cl⁻) ou efluxo de cátions (Potássio - K⁺), hiperpolarizando a célula e silenciando o disparo.
+      title: "1. Fisiologia da Sinapse Química e Eventos Eletrofisiológicos",
+      content: `A transmissão da informação no Sistema Nervoso Central (SNC) ocorre prioritariamente por sinapses químicas. As etapas sequenciais envolvem:
+      1. **Chegada do Potencial de Ação:** Despolariza a membrana do terminal axonal pré-sináptico.
+      2. **Influxo de Cálcio ($Ca^{2+}$):** Abrem-se canais de cálcio dependentes de voltagem. O **influxo rápido de $Ca^{2+}$** atua como o gatilho biofísico mandatório para a exocitose vesicular.
+      3. **Exocitose Vesicular:** O $Ca^{2+}$ interage com as proteínas do **complexo SNARE**, fundindo as vesículas à membrana e liberando os neurotransmissores na fenda.
+      4. **Eventos Pós-Sinápticos:** 
+         - **PPSE (Potencial Pós-Sináptico Excitatório):** Induzido pelo influxo de cátions como o **Sódio ($Na^+$)**, despolarizando a membrana e aproximando o neurônio do limiar de disparo.
+         - **PPSI (Potencial Pós-Sináptico Inibitório):** Induzido pelo influxo de ânions **Cloreto ($Cl^-$)** (frequentemente via receptores $GABA_A$) ou efluxo de Potássio ($K^+$), hiperpolarizando a célula (tornando o citoplasma mais negativo) e afastando-a do limiar de ação.
 
-      **Exemplo Prático:** Quando você toca em algo quente, o impulso elétrico desce pelo axônio, abre as portas de cálcio, solta o neurotransmissor na fenda e avisa o próximo neurônio para afastar a mão rapidamente.
-
-      **Modo Simplificado:**
-      - **Cálcio (Ca²⁺):** O gatilho que abre as portas para as vesículas descarregarem na fenda.
-      - **PPSE:** Acelera o neurônio (o sódio entra, fica positivo e dispara).
-      - **PPSI:** Freia o neurônio (o cloreto entra ou o potássio sai, fica negativo e cessa o sinal).`,
-      mnemonic: "💡 Mnemônico: 'PPSE aproxima do zero (+ dispara), PPSI afasta o neurônio (- silencia)'."
+* **Exemplo Prático:** A chegada do impulso elétrico abre as portas de cálcio, soltando o neurotransmissor que vai excitar (sódio) ou inibir (cloreto) o próximo neurônio.`,
+      mnemonic: "💡 Mnemônico: Cálcio ($Ca^{2+}$) é o gatilho da exocitose; Sódio ($Na^+$) excita (PPSE); Cloreto ($Cl^-$) inibe (PPSI)."
     },
     {
       id: "agonista_antagonista",
-      title: "2. Princípios Farmacodinâmicos: Agonistas vs. Antagonistas",
-      content: `A farmacodinâmica estuda o mecanismo de ação dos fármacos nos receptores celulares:
-      - **Agonista Pleno:** Fármaco que possui **afinidade** (capacidade de se ligar ao sítio ativo do receptor) e **alta atividade intrínseca** (eficácia de 100% em alterar a conformação do receptor e ativar a cascata intracelular).
-      - **Agonista Parcial:** Possui afinidade, mas a sua atividade intrínseca é submáxima. Na presença de excesso de agonista pleno, atua como um 'freio' ou antagonista relativo.
-      - **Antagonista Silencioso:** Possui **afinidade** pelo receptor, mas a sua **atividade intrínseca é nula (0%)**. Ocupa a fenda sem ativá-la, bloqueando o acesso de agonistas endógenos.
-      
-      **Exemplo Prático:** Antipsicóticos clássicos (como o Haloperidol) atuam como antagonistas puros de receptores dopaminérgicos D₂; eles encaixam-se na fechadura mas não giram a chave, impedindo que a dopamina em excesso se ligue.
-
-      **Modo Simplificado:**
-      - **Agonista:** Chave que entra na fechadura e gira o trinco, ligando o motor da célula.
-      - **Antagonista:** Chave quebrada que emperra na fechadura; não liga nada e impede que qualquer outra chave entre.`,
-      mnemonic: "💡 Mnemônico: 'Agonista liga o motor; Antagonista quebra a chave na ignição'."
+      title: "2. Princípios Farmacodinâmicos: Agonistas e Antagonistas",
+      content: `A farmacodinâmica estuda o comportamento dos fármacos nos receptores:
+      * **Afinidade:** A força ou capacidade de ligação do fármaco ao sítio ativo do receptor.
+      * **Atividade Intrínseca (Eficácia):** A capacidade do fármaco de desencadear a transdução de sinal intracelular após a ligação.
+      * **Agonista Pleno:** Possui afinidade e atividade intrínseca máxima (**100%**), ativando plenamente o receptor.
+      * **Agonista Parcial:** Possui afinidade, mas atividade intrínseca submáxima. Na presença de um agonista pleno, pode atuar competitivamente reduzindo a resposta máxima.
+      * **Antagonista Silencioso (ou Neutro):** Possui afinidade, mas atividade intrínseca estritamente **nula (0%)**. Ele ocupa a fechadura sem girar a chave, bloqueando o acesso de agonistas endógenos.`,
+      mnemonic: "💡 Mnemônico: Agonista pleno = 100% de eficácia; Agonista parcial = Eficácia submáxima; Antagonista silencioso = 0% de eficácia (apenas bloqueia)."
     },
     {
       id: "neurotransmissores",
-      title: "3. Neurotransmissores Clássicos & Ações Centrais",
-      content: `Os principais mensageiros químicos do encéfalo exercem funções regulatórias específicas:
-      - **Glutamato:** Principal neurotransmissor excitatório cerebral. Vital para a memória e aprendizado (LTP). Em excesso crônico causa **excitotoxicidade** (morte neuronal por influxo descontrolado de Ca²⁺).
-      - **GABA (Ácido Gama-Aminobutírico):** Principal inibidor encefálico. Seus receptores abrem canais de Cl⁻, promovendo sedação, ansiólise e estabilização de crises.
-      - **Serotonina (5-HT):** Regulação do humor, impulsividade, saciedade alimentar e ciclos de sono.
-      - **Noradrenalina (NA):** Alerta, prontidão de luta/fuga, foco, vigília e regulação da pressão arterial.
-      - **Dopamina (DA):** Vias de recompensa e prazer, tônus motor extrapiramidal e funções executivas.
-      - **Acetilcolina (ACh):** No SNC, atua na atenção e consolidação da memória. No SNP, atua na junção neuromuscular disparando a contração dos músculos esqueléticos.
-
-      **Exemplo Prático:** Durante um susto, a noradrenalina dispara o coração e o alerta; logo em seguida, o GABA tenta acalmar o sistema para retornar ao equilíbrio.
-
-      **Modo Simplificado:**
-      - **Glutamato:** Acelerador geral do cérebro.
-      - **GABA:** Freio de mão geral (calmante).
-      - **Acetilcolina:** Foco na cabeça e força no músculo.`,
-      mnemonic: "💡 Mnemônico: 'GABA desliga a tomada; Glutamato cola o circuito; Acetilcolina ativa a contração'."
+      title: "3. Neurotransmissores Clássicos e Seus Papéis Centrais",
+      content: `Os principais mensageiros químicos do encéfalo exercem funções regulatórias vitais:
+      * **Glutamato:** Principal neurotransmissor excitatório cerebral. Essencial para a plasticidade sináptica (LTP) e memória. O seu excesso crônico provoca **excitotoxicidade** (morte neuronal por influxo descontrolado de $Ca^{2+}$).
+      * **GABA:** Principal inibidor encefálico. Promove sedação, ansiólise e relaxamento.
+      * **Serotonina (5-HT):** Regulação do humor, sono, impulsividade e saciedade.
+      * **Noradrenalina (NA):** Alerta, foco, vigília e resposta de luta ou fuga.
+      * **Dopamina (DA):** Recompensa, prazer e controle motor.
+      * **Acetilcolina (ACh):** No SNC, atua na atenção e memória (através do **Núcleo Basal de Meynert**). No SNP, atua na placa motora gerando a contração dos músculos esqueléticos (degradada pela enzima **acetilcolinesterase**).`,
+      mnemonic: "💡 Mnemônico: Glutamato = Excitador; GABA = Inibidor; Acetilcolina = Memória (Meynert) e Contração muscular."
     },
     {
       id: "psicose_dependencia",
-      title: "4. Vias Dopaminérgicas: Psicose & Dependência",
-      content: `A dopamina organiza quatro vias centrais e está no centro de importantes patologias:
-      1. **Esquizofrenia (Hipótese Dopaminérgica):**
-         - **Via Mesolímbica:** Hiperatividade dopaminérgica gera os **sintomas positivos** (delírios e alucinações). Os antipsicóticos bloqueiam receptores D₂ desta via.
-         - **Via Mesocortical:** Hipoatividade dopaminérgica correlaciona-se com os **sintomas negativos** (embotamento afetivo, apatia) e déficits cognitivos.
-         - **Via Nigroestriatal:** Controla a motricidade. O bloqueio excessivo de D₂ induz efeitos extrapiramidais (parkinsonismo).
-      2. **Neurobiologia da Adição:**
-         - Ocorre no **Circuito de Recompensa Mesolímbico**. Substâncias de abuso causam picos rápidos e suprafisiológicos de dopamina no **Núcleo Accumbens**. O uso crônico gera dessensibilização (tolerância).
-      3. **Déficit Colinérgico (Alzheimer):**
-         - A morte seletiva de neurônios no Núcleo Basal de Meynert causa falta severa de acetilcolina.
-
-      **Exemplo Prático:** O uso de drogas de abuso inunda o Núcleo Accumbens de dopamina artificial, gerando um prazer intenso e desregulando o circuito natural de recompensa.
-
-      **Modo Simplificado:**
-      - **Psicose (Sintomas Positivos):** Excesso de dopamina na via mesolímbica. Tratamento: Bloqueador de D₂.
-      - **Dependência:** Inundação artificial de dopamina no Núcleo Accumbens.
-      - **Alzheimer:** Falta severa de Acetilcolina na central da memória.`,
-      mnemonic: "💡 Mnemônico: 'Mesolímbica alta = Delírio e Vício; Colinérgico em baixa = Esquecimento (Alzheimer)'."
+      title: "4. Vias Dopaminérgicas: Psicose, Esquizofrenia e Adição",
+      content: `A dopamina organiza quatro vias centrais de grande relevância clínica:
+      1. **Via Mesolímbica:** Hiperatividade dopaminérgica gera os **sintomas positivos da esquizofrenia** (delírios e alucinações). Os antipsicóticos típicos bloqueiam receptores $D_2$ aqui.
+      2. **Via Mesocortical:** Hipoatividade dopaminérgica correlaciona-se com os **sintomas negativos** (apatia, embotamento) e déficits cognitivos.
+      3. **Via Nigroestriatal:** Regula os movimentos. Seu bloqueio induz parkinsonismo medicamentoso e efeitos extrapiramidais.
+      4. **Via Tuberoinfundibular:** Regula a prolactina.
+      * **Neurobiologia da Adição:** As substâncias de abuso provocam picos rápidos de dopamina no **Núcleo Accumbens** (via mesolímbica), induzindo *down-regulation* crônica de receptores $D_2$ (tolerância e anedonia).`,
+      mnemonic: "💡 Mnemônico: Mesolímbica alta = Alucinações e Vício (Accumbens); Mesocortical baixa = Sintomas negativos."
     },
     {
       id: "depressao_teorias",
-      title: "5. Teorias Neurobiológicas da Depressão Maior",
-      content: `A depressão é compreendida a partir de duas principais matrizes teóricas:
-      - **Teoria Monoaminérgica Clássica:** Propõe que o transtorno decorre do déficit funcional de Serotonina, Noradrenalina e Dopamina.
-        - *Paradoxo Temporal:* Os fármacos elevam as monoaminas na fenda em poucas horas, mas a remissão clínica demora de 2 a 4 semanas. Isto ocorre devido à necessidade de adaptações celulares lentas: **dessensibilização e down-regulation de autorreceptores inibitórios pré-sinápticos**, permitindo a desinibição do neurônio.
-      - **Teoria Neurotrófica:** O estresse crônico (excesso de cortisol) suprime a expressão do gene do **BDNF** (*Fator Neurotrófico Derivado do Encéfalo*). Isto causa atrofia de dendritos e perda sináptica no hipocampo. Os antidepressivos reativam o BDNF, restaurando a plasticidade neuronal.
-
-      **Exemplo Prático:** Um antidepressivo eleva a serotonina no primeiro dia, mas o paciente só melhora um mês depois porque os "sensores de freio" do neurônio precisam se desligar com o tempo.
-
-      **Modo Simplificado:**
-      - **Monoaminas:** O atraso terapêutico ocorre porque os autorreceptores precisam de tempo para se adaptarem.
-      - **Teoria Neurotrófica:** O estresse crônico seca os ramos dos neurônios (falta de BDNF). O antidepressivo funciona como um adubo celular.`,
-      mnemonic: "💡 Mnemônico: 'Mais do que faltar neurotransmissor, falta adubo nos neurônios (BDNF)'."
+      title: "5. Teorias Neurobiológicas da Depressão e Plasticidade",
+      content: `A depressão é compreendida por duas matrizes complementares:
+      * **Teoria Monoaminérgica Clássica:** Atribui o transtorno ao déficit funcional de monoaminas. O *paradoxo temporal* (demora de 2 a 4 semanas para o efeito clínico apesar do aumento imediato de aminas na fenda) é explicado pelo tempo necessário para a **dessensibilização e *down-regulation* progressiva de autorreceptores pré-sinápticos inibitórios**.
+      * **Teoria Neurotrófica:** O estresse crônico eleva o cortisol e suprime a expressão do gene do **BDNF** (*Fator Neurotrófico Derivado do Encéfalo*), provocando atrofia dendrítica e perda de sinapses no hipocampo. Os antidepressivos restauram a plasticidade ao reativar o BDNF.`,
+      mnemonic: "💡 Mnemônico: Atraso de 2 semanas = Adaptação dos autorreceptores; Teoria Neurotrófica = Falta de BDNF (adubo celular)."
     },
     {
       id: "antidepressivos",
       title: "6. Farmacologia: Tricíclicos (ADTs) vs. ISRS",
-      content: `A evolução dos fármacos antidepressivos marcou uma transição em termos de seletividade e segurança:
-      - **Antidepressivos Tricíclicos (ADTs):**
-        - Inibem a recaptação de Serotonina e Noradrenalina.
-        - *Perfil Não Seletivo:* Antagonizam receptores colinérgicos muscarínicos (boca seca, retenção urinária); histamínicos H₁ (sedação, ganho de peso); e adrenérgicos α₁ (hipotensão postural).
-        - *Risco:* Elevada cardiotoxicidade por bloqueio de canais de sódio miocárdicos (arritmias letais em superdosagem).
-      - **Inibidores Seletivos de Recaptação de Serotonina (ISRS):**
-        - Inibição seletiva do transportador SERT, sem afinidade por receptores muscarínicos ou adrenérgicos.
-        - *Vantagem:* Eficácia equivalente aos ADTs, mas com elevado perfil de segurança e baixíssima letalidade em caso de overdose.
-
-      **Exemplo Prático:** Antigamente usava-se a amitriptilina (tricíclico), que causava muita boca seca e tontura ao levantar. Hoje prefere-se a sertralina ou fluoxetina (ISRS), que atuam de forma cirúrgica na serotonina sem esses incômodos colaterais intensos.
-
-      **Modo Simplificado:**
-      - **Tricíclicos:** Eficazes, mas afetam vários receptores no corpo (boca seca, tontura) e são perigosos no coração em overdose.
-      - **ISRS:** Atuação seletiva e segura na serotonina, sendo a primeira linha atual.`,
-      mnemonic: "💡 Mnemônico: 'Tricíclico atira para todo o lado; ISRS é cirúrgico e seguro'."
+      content: `* **Antidepressivos Tricíclicos (ADTs):** Inibem a recaptação de serotonina e noradrenalina, mas possuem perfil **não seletivo**, bloqueando receptores muscarínicos (boca seca, retenção urinária), histamínicos $H_1$ (sedação, ganho de peso) e $\alpha_1$ adrenérgicos (hipotensão postural). São altamente cardiotóxicos em overdose devido ao bloqueio de canais de sódio miocárdicos.
+      * **Inibidores Seletivos (ISRS):** Atuam seletivamente sobre o transportador **SERT**, apresentando excelente perfil de segurança e baixíssima letalidade em superdosagem.`,
+      mnemonic: "💡 Mnemônico: Tricíclicos bloqueiam vários receptores e são perigosos no coração; ISRS são seletivos e seguros."
     }
   ],
 
@@ -119,32 +74,21 @@ const studyData = {
     { id: "sinapse", title: "1. Fisiologia das Sinapses", level: 1, unlocked: true },
     { id: "agonista_antagonista", title: "2. Agonistas e Antagonistas", level: 2, unlocked: true },
     { id: "neurotransmissores", title: "3. Neurotransmissores", level: 2, unlocked: true },
-    { id: "psicose_dependencia", title: "4. Psicose e Dependência", level: 3, unlocked: true },
-    { id: "depressao_teorias", title: "5. Teorias da Depressão", level: 3, unlocked: true },
+    { id: "psicose_dependencia", title: "4. Vias Dopaminérgicas e Adição", level: 3, unlocked: true },
+    { id: "depressao_teorias", title: "5. Teorias da Depressão e BDNF", level: 3, unlocked: true },
     { id: "antidepressivos", title: "6. Tricíclicos vs. ISRS", level: 4, unlocked: true }
   ],
 
   flashcards: [
-    { topicId: "sinapse", category: "Sinapses", question: "Qual íon desencadeia diretamente a exocitose das vesículas sinápticas?", answer: "Cálcio (Ca²⁺), que entra no terminal axonal após a despolarização." },
-    { topicId: "sinapse", category: "Sinapses", question: "Como atua o Potencial Pós-Sináptico Excitatório (PPSE)?", answer: "Despolariza a membrana (frequentemente via entrada de Na⁺), aproximando-a do limiar de disparo." },
-    { topicId: "sinapse", category: "Sinapses", question: "A entrada de Cloreto (Cl⁻) na célula gera qual evento elétrico?", answer: "Gera um Potencial Pós-Sináptico Inibitório (PPSI), hiperpolarizando a célula." },
-    { topicId: "agonista_antagonista", category: "Farmacodinâmica", question: "Qual a diferença primária entre Agonista Pleno e Antagonista?", answer: "O Agonista possui afinidade e atividade intrínseca máxima; o Antagonista possui afinidade, mas eficácia nula (apenas bloqueia)." },
-    { topicId: "neurotransmissores", category: "Neuroquímica", question: "Qual o principal neurotransmissor inibitório e o excitatório do SNC?", answer: "GABA (inibitório) e Glutamato (excitatório)." },
-    { topicId: "neurotransmissores", category: "Neuroquímica", question: "Onde atua a Acetilcolina no Sistema Nervoso Periférico?", answer: "Na junção neuromuscular, sendo responsável pela contração dos músculos esqueléticos." },
-    { topicId: "psicose_dependencia", category: "Psicose", question: "Qual via dopaminérgica está associada aos sintomas positivos da esquizofrenia?", answer: "Via Mesolímbica (hiperatividade dopaminérgica)." },
-    { topicId: "psicose_dependencia", category: "Psicose", question: "O bloqueio acidental de qual via pelos antipsicóticos causa parkinsonismo?", answer: "Via Nigroestriatal." },
-    { topicId: "psicose_dependencia", category: "Dependência", question: "Que estrutura forma o centro de recompensa estimulado no vício?", answer: "Núcleo Accumbens." },
-    { topicId: "psicose_dependencia", category: "Dependência", question: "A exposição contínua a drogas causa que adaptação nos receptores D₂?", answer: "Dessensibilização e down-regulation (redução do número de receptores)." },
-    { topicId: "depressao_teorias", category: "Depressão", question: "O que é o paradoxo temporal da teoria monoaminérgica?", answer: "As aminas sobem na fenda em horas, mas o humor só melhora após 2 a 4 semanas." },
-    { topicId: "depressao_teorias", category: "Depressão", question: "O que explica a latência de ação dos antidepressivos?", answer: "A necessidade de down-regulation dos autorreceptores inibitórios pré-sinápticos." },
-    { topicId: "depressao_teorias", category: "Depressão", question: "Segundo a Teoria Neurotrófica, qual é o impacto do estresse crônico?", answer: "Suprime o BDNF, causando atrofia dendrítica no hipocampo." },
-    { topicId: "antidepressivos", category: "Antidepressivos", question: "Qual a diferença central de segurança entre Tricíclicos e ISRS?", answer: "ISRS têm elevada segurança e seletividade; Tricíclicos têm risco de letalidade por cardiotoxicidade em superdosagem." },
-    { topicId: "antidepressivos", category: "Antidepressivos", question: "Por que os Tricíclicos causam boca seca e retenção urinária?", answer: "Devido ao bloqueio não intencional dos receptores colinérgicos muscarínicos." },
-    { topicId: "sinapse", category: "Sinapses", question: "O que é o complexo SNARE na fisiologia sináptica?", answer: "Um conjunto de proteínas responsáveis por mediar a fusão das vesículas sinápticas à membrana pré-sináptica." },
-    { topicId: "agonista_antagonista", category: "Farmacodinâmica", question: "O que caracteriza um agonista parcial?", answer: "Possui afinidade pelo receptor, mas atividade intrínseca submáxima." },
-    { topicId: "neurotransmissores", category: "Neuroquímica", question: "O que é excitotoxicidade glutamatérgica?", answer: "Morte neuronal causada por influxo descontrolado de cálcio devido ao excesso de glutamato." },
-    { topicId: "psicose_dependencia", category: "Psicose", question: "O que se associa à via mesocortical na esquizofrenia?", answer: "Hipoatividade dopaminérgica relacionada aos sintomas negativos e déficits cognitivos." },
-    { topicId: "depressao_teorias", category: "Depressão", question: "Qual é a função essencial da proteína BDNF no cérebro?", answer: "Sustentar a neuroplasticidade, a sobrevivência neuronal e a neurogênese no hipocampo." },
-    { topicId: "antidepressivos", category: "Antidepressivos", question: "Por que os tricíclicos causam hipotensão postural?", answer: "Devido ao bloqueio periférico de receptores alfa-1 adrenérgicos nos vasos sanguíneos." }
+    { topicId: "sinapse", category: "Sinapses", question: "Qual íon deflagra a exocitose vesicular no terminal pré-sináptico?", answer: "Cálcio ($Ca^{2+}$), através de influxo por canais dependentes de voltagem." },
+    { topicId: "sinapse", category: "Sinapses", question: "O que caracteriza o Potencial Pós-Sináptico Excitatório (PPSE)?", answer: "Despolarização da membrana gerada habitualmente pelo influxo de Sódio ($Na^+$)." },
+    { topicId: "agonista_antagonista", category: "Farmacodinâmica", question: "Qual a atividade intrínseca de um antagonista silencioso?", answer: "Atividade intrínseca estritamente nula (0%), pois apenas bloqueia o receptor." },
+    { topicId: "neurotransmissores", category: "Neuroquímica", question: "Qual enzima degrada a acetilcolina na fenda sináptica?", answer: "A enzima acetilcolinesterase." },
+    { topicId: "neurotransmissores", category: "Neuroquímica", question: "Onde se localiza o núcleo colinérgico degenerado no Alzheimer?", answer: "No Núcleo Basal de Meynert." },
+    { topicId: "psicose_dependencia", category: "Psicose", question: "Qual via dopaminérgica gera os sintomas positivos da esquizofrenia?", answer: "A Via Mesolímbica (por hiperatividade dopaminérgica)." },
+    { topicId: "psicose_dependencia", category: "Adição", question: "Que estrutura cerebral constitui o alvo central do circuito de recompensa?", answer: "O Núcleo Accumbens." },
+    { topicId: "depressao_teorias", category: "Depressão", question: "O que explica o atraso de 2 a 4 semanas na eficácia dos antidepressivos?", answer: "A dessensibilização e down-regulation progressiva de autorreceptores pré-sinápticos." },
+    { topicId: "depressao_teorias", category: "Depressão", question: "Qual o papel do BDNF na teoria neurotrófica?", answer: "Promover a plasticidade sináptica, sobrevivência neuronal e neurogênese no hipocampo." },
+    { topicId: "antidepressivos", category: "Antidepressivos", question: "Por que os tricíclicos causam efeitos como boca seca e visão turva?", answer: "Devido ao bloqueio não seletivo de receptores colinérgicos muscarínicos." }
   ]
 };

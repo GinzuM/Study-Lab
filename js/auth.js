@@ -1,46 +1,71 @@
-// js/auth.js
+// =========================================================================
+// js/auth.js — Autenticação Supabase & Controle de Sessão do Doc's Lab
+// =========================================================================
 
 const SUPABASE_URL = 'https://sqhymzvkfqudmridwmop.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_flOOhNjr0YJ8es0EtyLG5w_csXqh0n_';
 
 // Inicializa o cliente global do Supabase
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true
-  }
-});
+const supabaseClient = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    })
+  : null;
 
-// Verifica a sessão na página principal (index.html)
+window. currentSessionUser = null;
+
 async function checkAuth() {
-  // Pega a sessão atual do localStorage
-  const { data: { session }, error } = await supabaseClient.auth.getSession();
-  
-  // Se não houver sessão, expulsa imediatamente para o login
-  if (error || !session) {
-    window.location.replace('/pages/login.html');
-    return;
-  }
+  if (!supabaseClient) return;
 
-  // Se estiver logado, exibe o e-mail caso o elemento exista
-  const emailDisplay = document.getElementById('user-display-email');
-  if (emailDisplay) {
-    emailDisplay.textContent = session.user.email;
+  try {
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+
+    // Se não houver sessão ativa, redireciona para a tela de login
+    if (error || !session) {
+      // Calcula o caminho correto para pages/login.html mesmo em subpastas
+      const isInSubfolder = window.location.pathname.includes('/cursos/') || window.location.pathname.includes('/pages/');
+      const loginPath = isInSubfolder ? '../pages/login.html' : 'pages/login.html';
+      if (!window.location.pathname.endsWith('login.html')) {
+        window.location.replace(loginPath);
+      }
+      return;
+    }
+
+    window.currentSessionUser = session.user;
+
+    // Exibe o e-mail do usuário nos elementos da interface
+    const emailDisplays = document.querySelectorAll('.user-display-email, #user-display-email');
+    emailDisplays.forEach(el => {
+      el.textContent = session.user.email;
+    });
+
+    // Se o usuário ainda não personalizou o nome no Doc's Lab, usa o prefixo do e-mail
+    if (typeof window.syncAuthenticatedUser === 'function') {
+      window.syncAuthenticatedUser(session.user);
+    }
+  } catch (err) {
+    console.warn('Aviso ao verificar sessão Supabase:', err);
   }
 }
 
-// Executa a verificação apenas se estivermos na página principal (index.html)
-if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+// Executa a verificação automaticamente fora da página de login
+if (!window.location.pathname.endsWith('login.html')) {
   checkAuth();
 }
 
-// Configura o botão de logout globalmente
+// Configura o botão de Logout globalmente
 document.addEventListener('click', async (e) => {
-  const logoutBtn = e.target.closest('#btn-logout');
+  const logoutBtn = e.target.closest('#btn-logout, .btn-logout-action');
   if (logoutBtn) {
     e.preventDefault();
-    await supabaseClient.auth.signOut();
-    window.location.replace('/pages/login.html');
+    if (supabaseClient) {
+      await supabaseClient.auth.signOut();
+    }
+    const isInSubfolder = window.location.pathname.includes('/cursos/');
+    window.location.replace(isInSubfolder ? '../../pages/login.html' : 'pages/login.html');
   }
 });

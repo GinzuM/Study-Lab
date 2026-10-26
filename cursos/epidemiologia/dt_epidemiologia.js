@@ -1,131 +1,109 @@
 // =========================================================================
-// DADOS TEÓRICOS (dt_epidemiologia.js): TÓPICOS, MAPA MENTAL E FLASHCARDS
-// Revisado integralmente para Português do Brasil (PT-BR)
+// DADOS TEÓRICOS (dt_epidemiologia.js) — Doc's Lab
+// Revisado integralmente: Espelhamento pedagógico exato com o Quiz
 // =========================================================================
 
 const studyData = {
-  // 1. RESUMOS E TÓPICOS (Com exemplos práticos e Modo Simplificado)
   topics: [
     {
       id: "sp_sc",
       title: "1. Saúde Pública vs. Saúde Coletiva",
-      content: `A Saúde Pública foca no controle de epidemias, riscos biológicos e prevenção de doenças por meio de intervenções pontuais e campanhas do Estado. Já a Saúde Coletiva, nascida na América Latina (décadas de 1970 e 1980) com a Reforma Sanitária, entende a saúde como um fenômeno social e histórico profundo. A diferença principal é que a Saúde Pública olha para a biologia e fatores de risco imediatos, enquanto a Saúde Coletiva analisa os determinantes sociais e as desigualdades estruturais.
-      
-      **Exemplo Prático:** Durante um surto de dengue, a Saúde Pública distribui repelentes e aplica inseticidas (fumacê). A Saúde Coletiva investiga a falta de saneamento básico, a coleta irregular de lixo no bairro e cobra políticas públicas de habitação.
-      
-      **Modo Simplificado:** A Saúde Pública trata o corpo e o vírus. A Saúde Coletiva trata a sociedade e a desigualdade que causaram a doença.`,
-      mnemonic: "💡 Mnemônico: Saúde Pública = Risco/Biologia; Saúde Coletiva = Sociedade/Desigualdade."
+      content: `A **Saúde Pública** tradicional foca no controle de epidemias, riscos biológicos imediatos, vacinação em massa e campanhas sanitárias estatais, operando de forma técnica e centrada no vetor ou na doença. 
+
+Já a **Saúde Coletiva**, nascida na América Latina (especialmente no Brasil) nas décadas de 1970 e 1980 com o movimento da Reforma Sanitária, entende a saúde como um fenômeno social e histórico profundo. Ela analisa a **determinação social** do processo saúde-doença e as desigualdades estruturais.
+
+* **Exemplo Prático:** Durante um surto de dengue, a Saúde Pública tradicional distribui repelentes e aplica inseticidas (fumacê). A Saúde Coletiva investiga a falta de saneamento básico, a coleta irregular de lixo na periferia e cobra políticas públicas de habitação e renda.`,
+      mnemonic: "💡 Mnemônico: Saúde Pública = Foca no risco biológico imediato. Saúde Coletiva = Foca nas desigualdades e na determinação social."
     },
     {
       id: "art_196",
-      title: "2. Reforma Sanitária e Artigo 196",
-      content: `Antes da Constituição de 1988, a saúde no Brasil era gerida pelo INAMPS, operando sob um modelo previdenciário e excludente: apenas trabalhadores formais (com carteira assinada) tinham acesso à assistência médica pública. O restante da população dependia de caridade e filantropia (Santas Casas). O Artigo 196 da CF/1988 rompeu com esse modelo ao afirmar que "a saúde é direito de todos e dever do Estado", criando uma concepção ampliada de saúde e dando origem ao Sistema Único de Saúde (SUS).
-      
-      **Exemplo Prático:** Antes de 1988, um trabalhador autônomo ou desempregado sem carteira assinada não podia ser atendido nos hospitais do INAMPS. Hoje, com o SUS, ele tem exatamente o mesmo direito de acesso que qualquer trabalhador formal.
-      
-      **Modo Simplificado:** Antes de 1988 (INAMPS), a saúde era um clube fechado só para quem tinha carteira assinada. Depois de 1988 (Art. 196 / SUS), virou um direito universal para todos.`,
-      mnemonic: "💡 Mnemônico: INAMPS = Clube Restrito (Carteira Assinada). Art. 196 = Direito Universal (SUS)."
+      title: "2. Reforma Sanitária e o Artigo 196 da Constituição",
+      content: `Antes da Constituição Federal de 1988, a assistência médica pública no Brasil era gerida pelo **INAMPS**, operando sob um **modelo previdenciário e excludente**: apenas os trabalhadores formais (com carteira assinada e contribuição em dia) tinham direito garantido ao atendimento médico. O restante da população dependia da caridade e da filantropia (como as Santas Casas).
+
+O **Artigo 196 da Constituição Federal de 1988** rompeu radicalmente com esse modelo ao estabelecer que *"a saúde é direito de todos e dever do Estado"*, garantindo o acesso universal e igualitário e criando as bases legais para o surgimento do **SUS (Sistema Único de Saúde)**.`,
+      mnemonic: "💡 Mnemônico: INAMPS = Clube restrito para quem tinha carteira assinada. Art. 196 / SUS = Direito universal para todo cidadão."
     },
     {
       id: "proc_saude_doenca",
       title: "3. O Processo Saúde-Doença",
-      content: `Saúde e doença não são estados isolados ou estáticos ("ou você está 100% saudável, ou está doente"), mas sim polos de um processo contínuo e dinâmico. A Saúde Coletiva opõe-se ao reducionismo biomédico por entender que esse processo é multicausal. O adoecimento depende diretamente da forma como a sociedade produz, trabalha e distribui riqueza, articulando fatores biológicos, culturais, psíquicos e ambientais.
-      
-      **Exemplo Prático:** Uma pessoa não desenvolve esgotamento profissional (Burnout) ou hipertensão "do nada". É um processo contínuo que envolve sua predisposição biológica, mas também anos de transporte público lotado, trabalho precarizado, estresse financeiro e falta de lazer.
-      
-      **Modo Simplificado:** Não existe um interruptor "ligar/desligar" para ficar doente. Adoecer é um caminho (processo) que envolve o seu corpo, a sua mente e as condições de vida ao seu redor.`,
-      mnemonic: "💡 Mnemônico: Não é um interruptor estático, é um termostato social e multicausal."
+      content: `Saúde e doença não são estados estanques ou um interruptor de ligar/desligar ("ou você está 100% saudável, ou está doente"), mas sim os polos de um **processo contínuo, dinâmico e multicausal**. 
+
+A Saúde Coletiva rejeita a ideia de que o adoecimento ocorra de forma linear e puramente biológica, reconhecendo que ele resulta das condições materiais de vida, do trabalho, da cultura e do acesso a recursos sociais.
+
+* **Exemplo Prático:** O estresse crônico e a hipertensão de um trabalhador precarizado não surgem por acaso; eles fazem parte de um processo contínuo de desgaste físico e mental condicionado pelas exigências do trabalho e pela insegurança financeira.`,
+      mnemonic: "💡 Mnemônico: Saúde e doença não são estados opostos fixos, mas um processo contínuo e multicausal."
     },
     {
       id: "dss_risco",
-      title: "4. Fatores de Risco vs. Determinantes Sociais",
-      content: `Fatores de risco são exposições ou características imediatas que aumentam a probabilidade de desenvolver uma doença (ex: tabagismo e sedentarismo — modificáveis; idade e genética — não modificáveis). Já os Determinantes Sociais da Saúde (DSS) são as "causas das causas": as condições estruturais em que as pessoas nascem, crescem, vivem, trabalham e envelhecem (ex: moradia, renda, saneamento, escolaridade). Os DSS explicam por que certos grupos sociais estão muito mais expostos aos fatores de risco.
-      
-      **Exemplo Prático:** O médico orienta o paciente a melhorar a alimentação porque está com colesterol alto (fator de risco). Porém, o paciente mora em uma periferia sem feiras livres e com baixa renda, onde só consegue comprar alimentos ultraprocessados baratos (Determinante Social).
-      
-      **Modo Simplificado:** O fator de risco é o problema imediato (ex: fumar ou comer mal). O determinante social é a raiz estrutural do problema (ex: pobreza, falta de educação ou falta de saneamento).`,
-      mnemonic: "💡 Mnemônico: O fator de risco é o buraco na rua; o DSS é a falta de investimento no bairro."
+      title: "4. Fatores de Risco vs. Determinantes Sociais da Saúde (DSS)",
+      content: `É fundamental distinguir duas categorias epidemiológicas essenciais:
+      * **Fatores de Risco:** Exposições ou características imediatas que aumentam a probabilidade de adoecer. Podem ser *modificáveis* (tabagismo, sedentarismo, dieta inadequada) ou *não modificáveis* (idade avançada, herança genética).
+      * **Determinantes Sociais da Saúde (DSS):** As "causas das causas", ou seja, as condições estruturais em que as pessoas nascem, crescem, vivem, trabalham e envelhecem (renda, saneamento básico, habitação, escolaridade, emprego). Os DSS explicam por que determinados grupos sociais acumulam mais fatores de risco.
+
+* **Exemplo Prático:** A obesidade e o colesterol alto de um paciente são fatores de risco individuais. Morar em uma região periférica sem saneamento, sem feiras de alimentos frescos e com alta exposição a ultraprocessados baratos é o Determinante Social que condiciona esse risco.`,
+      mnemonic: "💡 Mnemônico: Fator de Risco = O problema imediato no indivíduo. Determinante Social (DSS) = A raiz estrutural na sociedade."
     },
     {
       id: "mod_biomedico",
-      title: "5. Modelo Biomédico e Críticas (Canguilhem)",
-      content: `O modelo biomédico clássico enxerga o corpo humano como uma máquina. Possui uma lógica mecanicista, linear e unicausal (um agente patogênico causa uma lesão orgânica específica). A crítica da Saúde Coletiva aponta que esse modelo reduz o sujeito a um órgão avariado e ignora o contexto social. O filósofo e médico Georges Canguilhem criticou a divisão rígida e meramente estatística entre "normal" e "patológico", propondo o conceito de "normatividade da vida": ter saúde é a capacidade do organismo de se adaptar, tolerar crises e instituir novas normas de vida diante das adversidades.
-      
-      **Exemplo Prático:** Para a biomedicina estrita, uma pessoa com diabetes crônica é vista apenas como um pâncreas defeituoso fora da média estatística. Para Canguilhem, se essa pessoa reorganiza sua rotina e vive com autonomia e bem-estar, ela estabeleceu uma nova norma saudável de vida.
-      
-      **Modo Simplificado:** O modelo biomédico foca apenas na peça quebrada da máquina (unicausal). Canguilhem mostra que saúde é a potência do ser vivo de se adaptar e criar novas regras para viver bem.`,
-      mnemonic: "💡 Mnemônico: Biomédico = Máquina/Causa Única. Canguilhem = Adaptação/Normatividade da Vida."
+      title: "5. Modelo Biomédico e a Normatividade de Canguilhem",
+      content: `O **Modelo Biomédico tradicional** enxerga o corpo humano como uma máquina puramente mecânica, adotando uma lógica **reducionista e unicausal** (um agente etiológico externo invade o corpo e causa uma lesão isolada, ignorando o contexto social).
+
+Em oposição a isso, o filósofo e médico **Georges Canguilhem** formulou o conceito de **normatividade da vida**: a verdadeira saúde não é a ausência de lesão ou um número estatístico perfeito na média, mas sim a *capacidade do organismo de tolerar crises, adaptar-se ao meio e instituir novas normas de vida* diante das adversidades biológicas e sociais.`,
+      mnemonic: "💡 Mnemônico: Biomédico = Corpo como máquina linear. Canguilhem = Saúde é a capacidade de adaptação e criação de novas normas."
     },
     {
       id: "func_critica",
-      title: "6. Funcionalismo vs. Teoria Crítica",
-      content: `O Funcionalismo enxerga a sociedade como um sistema orgânico produtivo: conflitos e desigualdades sociais são tratados apenas como "disfunções" temporárias que devem ser corrigidas ou medicadas para que o indivíduo volte rapidamente a produzir e o sistema mantenha seu equilíbrio. Em oposição, a Teoria Crítica (como a Bioética de Intervenção de Volnei Garrafa) denuncia que o sistema econômico produz desigualdades estruturais severas. Ela foca nas populações vulneráveis (especialmente do Sul Global / países em desenvolvimento) e luta por equidade, justiça social e acesso universal.
-      
-      **Exemplo Prático:** Diante de operários exaustos na fábrica, o Funcionalismo receita ansiolíticos para que voltem logo à linha de montagem. A Teoria Crítica questiona a exploração do trabalho, exige redução da jornada e melhores condições salariais.
-      
-      **Modo Simplificado:** O Funcionalismo quer apenas consertar a engrenagem para a máquina continuar lucrando. A Teoria Crítica quer transformar as regras injustas do jogo em favor dos mais vulneráveis.`,
-      mnemonic: "💡 Mnemônico: Funcionalismo = Manter a Máquina funcionando. Teoria Crítica = Lutar por Justiça Social."
+      title: "6. Funcionalismo vs. Teoria Crítica (Bioética de Intervenção)",
+      content: `Duas leituras sociológicas interpretam a saúde na sociedade:
+      * **Funcionalismo:** Vê a sociedade como um sistema produtivo estável. As desigualdades e conflitos sociais são tratados apenas como "disfunções temporárias" que devem ser ajustadas (ou medicadas) para que o indivíduo retorne logo ao trabalho e o sistema continue produzindo.
+      * **Teoria Crítica / Bioética de Intervenção (Volnei Garrafa):** Denuncia que as injustiças e a miséria são produzidas estruturalmente pelo modelo econômico. Defende o combate ativo às desigualdades, com foco prioritário na proteção das **populações vulneráveis do Sul Global**.`,
+      mnemonic: "💡 Mnemônico: Funcionalismo = Manter a engrenagem produtiva rodando. Teoria Crítica = Lutar contra as injustiças estruturais."
     },
     {
       id: "auto_org",
       title: "7. Teoria da Auto-organização (Michel Debrun)",
-      content: `Michel Debrun classifica três dinâmicas distintas de organização em sistemas coletivos:
-      - **Auto-organização primária:** O sistema nasce do zero a partir da interação livre entre elementos inicialmente soltos (ex: moradores de um bairro unem-se espontaneamente para criar uma horta ou associação comunitária).
-      - **Auto-organização secundária:** Um sistema já estruturado que, por iniciativa interna da própria equipe, adapta suas rotinas para superar desafios sem precisar de ordens externas (ex: equipe de uma UBS reorganiza seus fluxos internos para acolher melhor os idosos).
-      - **Hetero-organização:** A regra ou mudança vem imposta de fora para dentro por uma autoridade externa (ex: portaria obrigatória emitida pelo Ministério da Saúde).
-      
-      **Exemplo Prático:** Se o Ministério impõe por decreto, é Hetero-organização. Se a própria equipe do posto de saúde decide mudar a rotina em reunião, é Auto-organização Secundária. Se a comunidade cria um projeto do zero, é Auto-organização Primária.
-      
-      **Modo Simplificado:** Primária = Criado do zero pela comunidade. Secundária = A própria equipe adapta o serviço por dentro. Hetero = O governo ou chefia externa impõe de cima para baixo.`,
-      mnemonic: "💡 Mnemônico: Primária (Nasce do zero), Secundária (Equipe adapta por dentro), Hetero (Imposta de fora)."
+      content: `Michel Debrun classifica as formas de mudança e organização em coletivos:
+      * **Auto-organização Primária:** O sistema nasce *do zero* a partir da livre interação entre elementos inicialmente desorganizados (ex: moradores de uma comunidade unem-se espontaneamente para criar um mutirão de saúde e limpeza no bairro).
+      * **Auto-organização Secundária:** Um sistema já estabelecido que, por iniciativa interna e autônoma da própria equipe, reorganiza seus fluxos para superar um desafio sem ordens verticais (ex: equipe de uma UBS decide mudar o modo de acolhimento em reunião interna).
+      * **Hetero-organização:** A mudança é imposta *de fora para cima* por uma autoridade externa (ex: decreto ou portaria obrigatória do Ministério da Saúde determinando novos protocolos).`,
+      mnemonic: "💡 Mnemônico: Primária = Nasce do zero na comunidade; Secundária = Equipe adapta por dentro; Hetero = Imposta de cima para baixo."
     },
     {
       id: "mod_atencao",
-      title: "8. Modelos e Níveis de Atenção à Saúde",
-      content: `O modelo biomédico tradicional gera uma assistência hospitalocêntrica (focada no hospital e na doença já instalada). Já a Saúde Coletiva organiza o SUS em níveis integrados de atenção em rede:
-      - **Atenção Primária à Saúde (APS):** Unidades Básicas de Saúde (UBS) e Estratégia Saúde da Família. É a "porta de entrada" próxima ao território, focada em promoção, prevenção e acompanhamento longitudinal.
-      - **Atenção Secundária:** Ambulatórios de especialidades médicas (ex: cardiologia, ortopedia), UPAs e exames de média complexidade.
-      - **Atenção Terciária:** Hospitais de grande porte, UTIs, cirurgias complexas, hemodiálise e transplantes (alta densidade tecnológica).
-      
-      **Exemplo Prático:** Tomar vacina e controlar a pressão no posto do bairro é Atenção Primária. Consultar um oftalmologista no ambulatório é Atenção Secundária. Fazer uma cirurgia cardíaca ou transplante é Atenção Terciária.
-      
-      **Modo Simplificado:** Primária previne perto de casa (UBS). Secundária atende com especialistas e exames. Terciária realiza procedimentos graves em hospitais de alta complexidade.`,
-      mnemonic: "💡 Mnemônico: Primária = Base/Prevenir (UBS). Secundária = Especialistas. Terciária = Topo/Alta Complexidade (UTI/Transplante)."
+      title: "8. Modelos Assistenciais e Níveis de Atenção à Saúde",
+      content: `O modelo assistencial derivado do reducionismo biomédico é o **hospitalocêntrico**, focado no tratamento da doença já instalada dentro do hospital. O SUS organiza o cuidado em rede através de três níveis integrados:
+      * **Atenção Primária à Saúde (APS):** Unidades Básicas de Saúde (UBS) e Estratégia Saúde da Família. É a **porta de entrada preferencial** do sistema, focada na promoção da saúde, prevenção de agravos e acompanhamento longitudinal no território.
+      * **Atenção Secundária:** Ambulatórios de especialidades médicas (cardiologia, ortopedia) e exames de média complexidade.
+      * **Atenção Terciária:** Hospitais de grande porte, unidades de terapia intensiva (UTI), cirurgias complexas e transplantes (alta densidade tecnológica).`,
+      mnemonic: "💡 Mnemônico: Primária = Porta de entrada e prevenção (UBS). Secundária = Especialistas. Terciária = Alta complexidade e hospitais (UTI)."
     }
   ],
 
-  // 2. MAPA MENTAL
   tree: [
-    { id: "sp_sc", title: "1. Saúde Pública vs. Coletiva", level: 1, unlocked: true },
-    { id: "art_196", title: "2. Direito à Saúde (Art. 196)", level: 1, unlocked: true },
+    { id: "sp_sc", title: "1. Saúde Pública vs Coletiva", level: 1, unlocked: true },
+    { id: "art_196", title: "2. Reforma Sanitária e Art. 196", level: 1, unlocked: true },
     { id: "proc_saude_doenca", title: "3. O Processo Saúde-Doença", level: 2, unlocked: true },
-    { id: "dss_risco", title: "4. Determinantes Sociais e Risco", level: 2, unlocked: true },
-    { id: "mod_biomedico", title: "5. Críticas ao Modelo Biomédico", level: 3, unlocked: true },
-    { id: "func_critica", title: "6. Funcionalismo vs. Teoria Crítica", level: 3, unlocked: true },
+    { id: "dss_risco", title: "4. Fatores de Risco e DSS", level: 2, unlocked: true },
+    { id: "mod_biomedico", title: "5. Modelo Biomédico e Canguilhem", level: 3, unlocked: true },
+    { id: "func_critica", title: "6. Funcionalismo vs Teoria Crítica", level: 3, unlocked: true },
     { id: "auto_org", title: "7. Auto-organização (Debrun)", level: 4, unlocked: true },
     { id: "mod_atencao", title: "8. Níveis de Atenção à Saúde", level: 5, unlocked: true }
   ],
 
-  // 3. FLASHCARDS (19 cartões revisados em PT-BR)
   flashcards: [
-    { topicId: "sp_sc", category: "Conceitos Base", question: "Como se diferencia a Saúde Pública clássica da Saúde Coletiva?", answer: "A Saúde Pública foca nos riscos biológicos e no controle de epidemias, enquanto a Saúde Coletiva analisa os determinantes sociais e as desigualdades estruturais." },
-    { topicId: "sp_sc", category: "História", question: "Onde e quando nasceu o movimento da Saúde Coletiva?", answer: "Na América Latina (especialmente no Brasil), durante as décadas de 1970 e 1980, impulsionado pela Reforma Sanitária." },
-    { topicId: "art_196", category: "Legislação", question: "Qual a importância histórica do Art. 196 da Constituição Federal de 1988?", answer: "Estabeleceu a saúde como direito universal de todos e dever do Estado, criando a base legal do SUS." },
-    { topicId: "art_196", category: "História", question: "Antes da Constituição de 1988, quem tinha direito à assistência médica pelo INAMPS?", answer: "Apenas os trabalhadores formais com carteira assinada (modelo previdenciário e excludente)." },
-    { topicId: "proc_saude_doenca", category: "Teoria", question: "Por que a Saúde Coletiva rejeita a ideia de que saúde é apenas 'ausência de doença'?", answer: "Porque compreende saúde e doença como polos de um processo dinâmico, contínuo e multicausal ligado às condições de vida e trabalho." },
-    { topicId: "proc_saude_doenca", category: "Teoria", question: "Como o desemprego crônico é interpretado pela Epidemiologia Social?", answer: "Como parte integrante do Processo Saúde-Doença, pois degrada as condições materiais e psíquicas que levam ao adoecimento." },
-    { topicId: "dss_risco", category: "Conceitos Base", question: "Qual a diferença entre Fator de Risco e Determinante Social da Saúde (DSS)?", answer: "Fator de risco é a exposição imediata individual (ex: tabagismo); DSS é a condição estrutural ampla que gera a exposição (ex: pobreza, falta de saneamento)." },
-    { topicId: "dss_risco", category: "Fatores de Risco", question: "Idade avançada e herança genética são classificados como que tipo de fator de risco?", answer: "Fatores de risco não modificáveis." },
-    { topicId: "mod_biomedico", category: "Paradigmas", question: "Por que o Modelo Biomédico tradicional é criticado como 'mecanicista e unicausal'?", answer: "Porque trata o corpo como uma máquina de peças isoladas e foca apenas no agente biológico (patógeno -> lesão), ignorando o meio social." },
-    { topicId: "mod_biomedico", category: "Filosofia", question: "O que é a 'normatividade da vida' segundo Georges Canguilhem?", answer: "É a capacidade do ser vivo de se adaptar às adversidades e instituir novas normas de funcionamento, superando a divisão rígida entre normal e patológico." },
-    { topicId: "func_critica", category: "Sociologia", question: "Como o Funcionalismo enxerga as desigualdades sociais na saúde?", answer: "Trata as desigualdades apenas como 'disfunções' temporárias que devem ser ajustadas para manter o equilíbrio produtivo do sistema." },
-    { topicId: "func_critica", category: "Sociologia", question: "O que defende a Bioética de Intervenção (baseada na Teoria Crítica)?", answer: "O combate ativo às injustiças estruturais e a defesa prioritária das populações vulneráveis do Sul Global." },
-    { topicId: "auto_org", category: "Sistemas", question: "Quando moradores se unem do zero para criar uma horta comunitária no bairro, qual conceito de Debrun ocorre?", answer: "Auto-organização Primária." },
-    { topicId: "auto_org", category: "Sistemas", question: "O que é Auto-organização Secundária segundo Michel Debrun?", answer: "Quando uma equipe de um sistema já existente adapta autonomamente suas rotinas internas para resolver um problema, sem imposição externa." },
-    { topicId: "auto_org", category: "Sistemas", question: "Uma portaria obrigatória emitida pelo Ministério da Saúde para os hospitais ilustra qual conceito?", answer: "Hetero-organização (mudança imposta de fora para dentro)." },
-    { topicId: "mod_atencao", category: "Atenção à Saúde", question: "Qual é o papel da Atenção Primária à Saúde (APS)?", answer: "Atuar como porta de entrada do SUS (via UBS), focando em promoção, prevenção e cuidado contínuo no território." },
-    { topicId: "mod_atencao", category: "Atenção à Saúde", question: "Quais serviços compõem a Atenção Secundária à Saúde?", answer: "Ambulatórios de especialidades médicas e exames diagnósticos de média complexidade." },
-    { topicId: "mod_atencao", category: "Atenção à Saúde", question: "Em qual nível de atenção estão os transplantes, UTIs e cirurgias de alta complexidade?", answer: "Na Atenção Terciária." },
-    { topicId: "mod_atencao", category: "Modelos", question: "O que caracteriza um modelo assistencial hospitalocêntrico?", answer: "Um modelo derivado da visão biomédica que concentra os recursos no hospital e na cura da doença já agravada, negligenciando a prevenção." }
+    { topicId: "sp_sc", category: "Conceitos Base", question: "Qual a diferença central entre Saúde Pública e Saúde Coletiva?", answer: "A Saúde Pública foca no combate imediato aos riscos biológicos; a Saúde Coletiva investiga a determinação social e as desigualdades estruturais." },
+    { topicId: "art_196", category: "Legislação", question: "Como era o acesso à saúde pública antes do Art. 196 da CF/1988?", answer: "Excludente e previdenciário (via INAMPS), restrito apenas aos trabalhadores formais com carteira assinada." },
+    { topicId: "art_196", category: "Legislação", question: "O que garantiu o Artigo 196 da Constituição Federal de 1988?", answer: "Que a saúde é direito de todos e dever do Estado, criando o fundamento legal do SUS." },
+    { topicId: "proc_saude_doenca", category: "Teoria", question: "Por que a saúde não deve ser vista como ausência de doença?", answer: "Porque o processo saúde-doença é dinâmico, contínuo e multicausal, condicionado pelas condições reais de vida." },
+    { topicId: "dss_risco", category: "Conceitos Base", question: "O que são Determinantes Sociais da Saúde (DSS)?", answer: "As condições estruturais (renda, saneamento, habitação) em que as pessoas vivem e que geram a exposição aos fatores de risco." },
+    { topicId: "dss_risco", category: "Fatores de Risco", question: "Como se classificam idade avançada e genética nos fatores de risco?", answer: "Fatores de risco não modificáveis." },
+    { topicId: "mod_biomedico", category: "Modelos", question: "O que caracteriza o reducionismo do Modelo Biomédico?", answer: "Enxergar o corpo como uma máquina mecânica e operar sob uma lógica estritamente unicausal e linear." },
+    { topicId: "mod_biomedico", category: "Filosofia", question: "O que define a 'normatividade da vida' de Georges Canguilhem?", answer: "A capacidade biológica e social do organismo de adaptar-se e instituir novas normas de funcionamento diante das crises." },
+    { topicId: "func_critica", category: "Sociologia", question: "Como o Funcionalismo interpreta os conflitos sociais na saúde?", answer: "Trata-os como simples 'disfunções' temporárias que devem ser ajustadas para manter a ordem e a produtividade do sistema." },
+    { topicId: "func_critica", category: "Sociologia", question: "O que defende a Teoria Crítica na saúde?", answer: "O enfrentamento das desigualdades estruturais profundas, priorizando a proteção das populações vulneráveis." },
+    { topicId: "auto_org", category: "Sistemas", question: "O que caracteriza a auto-organização primária de Debrun?", answer: "Quando um coletivo ou sistema nasce inteiramente do zero a partir da livre interação entre pessoas." },
+    { topicId: "auto_org", category: "Sistemas", question: "Qual a diferença entre auto-organização secundária e hetero-organização?", answer: "A secundária surge por iniciativa autônoma interna da equipe; a hetero-organização é imposta de fora por uma autoridade externa." },
+    { topicId: "mod_atencao", category: "Rede de Saúde", question: "Qual é a porta de entrada preferencial e o papel da Atenção Primária?", answer: "As UBSs, atuando na prevenção, promoção da saúde e acompanhamento longitudinal no território." },
+    { topicId: "mod_atencao", category: "Rede de Saúde", question: "Onde se encaixam os hospitais de alta complexidade e UTIs no SUS?", answer: "Na Atenção Terciária à Saúde." }
   ]
 };

@@ -1,650 +1,579 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Unifica os dados de dt_(curso).js e q_(curso).js com fallback seguro
-  const topicsList = (typeof studyData !== "undefined" && studyData.topics) ? studyData.topics : [];
-  const treeList = (typeof studyData !== "undefined" && studyData.tree) ? studyData.tree : [];
-  const flashcardsList = (typeof studyData !== "undefined" && studyData.flashcards) ? studyData.flashcards : [];
-  
-  const quizList = (typeof questionsData !== "undefined" && questionsData.quiz)
-    ? questionsData.quiz
-    : ((typeof studyData !== "undefined" && studyData.quiz) ? studyData.quiz : []);
+// =========================================================================
+// js/app.js — Orquestrador Principal do Doc's Lab (Completo e Sem Cortes)
+// =========================================================================
 
-  const simuladoList = (typeof questionsData !== "undefined" && questionsData.simulado)
-    ? questionsData.simulado
-    : ((typeof studyData !== "undefined" && studyData.simulado) ? studyData.simulado : []);
+let isCurrentlyInCourseView = false;
 
-  // ==========================================
-  // 0. CONTROLE DO MENU LATERAL (SIDEBAR)
-  // ==========================================
-  const openSidebarBtn = document.getElementById("open-sidebar");
-  const closeSidebarBtn = document.getElementById("close-sidebar");
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("sidebar-overlay");
-
-  function toggleSidebar() {
-    if (sidebar && overlay) {
-      sidebar.classList.toggle("active");
-      overlay.classList.toggle("active");
-    }
-  }
-
-  if (openSidebarBtn) openSidebarBtn.addEventListener("click", toggleSidebar);
-  if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", toggleSidebar);
-  if (overlay) overlay.addEventListener("click", toggleSidebar);
-
-  // ==========================================
-  // 1. TEMA CLARO / ESCURO
-  // ==========================================
-  const themeToggle = document.getElementById("theme-toggle");
-  const bodyEl = document.body;
-  const iconSun = document.getElementById("icon-sun");
-  const iconMoon = document.getElementById("icon-moon");
-
-  if (localStorage.getItem("theme") === "dark") {
-    bodyEl.setAttribute("data-theme", "dark");
-    if (iconSun && iconMoon) {
-      iconMoon.style.display = "none";
-      iconSun.style.display = "block";
-    }
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const isDark = bodyEl.getAttribute("data-theme") === "dark";
-      if (isDark) {
-        bodyEl.removeAttribute("data-theme");
-        localStorage.setItem("theme", "light");
-        if (iconSun && iconMoon) {
-          iconSun.style.display = "none";
-          iconMoon.style.display = "block";
-        }
-      } else {
-        bodyEl.setAttribute("data-theme", "dark");
-        localStorage.setItem("theme", "dark");
-        if (iconSun && iconMoon) {
-          iconMoon.style.display = "none";
-          iconSun.style.display = "block";
-        }
-      }
-    });
-  }
-
-  // ==========================================
-  // 2. NAVEGAÇÃO DE ABAS (TABS)
-  // ==========================================
-  const navBtns = document.querySelectorAll(".nav-btn");
-  const tabContents = document.querySelectorAll(".tab-content");
-
-  // Oculta o botão da aba Simulado automaticamente se o curso não tiver simulado
-  const simTabBtn = document.querySelector('[data-tab="simulado"]');
-  if (simTabBtn && (!simuladoList || simuladoList.length === 0)) {
-    simTabBtn.style.display = "none";
-  }
-
-  function switchTab(tabId) {
-    tabContents.forEach(tab => tab.classList.remove("active"));
-    navBtns.forEach(btn => btn.classList.remove("active"));
-
-    const targetTab = document.getElementById(tabId);
-    const targetBtn = document.querySelector(`[data-tab="${tabId}"]`);
-    if (targetTab) targetTab.classList.add("active");
-    if (targetBtn) targetBtn.classList.add("active");
-  }
-
-  navBtns.forEach(btn => {
-    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+window.injectDocMascotEverywhere = function() {
+  if (typeof window.renderDocPlagueMascotSvg !== 'function') return;
+  document.querySelectorAll('.doc-mascot-slot').forEach(el => {
+    el.innerHTML = window.renderDocPlagueMascotSvg();
   });
+};
 
-  window.goToExplanation = function(topicId) {
-    switchTab("resumos");
-    setTimeout(() => {
-      const el = document.getElementById(`art-${topicId}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        el.style.borderColor = "var(--brand-primary)";
-        setTimeout(() => { el.style.borderColor = "var(--border-color)"; }, 2000);
-      }
-    }, 100);
-  };
+// =========================================================================
+// 1. SINCRONIZAÇÃO SUPABASE (ISOLAMENTO REAL POR E-MAIL / UID)
+// =========================================================================
+window.syncAuthenticatedUser = async function(supaUser) {
+  if (!supaUser) return;
 
-  // ==========================================
-  // 3. RENDERIZAR EXPLICAÇÕES (COM NEGRITO MARKDOWN)
-  // ==========================================
-  function formatMarkdownText(text) {
-    if (!text) return "";
-    return text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  }
+  const email = (supaUser.email || '').toLowerCase().trim();
+  window.isCurrentUserAdmin = (email === window.ADMIN_EMAIL);
 
-  const articlesContainer = document.getElementById("articles-container");
-  if (articlesContainer) {
-    articlesContainer.innerHTML = topicsList.map(topic => `
-      <article class="article-card" id="art-${topic.id}">
-        <h3>${topic.title}</h3>
-        <p style="white-space: pre-line;">${formatMarkdownText(topic.content)}</p>
-        <div class="mnemonic-box">${formatMarkdownText(topic.mnemonic)}</div>
-      </article>
-    `).join("");
-  }
-
-  // ==========================================
-  // 4. RENDERIZAR MAPA MENTAL
-  // ==========================================
-  const treeContainer = document.getElementById("mindmap-container");
-  function renderMindmap() {
-    if (!treeContainer) return;
-    treeContainer.innerHTML = "";
-    const levels = {};
-    treeList.forEach(node => {
-      if (!levels[node.level]) levels[node.level] = [];
-      levels[node.level].push(node);
-    });
-
-    Object.keys(levels).forEach(level => {
-      const levelDiv = document.createElement("div");
-      levelDiv.className = "map-level";
-      levels[level].forEach(node => {
-        const nodeDiv = document.createElement("div");
-        nodeDiv.className = "map-node";
-        nodeDiv.innerHTML = `
-          <h4>${node.title}</h4>
-          <p>Ler explicação detalhada →</p>
-        `;
-        nodeDiv.addEventListener("click", () => window.goToExplanation(node.id));
-        levelDiv.appendChild(nodeDiv);
-      });
-      treeContainer.appendChild(levelDiv);
-    });
-  }
-  renderMindmap();
-
-  // ==========================================
-  // 5. LÓGICA DOS FLASHCARDS (BOTÃO NA FRENTE)
-  // ==========================================
-  let currentCardIndex = 0;
-  const flashcardEl = document.getElementById("flashcard");
-  const fcCategory = document.getElementById("fc-category");
-  const fcQuestion = document.getElementById("fc-question");
-  const fcAnswer = document.getElementById("fc-answer");
-  const fcCounter = document.getElementById("fc-counter");
-  const fcMoreBtns = document.querySelectorAll("#fc-more-btn, .fc-topic-btn");
-
-  const shuffledFlashcards = [...flashcardsList].sort(() => 0.5 - Math.random());
-
-  function updateFlashcard() {
-    if (shuffledFlashcards.length === 0) return;
-    if (flashcardEl) flashcardEl.classList.remove("flipped");
-
-    const current = shuffledFlashcards[currentCardIndex];
-    if (fcCategory) fcCategory.textContent = current.category;
-    if (fcQuestion) fcQuestion.textContent = current.question;
-    if (fcAnswer) fcAnswer.textContent = current.answer;
-    if (fcCounter) fcCounter.textContent = `${currentCardIndex + 1} / ${shuffledFlashcards.length}`;
-
-    fcMoreBtns.forEach(btn => {
-      btn.onclick = (e) => {
-        e.stopPropagation(); // Impede que o card vire ao clicar em Ver Tópico
-        window.goToExplanation(current.topicId);
-      };
-    });
-  }
-
-  if (flashcardEl) {
-    flashcardEl.addEventListener("click", () => flashcardEl.classList.toggle("flipped"));
-  }
-
-  const fcPrev = document.getElementById("fc-prev");
-  if (fcPrev) {
-    fcPrev.addEventListener("click", () => {
-      currentCardIndex = (currentCardIndex > 0) ? currentCardIndex - 1 : shuffledFlashcards.length - 1;
-      updateFlashcard();
-    });
-  }
-
-  const fcNext = document.getElementById("fc-next");
-  if (fcNext) {
-    fcNext.addEventListener("click", () => {
-      currentCardIndex = (currentCardIndex < shuffledFlashcards.length - 1) ? currentCardIndex + 1 : 0;
-      updateFlashcard();
-    });
-  }
-
-  if (shuffledFlashcards.length > 0) updateFlashcard();
-
-  // ==========================================
-  // 6. LÓGICA DO QUIZ
-  // ==========================================
-  const quizConfigBox = document.getElementById("quiz-config");
-  const quizPlayBox = document.getElementById("quiz-play");
-  const quizResultBox = document.getElementById("quiz-result");
-  const btnStartQuiz = document.getElementById("btn-start-quiz");
-
-  const timerGroup = document.getElementById("timer-val-group");
-  const configNormal = document.getElementById("config-normal");
-  const configSurvival = document.getElementById("config-survival");
-  const quizCountInput = document.getElementById("quiz-count");
-
-  if (quizCountInput && quizList.length > 0) {
-    quizCountInput.max = quizList.length;
-    const countLabel = document.querySelector('label[for="quiz-count"]');
-    if (countLabel) countLabel.textContent = `Número de Questões (Máx: ${quizList.length})`;
-  }
-
-  document.querySelectorAll('input[name="quiz-mode"]').forEach(r => {
-    r.addEventListener("change", (e) => {
-      if (e.target.value === "survival") {
-        if (configNormal) configNormal.style.display = "none";
-        if (configSurvival) configSurvival.style.display = "block";
-      } else {
-        if (configNormal) configNormal.style.display = "block";
-        if (configSurvival) configSurvival.style.display = "none";
-      }
-    });
-  });
-
-  document.querySelectorAll('input[name="timer-enable"]').forEach(r => {
-    r.addEventListener("change", (e) => {
-      if (timerGroup) timerGroup.style.display = e.target.value === "yes" ? "block" : "none";
-    });
-  });
-
-  let activeQuizQuestions = [];
-  let currentQuizIndex = 0;
-  let score = 0;
-  let lives = 0;
-  let isSurvival = false;
-  let timerInterval = null;
-  let timeLeft = 0;
-
-  function abortQuiz() {
-    clearInterval(timerInterval);
-    if (quizPlayBox) quizPlayBox.style.display = "none";
-    if (quizResultBox) quizResultBox.style.display = "none";
-    if (quizConfigBox) quizConfigBox.style.display = "block";
-  }
-
-  const btnAbort = document.getElementById("btn-abort-quiz");
-  if (btnAbort) btnAbort.addEventListener("click", abortQuiz);
-
-  if (btnStartQuiz) {
-    btnStartQuiz.addEventListener("click", () => {
-      const modeInput = document.querySelector('input[name="quiz-mode"]:checked');
-      isSurvival = modeInput ? modeInput.value === "survival" : false;
-
-      const shuffledQuiz = [...quizList].sort(() => 0.5 - Math.random());
-
-      if (isSurvival) {
-        activeQuizQuestions = shuffledQuiz;
-        const livesEl = document.getElementById("quiz-lives");
-        lives = livesEl ? parseInt(livesEl.value) || 5 : 5;
-      } else {
-        const qCountEl = document.getElementById("quiz-count");
-        const qCount = qCountEl ? parseInt(qCountEl.value) || 10 : 10;
-        activeQuizQuestions = shuffledQuiz.slice(0, Math.min(qCount, shuffledQuiz.length));
-      }
-
-      currentQuizIndex = 0;
-      score = 0;
-
-      if (quizConfigBox) quizConfigBox.style.display = "none";
-      if (quizResultBox) quizResultBox.style.display = "none";
-      if (quizPlayBox) quizPlayBox.style.display = "block";
-
-      loadQuizQuestion();
-    });
-  }
-
-  function updateLivesDisplay() {
-    const livesDisplay = document.getElementById("quiz-lives-display");
-    if (livesDisplay) {
-      if (isSurvival) {
-        livesDisplay.style.display = "inline-flex";
-        livesDisplay.innerHTML = `<span style="color:var(--error); margin-right:4px;">❤️</span> ${lives}`;
-      } else {
-        livesDisplay.style.display = "none";
-      }
+  if (window.isCurrentUserAdmin) {
+    document.getElementById('topAdminBtn')?.classList.remove('hidden');
+    document.getElementById('profileAdminBtn')?.classList.remove('hidden');
+    if (localStorage.getItem('docslab_admin_hide_init') !== 'true') {
+      window.userState.hideFromLeaderboard = true;
+      localStorage.setItem('docslab_admin_hide_init', 'true');
     }
+  } else {
+    document.getElementById('topAdminBtn')?.classList.add('hidden');
+    document.getElementById('profileAdminBtn')?.classList.add('hidden');
   }
 
-  function loadQuizQuestion() {
-    clearInterval(timerInterval);
-    updateLivesDisplay();
+  // Verifica se o usuário trocou de conta no navegador comparando com o UID salvo
+  const lastLoggedUserId = localStorage.getItem('docslab_current_uid');
+  const isDifferentUser = lastLoggedUserId && lastLoggedUserId !== supaUser.id;
 
-    if (isSurvival && currentQuizIndex >= activeQuizQuestions.length) {
-      currentQuizIndex = 0;
-      activeQuizQuestions = activeQuizQuestions.sort(() => 0.5 - Math.random());
-    }
-
-    const q = activeQuizQuestions[currentQuizIndex];
-    if (!q) return;
-
-    const progressText = document.getElementById("quiz-progress-text");
-    if (progressText) {
-      progressText.textContent = isSurvival
-        ? `Modo Sobrevivência | ${score} Acertos`
-        : `Questão ${currentQuizIndex + 1} de ${activeQuizQuestions.length}`;
-    }
-
-    const questionText = document.getElementById("quiz-question-text");
-    if (questionText) questionText.textContent = q.question;
-
-    const timerInput = document.querySelector('input[name="timer-enable"]:checked');
-    const hasTimer = timerInput ? timerInput.value === "yes" : false;
-    const timerDisplay = document.getElementById("quiz-timer-display");
-
-    if (hasTimer) {
-      const secInput = document.getElementById("quiz-seconds");
-      timeLeft = secInput ? parseInt(secInput.value) || 20 : 20;
-      if (timerDisplay) timerDisplay.innerHTML = `⏱️ ${timeLeft}s`;
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        if (timerDisplay) timerDisplay.innerHTML = `⏱️ ${timeLeft}s`;
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          handleAnswer(-1);
+  if (isDifferentUser) {
+    localStorage.removeItem('docslab_state_v5');
+    localStorage.removeItem('docslab_custom_named');
+    window.userState = {
+      name: 'Estudante',
+      xp: 0,
+      coins: 120,
+      activeCourse: 'psicopatologia',
+      studiedDays: [],
+      unlockedItems: [
+        '#fde6d8', '#f9d4b8', '#e5b887', '#c68642', '#8d5524', '#4b2810',
+        '#1e293b', '#451a03', '#92400e', '#facc15',
+        '#0f172a', '#78350f', '#0284c7', '#16a34a',
+        'style_short', 'style_bob', 'style_long', 'style_curly', 'style_bald',
+        'happy', 'confident', 'smile', 'smirk', 'none', 'hoodie', 'tshirt',
+        '#2563eb', '#7c3aed', '#1e1b4b', '#064e3b', '#3b0764'
+      ],
+      stageHistory: {},
+      unlockedModulesBonus: {},
+      unlockedGrimorioTopics: {},
+      isOnboarded: false,
+      hideFromLeaderboard: window.isCurrentUserAdmin,
+      stats: {
+        lifetimeCoinsEarned: 120,
+        totalQuestionsCorrect: 0,
+        totalTopicsRead: 0,
+        totalFlashcardsMastered: 0,
+        currentStreakDays: 0,
+        maxStreakDays: 0,
+        lastStudyDateISO: null,
+        claimedAchievementTiers: {},
+        courseStats: {
+          psicofarmacologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+          epidemiologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+          psicopatologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 }
         }
-      }, 1000);
-    } else {
-      if (timerDisplay) timerDisplay.textContent = "Tempo Livre";
-    }
-
-    const optionsContainer = document.getElementById("quiz-options");
-    if (optionsContainer) {
-      optionsContainer.innerHTML = "";
-      const feedbackBox = document.getElementById("quiz-feedback");
-      if (feedbackBox) feedbackBox.style.display = "none";
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = opt;
-        btn.onclick = () => handleAnswer(idx);
-        optionsContainer.appendChild(btn);
-      });
-    }
+      },
+      avatar: {
+        skinTone: '#f9d4b8',
+        hairColor: '#1e293b',
+        eyeColor: '#0f172a',
+        head: 'style_short',
+        eyes: 'happy',
+        mouth: 'smile',
+        hat: 'none',
+        body: 'hoodie',
+        bodyColor: '#16a34a',
+        bgColor: '#1e1b4b'
+      }
+    };
   }
+  localStorage.setItem('docslab_current_uid', supaUser.id);
 
-  function handleAnswer(selectedIndex) {
-    clearInterval(timerInterval);
-    const q = activeQuizQuestions[currentQuizIndex];
-    const optionBtns = document.querySelectorAll(".option-btn");
+  // Consulta o Supabase para carregar o perfil específico deste UID
+  if (window.supabaseClient) {
+    try {
+      const { data: cloudProfile, error } = await window.supabaseClient
+        .from('profiles')
+        .select('*')
+        .eq('id', supaUser.id)
+        .maybeSingle();
 
-    optionBtns.forEach(btn => { btn.disabled = true; });
-
-    const feedbackBox = document.getElementById("quiz-feedback");
-    const feedbackMsg = document.getElementById("feedback-msg");
-    const btnExplain = document.getElementById("btn-quiz-explain");
-
-    if (feedbackBox) feedbackBox.style.display = "block";
-
-    if (selectedIndex === q.correct) {
-      score++;
-      if (optionBtns[selectedIndex]) optionBtns[selectedIndex].classList.add("correct");
-      if (feedbackMsg) {
-        feedbackMsg.innerHTML = "✅ Resposta Correta!";
-        feedbackMsg.style.color = "var(--success)";
-      }
-    } else {
-      if (isSurvival) lives--;
-      if (selectedIndex >= 0 && optionBtns[selectedIndex]) {
-        optionBtns[selectedIndex].classList.add("wrong");
-      }
-      if (optionBtns[q.correct]) optionBtns[q.correct].classList.add("correct");
-      if (feedbackMsg) {
-        feedbackMsg.innerHTML = "❌ Resposta Incorreta.";
-        feedbackMsg.style.color = "var(--error)";
-      }
-    }
-
-    updateLivesDisplay();
-    if (btnExplain) btnExplain.onclick = () => window.goToExplanation(q.topicId);
-
-    const btnNext = document.getElementById("btn-quiz-next");
-    if (btnNext) {
-      btnNext.textContent = (isSurvival && lives <= 0) ? "Ver Resultados Finais" : "Avançar";
-    }
-  }
-
-  const btnQuizNext = document.getElementById("btn-quiz-next");
-  if (btnQuizNext) {
-    btnQuizNext.addEventListener("click", () => {
-      if (isSurvival) {
-        if (lives > 0) {
-          currentQuizIndex++;
-          loadQuizQuestion();
-        } else {
-          endQuiz();
+      if (!error && cloudProfile) {
+        window.userState.name = cloudProfile.username || window.userState.name;
+        window.userState.xp = typeof cloudProfile.total_xp === 'number' ? cloudProfile.total_xp : window.userState.xp;
+        window.userState.coins = typeof cloudProfile.coins === 'number' ? cloudProfile.coins : window.userState.coins;
+        window.userState.activeCourse = cloudProfile.last_course || window.userState.activeCourse;
+        if (cloudProfile.avatar_json && Object.keys(cloudProfile.avatar_json).length > 0) {
+          window.userState.avatar = { ...window.userState.avatar, ...cloudProfile.avatar_json };
         }
-      } else {
-        currentQuizIndex++;
-        if (currentQuizIndex < activeQuizQuestions.length) {
-          loadQuizQuestion();
-        } else {
-          endQuiz();
-        }
-      }
-    });
-  }
-
-  function endQuiz() {
-    if (quizPlayBox) quizPlayBox.style.display = "none";
-    if (quizResultBox) quizResultBox.style.display = "block";
-
-    const finalScoreEl = document.getElementById("final-score");
-    if (finalScoreEl) finalScoreEl.textContent = score;
-
-    const statsEl = document.getElementById("survival-stats");
-    const resultTitleEl = document.getElementById("result-title");
-
-    if (isSurvival) {
-      if (resultTitleEl) resultTitleEl.textContent = "Sessão Encerrada";
-      if (statsEl) statsEl.textContent = `Pontuação final: ${score} respostas corretas no Modo Sobrevivência.`;
-    } else {
-      if (resultTitleEl) resultTitleEl.textContent = "Avaliação Concluída";
-      if (statsEl) statsEl.textContent = `Você acertou ${score} de ${activeQuizQuestions.length} questões.`;
-    }
-  }
-
-  const btnRestart = document.getElementById("btn-restart-quiz");
-  if (btnRestart) btnRestart.addEventListener("click", abortQuiz);
-
-  // ==========================================
-  // 7. MOTOR UNIVERSAL DO SIMULADO
-  // ==========================================
-  const simuladoRoot = document.getElementById("simulado-root");
-  if (simuladoRoot && simuladoList && simuladoList.length > 0) {
-    let totalQuestionsCount = 0;
-    simuladoList.forEach(m => { totalQuestionsCount += (m.questions ? m.questions.length : 0); });
-
-    simuladoRoot.innerHTML = `
-      <div class="section-header text-center">
-        <h2>Simulado Interativo</h2>
-        <p class="text-muted">Módulos progressivos com questões objetivas e questões discursivas com autoavaliação.</p>
-      </div>
-
-      <div class="simulado-toolbar">
-        <div>
-          <strong>Progresso:</strong> <span id="sim-stat-progress">0 / ${totalQuestionsCount} respondidas</span> &nbsp;|&nbsp;
-          <strong>Nota:</strong> <span id="sim-stat-score">0.0 / ${totalQuestionsCount.toFixed(1)} pts</span>
-        </div>
-        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
-          <select id="sim-mod-filter" class="select-input" style="width:auto; padding:0.45rem 0.75rem;">
-            <option value="all">Ver Todos os Módulos (${simuladoList.length})</option>
-          </select>
-          <button id="sim-reset-all" class="btn secondary small">Reiniciar Simulado</button>
-        </div>
-      </div>
-
-      <div id="simulado-modules-list"></div>
-    `;
-
-    const filterSelect = document.getElementById("sim-mod-filter");
-    const resetBtn = document.getElementById("sim-reset-all");
-    const listContainer = document.getElementById("simulado-modules-list");
-    const progressEl = document.getElementById("sim-stat-progress");
-    const scoreEl = document.getElementById("sim-stat-score");
-
-    let simState = {};
-
-    simuladoList.forEach(mod => {
-      const opt = document.createElement("option");
-      opt.value = mod.moduleId;
-      opt.textContent = mod.title;
-      filterSelect.appendChild(opt);
-    });
-
-    function updateSimStats() {
-      const keys = Object.keys(simState);
-      let pts = 0;
-      keys.forEach(k => { pts += simState[k].points || 0; });
-      progressEl.textContent = `${keys.length} / ${totalQuestionsCount} respondidas`;
-      scoreEl.textContent = `${pts.toFixed(1)} / ${totalQuestionsCount.toFixed(1)} pts`;
-    }
-
-    function renderSimList() {
-      listContainer.innerHTML = "";
-      const fVal = filterSelect.value;
-      const mods = fVal === "all"
-        ? simuladoList
-        : simuladoList.filter(m => String(m.moduleId) === String(fVal));
-
-      mods.forEach(mod => {
-        const card = document.createElement("div");
-        card.className = "simulado-mod-card";
-
-        card.innerHTML = `
-          <div class="simulado-mod-title">${mod.title}</div>
-          <div class="simulado-exp-box">
-            <strong>${mod.explanationNumber}. Texto de Explicação:</strong><br>
-            ${mod.explanation}
-          </div>
-        `;
-
-        mod.questions.forEach(q => {
-          const qCard = document.createElement("div");
-          qCard.className = "simulado-q-card";
-          const saved = simState[q.number];
-
-          if (q.type === "mc") {
-            qCard.innerHTML = `
-              <span class="simulado-badge">Item ${q.number} • ${q.label}</span>
-              <div class="simulado-q-title">${q.question}</div>
-              <div class="simulado-opts-list" id="sim-q-opts-${q.number}"></div>
-              <div id="sim-q-fb-${q.number}" style="margin-top:0.75rem; font-weight:600; display:${saved ? 'block' : 'none'};"></div>
-            `;
-            card.appendChild(qCard);
-
-            const optsBox = qCard.querySelector(`#sim-q-opts-${q.number}`);
-            const fbBox = qCard.querySelector(`#sim-q-fb-${q.number}`);
-
-            q.options.forEach((optText, idx) => {
-              const btn = document.createElement("button");
-              btn.className = "simulado-opt";
-              btn.textContent = optText;
-
-              if (saved) {
-                btn.disabled = true;
-                if (idx === q.correct) btn.classList.add("is-correct");
-                else if (idx === saved.selected) btn.classList.add("is-wrong");
-              }
-
-              btn.addEventListener("click", () => {
-                const isRight = idx === q.correct;
-                simState[q.number] = { type: "mc", selected: idx, points: isRight ? 1.0 : 0.0 };
-
-                optsBox.querySelectorAll(".simulado-opt").forEach((b, bIdx) => {
-                  b.disabled = true;
-                  if (bIdx === q.correct) b.classList.add("is-correct");
-                  else if (bIdx === idx) b.classList.add("is-wrong");
-                });
-
-                fbBox.style.display = "block";
-                fbBox.innerHTML = isRight
-                  ? `<span style="color:var(--success);">✅ Correto! (+1.0 pt)</span>`
-                  : `<span style="color:var(--error);">❌ Incorreto. Gabarito: ${q.options[q.correct]} (0.0 pt)</span>`;
-
-                updateSimStats();
-              });
-
-              optsBox.appendChild(btn);
-            });
-
-            if (saved) {
-              fbBox.innerHTML = saved.points === 1
-                ? `<span style="color:var(--success);">✅ Correto! (+1.0 pt)</span>`
-                : `<span style="color:var(--error);">❌ Incorreto. Gabarito: ${q.options[q.correct]} (0.0 pt)</span>`;
-            }
-          } else {
-            const userTxt = saved ? saved.userText : "";
-            const isRev = saved ? saved.revealed : false;
-            const evalSt = saved ? saved.evalStatus : null;
-
-            qCard.innerHTML = `
-              <span class="simulado-badge">Item ${q.number} • ${q.label}</span>
-              <div class="simulado-q-title">${q.question}</div>
-              <textarea class="simulado-input-area" id="sim-ta-${q.number}" placeholder="Escreva a sua resposta aqui antes de ver o gabarito...">${userTxt}</textarea>
-              <div>
-                <button class="btn primary small" id="sim-rev-btn-${q.number}">Mostrar Gabarito para Comparar</button>
-              </div>
-              <div class="simulado-answer-box" id="sim-ans-box-${q.number}" style="display:${isRev ? 'block' : 'none'};">
-                <strong>📝 Resposta Esperada (Gabarito Oficial):</strong>
-                <p style="margin-top:0.4rem; line-height:1.55;">${q.expectedAnswer}</p>
-                <p style="margin-top:0.8rem; font-weight:600; font-size:0.9rem;">Compare com a sua resposta e marque como você foi:</p>
-                <div class="simulado-eval-btns">
-                  <button class="simulado-eval-btn ${evalSt === 'certo' ? 'active-certo' : ''}" data-status="certo">✅ Certo (+1.0 pt)</button>
-                  <button class="simulado-eval-btn ${evalSt === 'meio' ? 'active-meio' : ''}" data-status="meio">⚖️ Meio Certo (+0.5 pt)</button>
-                  <button class="simulado-eval-btn ${evalSt === 'errado' ? 'active-errado' : ''}" data-status="errado">❌ Errado (0.0 pt)</button>
-                </div>
-              </div>
-            `;
-            card.appendChild(qCard);
-
-            const ta = qCard.querySelector(`#sim-ta-${q.number}`);
-            const revBtn = qCard.querySelector(`#sim-rev-btn-${q.number}`);
-            const ansBox = qCard.querySelector(`#sim-ans-box-${q.number}`);
-            const evalBtns = qCard.querySelectorAll(".simulado-eval-btn");
-
-            revBtn.addEventListener("click", () => {
-              ansBox.style.display = "block";
-              if (!simState[q.number]) {
-                simState[q.number] = { type: "written", userText: ta.value, revealed: true, evalStatus: null, points: 0 };
-              } else {
-                simState[q.number].userText = ta.value;
-                simState[q.number].revealed = true;
-              }
-            });
-
-            ta.addEventListener("input", () => {
-              if (simState[q.number]) simState[q.number].userText = ta.value;
-            });
-
-            evalBtns.forEach(b => {
-              b.addEventListener("click", () => {
-                const st = b.getAttribute("data-status");
-                const pts = st === "certo" ? 1.0 : st === "meio" ? 0.5 : 0.0;
-
-                simState[q.number] = { type: "written", userText: ta.value, revealed: true, evalStatus: st, points: pts };
-
-                evalBtns.forEach(btnEl => {
-                  btnEl.classList.remove("active-certo", "active-meio", "active-errado");
-                });
-                b.classList.add(`active-${st}`);
-
-                updateSimStats();
-              });
-            });
+        if (cloudProfile.state_json && Object.keys(cloudProfile.state_json).length > 0) {
+          window.userState.studiedDays = cloudProfile.state_json.studiedDays || window.userState.studiedDays;
+          window.userState.unlockedItems = cloudProfile.state_json.unlockedItems || window.userState.unlockedItems;
+          window.userState.stageHistory = cloudProfile.state_json.stageHistory || window.userState.stageHistory;
+          window.userState.unlockedModulesBonus = cloudProfile.state_json.unlockedModulesBonus || window.userState.unlockedModulesBonus;
+          window.userState.unlockedGrimorioTopics = cloudProfile.state_json.unlockedGrimorioTopics || window.userState.unlockedGrimorioTopics;
+          if (cloudProfile.state_json.stats) {
+            window.userState.stats = { ...window.userState.stats, ...cloudProfile.state_json.stats };
           }
-        });
-
-        listContainer.appendChild(card);
-      });
+        }
+        window.userState.isOnboarded = Boolean(cloudProfile.is_onboarded);
+        if (typeof cloudProfile.hide_from_leaderboard === 'boolean') {
+          window.userState.hideFromLeaderboard = cloudProfile.hide_from_leaderboard;
+        }
+        window.saveUserState();
+      } else {
+        const prefix = email.split('@')[0];
+        window.userState.name = prefix.charAt(0).toUpperCase() + prefix.slice(1);
+        window.userState.isOnboarded = false;
+        window.saveUserState();
+      }
+    } catch (e) {
+      console.warn('Erro ao buscar perfil no Supabase:', e);
     }
-
-    filterSelect.addEventListener("change", renderSimList);
-    resetBtn.addEventListener("click", () => {
-      simState = {};
-      updateSimStats();
-      renderSimList();
-    });
-
-    renderSimList();
   }
+
+  if (!window.userState.isOnboarded) {
+    openFirstTimeOnboarding();
+  }
+
+  updateAdminUI();
+  window.updateAllUserUI();
+  window.renderHomeCatalog();
+  window.fetchSupabaseLeaderboard();
+};
+
+function openFirstTimeOnboarding() {
+  window.userState.avatar.hat = 'none';
+  const previewBox = document.getElementById('onboardingAvatarPreview');
+  if (previewBox) previewBox.innerHTML = window.renderAvatarSvg(window.userState.avatar);
+  const nameInput = document.getElementById('onboardingNameInput');
+  if (nameInput) nameInput.value = '';
+  document.getElementById('onboardingModal')?.classList.remove('hidden');
+}
+
+window.completeOnboardingStep1 = function() {
+  const typed = document.getElementById('onboardingNameInput')?.value.trim();
+  if (!typed) {
+    alert('Por favor, digite o seu apelido para continuar!');
+    return;
+  }
+  window.userState.name = typed;
+  window.userState.isOnboarded = true;
+  localStorage.setItem('docslab_custom_named', 'true');
+  window.saveUserState();
+  window.updateAllUserUI();
+
+  document.getElementById('onboardingModal')?.classList.add('hidden');
+  window.openAvatarStudio();
+};
+
+// =========================================================================
+// 2. RENDERIZAÇÃO DA HOME EM GRID DE CARDS ESTILO APPS
+// =========================================================================
+window.renderHomeCatalog = function() {
+  const grid = document.getElementById('homeCoursesGrid');
+  if (!grid) return;
+  const query = (document.getElementById('homeCourseSearch')?.value || '').toLowerCase().trim();
+
+  const courses = Object.values(window.CATALOG_COURSES).filter(c =>
+    c.title.toLowerCase().includes(query) ||
+    c.category.toLowerCase().includes(query)
+  );
+
+  grid.innerHTML = courses.map(c => {
+    const prog = window.getCourseProgressInfo(c.id);
+    return `
+      <div onclick="openCourseTrail('${c.id}')" class="duo-card hover:border-emerald-400 hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col items-center text-center justify-between p-4 sm:p-5 group">
+        <span class="text-[9px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${c.badgeColor}">
+          ${c.category}
+        </span>
+
+        <div class="w-20 h-20 sm:w-24 sm:h-24 my-3 rounded-3xl bg-gradient-to-br ${c.accentBg} border-2 ${c.accentBorder} flex items-center justify-center text-4xl sm:text-5xl shadow-lg group-hover:scale-105 transition">
+          ${c.icon}
+        </div>
+
+        <div class="w-full space-y-1">
+          <h3 class="text-sm sm:text-base font-bold leading-tight">${c.title}</h3>
+          <p class="text-[11px] font-bold opacity-60">${prog.completedModules}/${c.totalModules} Módulos</p>
+        </div>
+
+        <div class="w-full mt-3 space-y-1">
+          <div class="flex justify-between text-[10px] font-extrabold opacity-75">
+            <span>Progresso</span>
+            <span class="text-emerald-400">${prog.percent}%</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
+            <div class="h-full bg-emerald-400 rounded-full transition-all" style="width: ${Math.max(6, prog.percent)}%;"></div>
+          </div>
+        </div>
+
+        <button class="w-full btn-3d btn-green py-2 mt-3.5 text-xs">
+          Abrir Curso
+        </button>
+      </div>
+    `;
+  }).join('');
+};
+
+window.filterHomeCourses = function() {
+  window.renderHomeCatalog();
+};
+
+function updateNavigationContextUI() {
+  const deskGrimorio = document.getElementById('deskNavGrimorio');
+  const mobGrimorio = document.getElementById('mobNavGrimorio');
+  const topBackBtn = document.getElementById('topBackToHomeBtn');
+  const topIcon = document.getElementById('topContextIcon');
+  const topTitle = document.getElementById('topContextTitle');
+
+  const deskTrilhaIcon = document.getElementById('deskNavTrilhaIcon');
+  const deskTrilhaLabel = document.getElementById('deskNavTrilhaLabel');
+  const mobTrilhaIcon = document.getElementById('mobNavTrilhaIcon');
+  const mobTrilhaLabel = document.getElementById('mobNavTrilhaLabel');
+
+  if (!isCurrentlyInCourseView) {
+    deskGrimorio?.classList.add('hidden');
+    mobGrimorio?.classList.add('hidden');
+    mobGrimorio?.classList.remove('flex');
+    topBackBtn?.classList.add('hidden');
+
+    if (topIcon) topIcon.textContent = '🏠';
+    if (topTitle) topTitle.textContent = 'Central de Cursos';
+    if (deskTrilhaIcon) deskTrilhaIcon.className = 'fa-solid fa-house text-base w-6';
+    if (deskTrilhaLabel) deskTrilhaLabel.textContent = 'Início (Cursos)';
+    if (mobTrilhaIcon) mobTrilhaIcon.className = 'fa-solid fa-house text-base';
+    if (mobTrilhaLabel) mobTrilhaLabel.textContent = 'Início';
+  } else {
+    const meta = window.CATALOG_COURSES[window.userState.activeCourse] || window.CATALOG_COURSES.psicopatologia;
+    deskGrimorio?.classList.remove('hidden');
+    mobGrimorio?.classList.remove('hidden');
+    mobGrimorio?.classList.add('flex');
+    topBackBtn?.classList.remove('hidden');
+
+    if (topIcon) topIcon.textContent = meta.icon;
+    if (topTitle) topTitle.textContent = meta.title;
+    if (deskTrilhaIcon) deskTrilhaIcon.className = 'fa-solid fa-map-location-dot text-base w-6';
+    if (deskTrilhaLabel) deskTrilhaLabel.textContent = `Trilha: ${meta.title}`;
+    if (mobTrilhaIcon) mobTrilhaIcon.className = 'fa-solid fa-map-location-dot text-base';
+    if (mobTrilhaLabel) mobTrilhaLabel.textContent = 'Trilha';
+  }
+}
+
+window.handlePrimaryNavClick = function() {
+  window.switchMainTab('trilha');
+};
+
+window.goToHomeCatalog = function() {
+  isCurrentlyInCourseView = false;
+  updateNavigationContextUI();
+  window.switchMainTab('trilha');
+  document.getElementById('homeCatalogView')?.classList.remove('hidden');
+  document.getElementById('courseTrailView')?.classList.add('hidden');
+  window.renderHomeCatalog();
+};
+
+window.openCourseTrail = function(courseId) {
+  isCurrentlyInCourseView = true;
+  window.userState.activeCourse = courseId;
+  updateNavigationContextUI();
+  window.switchMainTab('trilha');
+  document.getElementById('homeCatalogView')?.classList.add('hidden');
+  document.getElementById('courseTrailView')?.classList.remove('hidden');
+
+  window.loadActiveCourseScripts(courseId, () => {
+    const meta = window.CATALOG_COURSES[window.userState.activeCourse];
+    document.getElementById('bannerCourseCategory').textContent = meta.category;
+    document.getElementById('bannerCourseTitle').textContent = `${meta.icon} ${meta.title}`;
+    document.getElementById('grimorioCourseHeader').textContent = `Grimório de ${meta.title}`;
+
+    window.renderTrilhaPath();
+    window.renderGrimorioList();
+    window.updateAllUserUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.playTone(540, 'triangle', 0.1);
+  });
+};
+
+// =========================================================================
+// 3. ATUALIZAÇÃO DE INTERFACE, PERFIL, PLACAR E CALENDÁRIO
+// =========================================================================
+window.updateAllUserUI = function() {
+  const meta = window.CATALOG_COURSES[window.userState.activeCourse] || window.CATALOG_COURSES.psicopatologia;
+  const level = Math.floor(window.userState.xp / 60) + 1;
+
+  document.getElementById('topXpValue').textContent = window.userState.xp;
+  document.getElementById('topCoinsValue').textContent = window.userState.coins;
+  document.getElementById('profileDisplayName').textContent = window.userState.name;
+  document.getElementById('deskProfileName').textContent = window.userState.name;
+  document.getElementById('profileLevelNum').textContent = level;
+  document.getElementById('deskLevel').textContent = level;
+  document.getElementById('profileLastCourseBadge').textContent = `${meta.icon} ${meta.title}`;
+  document.getElementById('profileStatXp').textContent = window.userState.xp;
+  document.getElementById('profileStatCoins').textContent = `${window.userState.coins} 🧪`;
+  document.getElementById('profileStatDays').textContent = `${window.userState.studiedDays.length} Dias`;
+
+  const svgHtml = window.renderAvatarSvg(window.userState.avatar);
+  const pBox = document.getElementById('profileAvatarBox');
+  const dMini = document.getElementById('deskMiniAvatar');
+  if (pBox) pBox.innerHTML = svgHtml;
+  if (dMini) dMini.innerHTML = svgHtml;
+
+  if (typeof window.renderAchievementsSection === 'function') window.renderAchievementsSection();
+  renderMonthCalendar();
+};
+
+window.renderLeaderboards = function() {
+  const sorted = [...window.friendsList].sort((a, b) => b.xp - a.xp);
+  const fullList = document.getElementById('leaderboardList');
+  const miniList = document.getElementById('deskMiniLeaderboard');
+
+  if (fullList) {
+    if (sorted.length === 0) {
+      fullList.innerHTML = `<div class="p-4 text-center text-xs opacity-70">Nenhum estudante visível no placar ainda (sua conta ADM está oculta).</div>`;
+    } else {
+      fullList.innerHTML = sorted.map((f, idx) => `
+        <div class="p-3.5 rounded-2xl border-2 ${f.isMe ? 'border-emerald-400 bg-emerald-950/20' : 'border-slate-700/80 bg-slate-900/60'} flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="w-6 text-center font-extrabold text-sm ${idx === 0 ? 'text-amber-400' : 'opacity-60'}">${idx + 1}º</span>
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border-2 border-slate-600 shrink-0 bg-slate-900">
+              ${window.renderAvatarSvg(f.avatar)}
+            </div>
+            <div>
+              <div class="font-bold text-sm flex items-center gap-1.5">
+                <span>${f.name}</span>
+                <span>${f.courseIcon || '🧩'}</span>
+                ${f.isMe ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-md font-extrabold">Você</span>' : ''}
+              </div>
+              <div class="text-[11px] font-bold text-emerald-400">
+                ⚡ Sincronizado na Nuvem
+              </div>
+            </div>
+          </div>
+          <span class="font-extrabold text-sm text-amber-400">${f.xp} XP</span>
+        </div>
+      `).join('');
+    }
+  }
+
+  if (miniList) {
+    if (sorted.length === 0) {
+      miniList.innerHTML = `<div class="text-xs opacity-60 p-2">Conta ADM Oculta do Placar</div>`;
+    } else {
+      miniList.innerHTML = sorted.slice(0, 5).map((f, idx) => `
+        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="font-extrabold text-amber-400">${idx + 1}º</span>
+            <div class="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-slate-900">${window.renderAvatarSvg(f.avatar)}</div>
+            <span class="font-bold truncate">${f.name}</span>
+          </div>
+          <span class="font-extrabold text-amber-300 shrink-0">${f.xp} XP</span>
+        </div>
+      `).join('');
+    }
+  }
+};
+
+function renderMonthCalendar() {
+  const grid = document.getElementById('calendarGridContainer');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const now = new Date();
+  const todayDay = now.getDate();
+
+  for (let empty = 0; empty < 4; empty++) {
+    grid.innerHTML += `<div class="h-10 rounded-xl bg-slate-900/20"></div>`;
+  }
+
+  for (let d = 1; d <= 31; d++) {
+    const isStudied = window.userState.studiedDays.includes(d);
+    const isToday = d === todayDay;
+    grid.innerHTML += `
+      <div class="h-10 rounded-xl flex flex-col items-center justify-center text-xs font-extrabold border ${
+        isStudied
+          ? 'bg-emerald-500 text-slate-950 border-emerald-300 shadow'
+          : 'bg-slate-900/70 border-slate-800 opacity-75'
+      } ${isToday ? 'ring-2 ring-amber-400' : ''}">
+        <span>${d}</span>
+        ${isStudied ? '<span class="text-[8px] leading-none">★</span>' : ''}
+      </div>
+    `;
+  }
+}
+
+// =========================================================================
+// 4. PAINEL EXCLUSIVO ADMIN (rphsaraiva@gmail.com)
+// =========================================================================
+function updateAdminUI() {
+  const btn = document.getElementById('adminHideToggleBtn');
+  if (!btn) return;
+  if (window.userState.hideFromLeaderboard) {
+    btn.className = 'btn-3d btn-green px-3 py-1.5 text-xs';
+    btn.textContent = 'Oculto do Placar: SIM';
+  } else {
+    btn.className = 'btn-3d btn-surface px-3 py-1.5 text-xs text-amber-300';
+    btn.textContent = 'Oculto do Placar: NÃO';
+  }
+}
+
+window.openAdminModal = function() {
+  if (!window.isCurrentUserAdmin) return;
+  updateAdminUI();
+  document.getElementById('adminPanelModal')?.classList.remove('hidden');
+};
+
+window.closeAdminModal = function() {
+  document.getElementById('adminPanelModal')?.classList.add('hidden');
+};
+
+window.adminToggleLeaderboardVisibility = function() {
+  if (!window.isCurrentUserAdmin) return;
+  window.userState.hideFromLeaderboard = !window.userState.hideFromLeaderboard;
+  window.saveUserState();
+  updateAdminUI();
+  window.fetchSupabaseLeaderboard();
+};
+
+window.adminModifyResources = function(xpDelta, coinsDelta) {
+  if (!window.isCurrentUserAdmin) return;
+  window.addReward(xpDelta, coinsDelta, 'Admin Boost');
+};
+
+window.adminResetMyResources = function() {
+  if (!window.isCurrentUserAdmin) return;
+  window.userState.xp = 0;
+  window.userState.coins = 120;
+  window.saveUserState();
+  window.updateAllUserUI();
+  window.closeAdminModal();
+};
+
+window.adminUnlockAllModules = function() {
+  if (!window.isCurrentUserAdmin) return;
+  window.generatedCourseModules.forEach(m => {
+    m.stages.forEach(s => {
+      window.userState.stageHistory[s.stageId] = { completedCount: 1, lastCompletedTimestamp: Date.now() };
+    });
+  });
+  window.saveUserState();
+  window.renderTrilhaPath();
+  window.renderGrimorioList();
+  window.renderHomeCatalog();
+  window.soundSuccess();
+  window.closeAdminModal();
+};
+
+// =========================================================================
+// 5. NAVEGAÇÃO DE ABAS, TROCA DE NOME E TEMA
+// =========================================================================
+window.switchMainTab = function(tabName) {
+  ['trilha', 'grimorio', 'perfil'].forEach(t => {
+    const sec = document.getElementById(`sec${t.charAt(0).toUpperCase() + t.slice(1)}`);
+    const mobBtn = document.getElementById(`mobNav${t.charAt(0).toUpperCase() + t.slice(1)}`);
+    const deskBtn = document.getElementById(`deskNav${t.charAt(0).toUpperCase() + t.slice(1)}`);
+
+    if (t === tabName) {
+      sec?.classList.remove('hidden');
+      if (mobBtn) {
+        mobBtn.classList.remove('opacity-60', 'font-bold');
+        mobBtn.classList.add('text-emerald-400', 'font-extrabold');
+      }
+      if (deskBtn) deskBtn.classList.replace('btn-surface', 'btn-green');
+    } else {
+      sec?.classList.add('hidden');
+      if (mobBtn) {
+        mobBtn.classList.remove('text-emerald-400', 'font-extrabold');
+        mobBtn.classList.add('opacity-60', 'font-bold');
+      }
+      if (deskBtn) deskBtn.classList.replace('btn-green', 'btn-surface');
+    }
+  });
+};
+
+window.switchProfileSubTab = function(subName) {
+  ['placar', 'conquistas', 'calendario'].forEach(s => {
+    const box = document.getElementById(`profileSub${s.charAt(0).toUpperCase() + s.slice(1)}`);
+    const btn = document.getElementById(`subBtn${s.charAt(0).toUpperCase() + s.slice(1)}`);
+    if (s === subName) {
+      box?.classList.remove('hidden');
+      btn?.classList.replace('btn-surface', 'btn-green');
+    } else {
+      box?.classList.add('hidden');
+      btn?.classList.replace('btn-green', 'btn-surface');
+    }
+  });
+};
+
+window.openChangeNameModal = function() {
+  const nameInput = document.getElementById('newNameInput');
+  if (nameInput) nameInput.value = window.userState.name;
+  document.getElementById('changeNameModal')?.classList.remove('hidden');
+};
+
+window.closeChangeNameModal = function() {
+  document.getElementById('changeNameModal')?.classList.add('hidden');
+};
+
+window.confirmNameChange = function() {
+  const newName = document.getElementById('newNameInput')?.value.trim();
+  if (!newName) return;
+  if (window.userState.coins < 50 && !window.isCurrentUserAdmin) {
+    window.soundError();
+    alert('Você precisa de 50 🧪 Moedas de Alquimia para mudar o apelido!');
+    return;
+  }
+  if (!window.isCurrentUserAdmin) window.userState.coins -= 50;
+  window.userState.name = newName;
+  localStorage.setItem('docslab_custom_named', 'true');
+  window.saveUserState();
+  window.soundSuccess();
+  window.updateAllUserUI();
+  window.fetchSupabaseLeaderboard();
+  window.closeChangeNameModal();
+};
+
+window.toggleTheme = function() {
+  const root = document.documentElement;
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('docslab_theme', next);
+  const iconEl = document.getElementById('themeToggleIcon');
+  if (iconEl) {
+    iconEl.className = next === 'dark' ? 'fa-solid fa-sun text-amber-400' : 'fa-solid fa-moon text-indigo-600';
+  }
+};
+
+const MASCOT_QUOTES = [
+  '"Doc diz: Suas conquistas têm 5 Níveis de Insígnia (do Bronze ao Diamante)!"',
+  '"Doc diz: Gastar moedas na loja não diminui seu progresso na conquista Magnata da Alquimia!"',
+  '"Doc diz: Complete as 4 etapas de um módulo para ganhar +25 XP e +15 🧪 de Bônus!"'
+];
+window.mascotSpeak = function() {
+  const q = MASCOT_QUOTES[Math.floor(Math.random() * MASCOT_QUOTES.length)];
+  const el = document.getElementById('mascotSpeechText');
+  if (el) el.textContent = q;
+  window.playTone(620, 'sine', 0.08);
+};
+
+window.openApkModal = () => document.getElementById('apkDownloadModal')?.classList.remove('hidden');
+window.closeApkModal = () => document.getElementById('apkDownloadModal')?.classList.add('hidden');
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('docslab_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  const iconEl = document.getElementById('themeToggleIcon');
+  if (iconEl) {
+    iconEl.className = savedTheme === 'dark' ? 'fa-solid fa-sun text-amber-400' : 'fa-solid fa-moon text-indigo-600';
+  }
+
+  // Injeta o Mascote Único "Doc" em todos os slots da interface
+  window.injectDocMascotEverywhere();
+
+  isCurrentlyInCourseView = false;
+  updateNavigationContextUI();
+  window.renderHomeCatalog();
+  window.loadActiveCourseScripts(window.userState.activeCourse, () => {
+    window.updateAllUserUI();
+    window.renderHomeCatalog();
+  });
 });
