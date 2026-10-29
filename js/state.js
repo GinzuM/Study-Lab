@@ -46,14 +46,47 @@ window.CATALOG_COURSES = {
   }
 };
 
+// Itens iniciais gratuitos (South Park Style v6)
 const DEFAULT_UNLOCKED_ITEMS = [
-  '#fde6d8', '#f9d4b8', '#e5b887', '#c68642', '#8d5524', '#4b2810',
-  '#1e293b', '#451a03', '#92400e', '#facc15',
-  '#0f172a', '#78350f', '#0284c7', '#16a34a',
-  'style_short', 'style_bob', 'style_long', 'style_curly', 'style_bald',
-  'happy', 'confident', 'smile', 'smirk', 'none', 'hoodie', 'tshirt',
-  '#2563eb', '#7c3aed', '#1e1b4b', '#064e3b', '#3b0764'
+  '#ffe3d1', '#fcd0b4', '#e8b48a', '#c68642', '#8d5524', '#4b2810',
+  '#18181b', '#451a03', '#7f432b', '#eab308',
+  '#090d16', '#78350f',
+  '#dc2626', '#16a34a', '#2563eb', '#15803d', '#f8fafc',
+  '#334155', '#1e3a8a',
+  '#1e1b4b', '#bceeff', '#064e3b',
+  'sp_short_clean', 'sp_curly_messy', 'sp_bob_long', 'none',
+  'shirt_basic', 'shirt_raglan',
+  'sp_standard', 'sp_look_side',
+  'lid_bored_blush', 'lid_half_skin',
+  'brow_normal', 'brow_angry',
+  'mouth_frown_small', 'mouth_smile',
+  'pants_jeans_stitch', 'pants_plain',
+  'shoes_classic_flat', 'shoes_sneakers'
 ];
+
+const DEFAULT_AVATAR_CONFIG = {
+  skinTone: '#fcd0b4',
+  hairColor: '#18181b',
+  eyeColor: '#090d16',
+  bodyColor: '#dc2626',
+  stripeColor: '#15803d',
+  hatColor: '#2563eb',
+  gloveColor: '#dc2626',
+  pantsColor: '#334155',
+  shoeColor: '#dc2626',
+  bgColor: '#1e1b4b',
+  hair: 'sp_curly_messy',
+  eyelids: 'lid_bored_blush',
+  eyes: 'sp_standard',
+  eyebrows: 'brow_normal',
+  mouth: 'mouth_frown_small',
+  body: 'shirt_raglan',
+  gloves: 'none',
+  pants: 'pants_jeans_stitch',
+  shoes: 'shoes_sneakers',
+  hat: 'none',
+  faceAcc: 'none'
+};
 
 function createDefaultStats() {
   return {
@@ -86,27 +119,27 @@ window.userState = JSON.parse(localStorage.getItem('docslab_state_v5')) || {
   isOnboarded: false,
   hideFromLeaderboard: false,
   stats: createDefaultStats(),
-  avatar: {
-    skinTone: '#f9d4b8',
-    hairColor: '#1e293b',
-    eyeColor: '#0f172a',
-    head: 'style_short',
-    eyes: 'happy',
-    mouth: 'smile',
-    hat: 'none',
-    body: 'hoodie',
-    bodyColor: '#16a34a',
-    bgColor: '#1e1b4b'
-  }
+  avatar: { ...DEFAULT_AVATAR_CONFIG }
 };
 
-// Migração segura caso o usuário já tenha dados salvos
+// Migração segura caso o usuário já tenha dados salvos de versões anteriores
 if (!window.userState.stats) window.userState.stats = createDefaultStats();
 if (!window.userState.stats.courseStats) window.userState.stats.courseStats = createDefaultStats().courseStats;
 if (!window.userState.stats.claimedAchievementTiers) window.userState.stats.claimedAchievementTiers = {};
 if (typeof window.userState.stats.lifetimeCoinsEarned !== 'number') {
   window.userState.stats.lifetimeCoinsEarned = Math.max(120, window.userState.coins || 120);
 }
+if (!Array.isArray(window.userState.unlockedItems)) {
+  window.userState.unlockedItems = [...DEFAULT_UNLOCKED_ITEMS];
+} else {
+  // Garante que todos os novos itens gratuitos básicos estejam desbloqueados na conta existente
+  DEFAULT_UNLOCKED_ITEMS.forEach(itemId => {
+    if (!window.userState.unlockedItems.includes(itemId)) {
+      window.userState.unlockedItems.push(itemId);
+    }
+  });
+}
+window.userState.avatar = { ...DEFAULT_AVATAR_CONFIG, ...(window.userState.avatar || {}) };
 
 window.isCurrentUserAdmin = false;
 window.friendsList = [];

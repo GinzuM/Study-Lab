@@ -423,34 +423,34 @@
   </div>
 
 <!-- =====================================================================
-       MODAL 1: ATELIÊ DE PERSONAGEM (ESTILO SOUTH PARK / PICREW)
+       MODAL 1: ATELIÊ DE PERSONAGEM (SOUTH PARK STYLE EM PRODUÇÃO)
        ===================================================================== -->
   <div id="avatarStudioModal" class="fixed inset-0 bg-black/85 z-50 hidden flex flex-col justify-center p-2 sm:p-4 overflow-y-auto">
-    <div class="max-w-2xl w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl overflow-hidden flex flex-col max-h-[95vh] shadow-2xl">
+    <div class="max-w-3xl w-full mx-auto bg-slate-900 border-2 border-slate-700 rounded-3xl overflow-hidden flex flex-col max-h-[95vh] shadow-2xl">
       <div class="p-3.5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
         <button onclick="closeAvatarStudio()" class="btn-3d btn-surface w-9 h-9 rounded-xl">
           <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="text-center">
-          <h3 class="font-bold text-base text-purple-400">Criador de Personagem (South Park Style)</h3>
-          <span class="text-[11px] opacity-70">Combine pálpebras, expressões, roupas, calças e tênis!</span>
+          <h3 class="font-bold text-base text-purple-400">Ateliê de Personagem</h3>
+          <span class="text-[11px] opacity-70">Personalize seu visual e desbloqueie itens estudando na Trilha!</span>
         </div>
         <div class="flex items-center gap-1.5 bg-purple-500/20 border border-purple-500/40 px-3 py-1 rounded-xl text-xs font-extrabold text-purple-300">
           <i class="fa-solid fa-flask"></i> <span id="studioCoinsDisplay">120</span>
         </div>
       </div>
 
-      <!-- Palco Central + Paletas Laterais + Dado Aleatório -->
+      <!-- Palco Central + Paletas Laterais -->
       <div class="p-4 bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800 flex flex-col items-center">
         <div class="flex items-center justify-center gap-3 sm:gap-5 w-full">
           
           <!-- Coluna Esquerda: Cores de Fundo -->
           <div class="flex flex-col items-center gap-1.5 bg-slate-900/90 p-2 rounded-2xl border border-slate-800">
             <span class="text-[9px] font-extrabold uppercase opacity-60 tracking-wider">Fundo</span>
-            <div id="studioBgColorSwatches" class="flex flex-col gap-1.5 max-h-[175px] overflow-y-auto pr-0.5"></div>
+            <div id="studioBgColorSwatches" class="flex flex-col gap-1.5 max-h-[180px] overflow-y-auto pr-0.5"></div>
           </div>
 
-          <!-- Foto Grande do Boneco South Park -->
+          <!-- Foto Grande do Personagem -->
           <div class="flex flex-col items-center">
             <div id="studioStageContainer" class="avatar-stage-large">
               <div id="studioAvatarSvgBox" class="w-full h-full"></div>
@@ -466,12 +466,29 @@
             </div>
           </div>
 
-          <!-- Coluna Direita: Cor Contextual (Cabelo, Olhos, Roupa, Calça ou Pele) -->
-          <div class="flex flex-col items-center gap-1.5 bg-slate-900/90 p-2 rounded-2xl border border-slate-800">
+          <!-- Coluna Direita: Cor Contextual + Toggle Blusa/Listras -->
+          <div class="flex flex-col items-center gap-1.5 bg-slate-900/90 p-2 rounded-2xl border border-slate-800 min-w-[54px]">
             <span id="studioContextColorLabel" class="text-[9px] font-extrabold uppercase text-purple-400 tracking-wider">Cabelo</span>
-            <div id="studioContextColorSwatches" class="flex flex-col gap-1.5 max-h-[175px] overflow-y-auto pr-0.5"></div>
+            <div id="studioShirtDualToggle" class="hidden flex-col gap-1 w-full pb-1 mb-1 border-b border-slate-800">
+              <button onclick="setStudioColorPalette('bodyColor', 'Blusa')" id="btnStudioSubBody" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-purple-600 text-white">1. Blusa</button>
+              <button onclick="setStudioColorPalette('stripeColor', 'Listras')" id="btnStudioSubStripe" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">2. Listras</button>
+            </div>
+            <div id="studioContextColorSwatches" class="flex flex-col gap-1.5 max-h-[165px] overflow-y-auto pr-0.5"></div>
           </div>
 
+        </div>
+
+        <!-- Barra Rápida de Troca de Paleta -->
+        <div class="flex flex-wrap justify-center gap-1.5 mt-3 pt-2 border-t border-slate-800/80 w-full max-w-lg">
+          <button onclick="setStudioColorPalette('skinTone', 'Pele')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">🎨 Pele</button>
+          <button onclick="setStudioColorPalette('hairColor', 'Cabelo')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">💇 Cabelo</button>
+          <button onclick="setStudioColorPalette('eyeColor', 'Olhos')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">👀 Olhos</button>
+          <button onclick="setStudioColorPalette('bodyColor', 'Blusa')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">👕 Cor Blusa</button>
+          <button onclick="setStudioColorPalette('stripeColor', 'Listras')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">🦓 Cor Listras</button>
+          <button onclick="setStudioColorPalette('hatColor', 'Chapéu')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">🧢 Chapéu</button>
+          <button onclick="setStudioColorPalette('gloveColor', 'Luvas')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">🧤 Luvas</button>
+          <button onclick="setStudioColorPalette('pantsColor', 'Calça')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">👖 Calça</button>
+          <button onclick="setStudioColorPalette('shoeColor', 'Sapatos')" class="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[10px] font-bold">👟 Sapatos</button>
         </div>
 
         <div class="w-full max-w-md mt-3 flex gap-2">
@@ -479,50 +496,31 @@
             <i class="fa-solid fa-check"></i> Salvar Meu Visual
           </button>
           <button onclick="buyPreviewedItem()" id="btnBuyTryOnItem" class="hidden w-full btn-3d btn-amber py-2.5 text-xs sm:text-sm">
-            <i class="fa-solid fa-cart-shopping"></i> Desbloquear (<span id="buyItemCost">50</span> 🧪)
+            <i class="fa-solid fa-cart-shopping"></i> Desbloquear Item
           </button>
         </div>
       </div>
 
-      <!-- Abas de Peças Completas Estilo Picrew / South Park -->
+      <!-- Abas de Peças -->
       <div class="flex overflow-x-auto border-b border-slate-800 bg-slate-950 px-3 py-2 gap-1.5 justify-start">
-        <button onclick="selectStudioCategory('hair')" id="catBtn_hair" class="studio-cat-btn btn-3d btn-purple px-3 py-1.5 text-xs shrink-0">
-          💇 Cabelo
-        </button>
-        <button onclick="selectStudioCategory('eyelids')" id="catBtn_eyelids" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          😑 Pálpebras
-        </button>
-        <button onclick="selectStudioCategory('eyes')" id="catBtn_eyes" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          👀 Olhos
-        </button>
-        <button onclick="selectStudioCategory('eyebrows')" id="catBtn_eyebrows" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          🤨 Sobrancelha
-        </button>
-        <button onclick="selectStudioCategory('mouth')" id="catBtn_mouth" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          👄 Boca
-        </button>
-        <button onclick="selectStudioCategory('body')" id="catBtn_body" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          👕 Camisa/Casaco
-        </button>
-        <button onclick="selectStudioCategory('pants')" id="catBtn_pants" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          👖 Calça
-        </button>
-        <button onclick="selectStudioCategory('shoes')" id="catBtn_shoes" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          👟 Sapatos
-        </button>
-        <button onclick="selectStudioCategory('hat')" id="catBtn_hat" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          🧢 Chapéu/Gorro
-        </button>
-        <button onclick="selectStudioCategory('faceAcc')" id="catBtn_faceAcc" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">
-          🎭 Óculos/Máscara
-        </button>
+        <button onclick="selectStudioCategory('hair')" id="catBtn_hair" class="studio-cat-btn btn-3d btn-purple px-3 py-1.5 text-xs shrink-0">💇 Cabelo</button>
+        <button onclick="selectStudioCategory('faceAcc')" id="catBtn_faceAcc" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">🎃 Máscaras & Óculos</button>
+        <button onclick="selectStudioCategory('body')" id="catBtn_body" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">👕 Blusa & Listras</button>
+        <button onclick="selectStudioCategory('hat')" id="catBtn_hat" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">🧢 Chapéu</button>
+        <button onclick="selectStudioCategory('eyes')" id="catBtn_eyes" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">👀 Olhos</button>
+        <button onclick="selectStudioCategory('eyelids')" id="catBtn_eyelids" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">😑 Pálpebras</button>
+        <button onclick="selectStudioCategory('eyebrows')" id="catBtn_eyebrows" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">🤨 Sobrancelha</button>
+        <button onclick="selectStudioCategory('mouth')" id="catBtn_mouth" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">👄 Boca</button>
+        <button onclick="selectStudioCategory('gloves')" id="catBtn_gloves" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">🧤 Mãos/Luvas</button>
+        <button onclick="selectStudioCategory('pants')" id="catBtn_pants" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">👖 Calça</button>
+        <button onclick="selectStudioCategory('shoes')" id="catBtn_shoes" class="studio-cat-btn btn-3d btn-surface px-3 py-1.5 text-xs shrink-0">👟 Sapatos</button>
       </div>
 
-      <!-- Grade de Quadradinhos com o Preview Isolado de cada peça -->
-      <div id="studioItemsGrid" class="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 flex-1"></div>
+      <!-- Grade Padronizada (Sem esticar cards quando houver poucos itens) -->
+      <div id="studioItemsGrid" class="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 content-start auto-rows-max flex-1"></div>
     </div>
   </div>
-
+  
   <!-- =====================================================================
        MODAL 2: LEITOR PAGINADO COM O MASCOTE ÚNICO "DOC"
        ===================================================================== -->
