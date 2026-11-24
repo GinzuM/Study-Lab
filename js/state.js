@@ -4,9 +4,86 @@
 
 window.ADMIN_EMAIL = 'rphsaraiva@gmail.com';
 
+window.SEASON_CONFIG = {
+  id: 'provas_finais',
+  title: 'Temporada: Provas de Final de Semestre',
+  subtitle: '9 disciplinas completas organizadas em blocos de revisão, quizzes, flashcards e simulados.'
+};
+
 window.CATALOG_COURSES = {
+  desenvolvimento_humano: {
+    id: 'desenvolvimento_humano',
+    season: 'provas_finais',
+    title: 'Desenvolvimento Humano',
+    icon: '🌱',
+    accentBg: 'from-lime-500/25 to-emerald-600/20',
+    accentBorder: 'border-lime-500/40',
+    badgeColor: 'text-lime-300 bg-lime-500/20',
+    category: 'Ciclo Vital',
+    totalModules: 5,
+    totalStages: 21,
+    dtPath: 'cursos/desenvolvimento_humano/dt_desenvolvimento_humano.js',
+    qPath: 'cursos/desenvolvimento_humano/q_desenvolvimento_humano.js'
+  },
+  epidemiologia: {
+    id: 'epidemiologia',
+    season: 'provas_finais',
+    title: 'Epidemiologia e Saúde Coletiva',
+    icon: '📊',
+    accentBg: 'from-sky-500/25 to-emerald-600/20',
+    accentBorder: 'border-sky-500/40',
+    badgeColor: 'text-sky-300 bg-sky-500/20',
+    category: 'Saúde Coletiva',
+    totalModules: 8,
+    totalStages: 33,
+    dtPath: 'cursos/epidemiologia/dt_epidemiologia.js',
+    qPath: 'cursos/epidemiologia/q_epidemiologia.js'
+  },
+  etica_profissional: {
+    id: 'etica_profissional',
+    season: 'provas_finais',
+    title: 'Ética Profissional e Cidadania',
+    icon: '⚖️',
+    accentBg: 'from-amber-500/25 to-yellow-600/20',
+    accentBorder: 'border-amber-500/40',
+    badgeColor: 'text-amber-300 bg-amber-500/20',
+    category: 'Deontologia',
+    totalModules: 3,
+    totalStages: 13,
+    dtPath: 'cursos/etica_profissional/dt_etica_profissional.js',
+    qPath: 'cursos/etica_profissional/q_etica_profissional.js'
+  },
+  psicologia_escolar: {
+    id: 'psicologia_escolar',
+    season: 'provas_finais',
+    title: 'Psicologia Escolar e Educacional',
+    icon: '🏫',
+    accentBg: 'from-orange-500/25 to-red-600/20',
+    accentBorder: 'border-orange-500/40',
+    badgeColor: 'text-orange-300 bg-orange-500/20',
+    category: 'Educação',
+    totalModules: 4,
+    totalStages: 17,
+    dtPath: 'cursos/psicologia_escolar/dt_psicologia_escolar.js',
+    qPath: 'cursos/psicologia_escolar/q_psicologia_escolar.js'
+  },
+  psicopatologia: {
+    id: 'psicopatologia',
+    season: 'provas_finais',
+    title: 'Psicopatologia e Sociedade',
+    icon: '🧩',
+    accentBg: 'from-emerald-500/25 to-teal-600/20',
+    accentBorder: 'border-emerald-500/40',
+    badgeColor: 'text-emerald-300 bg-emerald-500/20',
+    category: 'Saúde Mental',
+    totalModules: 8,
+    totalStages: 33,
+    dtPath: 'cursos/psicopatologia/dt_psicopatologia.js',
+    qPath: 'cursos/psicopatologia/q_psicopatologia.js'
+  },
   psicofarmacologia: {
     id: 'psicofarmacologia',
+    season: 'provas_finais',
     title: 'Psicofarmacologia',
     icon: '🧠',
     accentBg: 'from-pink-500/25 to-purple-600/20',
@@ -18,35 +95,50 @@ window.CATALOG_COURSES = {
     dtPath: 'cursos/psicofarmacologia/dt_psicofarmacologia.js',
     qPath: 'cursos/psicofarmacologia/q_psicofarmacologia.js'
   },
-  epidemiologia: {
-    id: 'epidemiologia',
-    title: 'Epidemiologia',
-    icon: '📊',
-    accentBg: 'from-sky-500/25 to-emerald-600/20',
-    accentBorder: 'border-sky-500/40',
-    badgeColor: 'text-sky-300 bg-sky-500/20',
-    category: 'Saúde Coletiva',
-    totalModules: 8,
-    totalStages: 33,
-    dtPath: 'cursos/epidemiologia/dt_epidemiologia.js',
-    qPath: 'cursos/epidemiologia/q_epidemiologia.js'
+  avaliacao_personalidade: {
+    id: 'avaliacao_personalidade',
+    season: 'provas_finais',
+    title: 'Técnicas de Exames e Personalidade',
+    icon: '🔍',
+    accentBg: 'from-indigo-500/25 to-blue-600/20',
+    accentBorder: 'border-indigo-500/40',
+    badgeColor: 'text-indigo-300 bg-indigo-500/20',
+    category: 'Avaliação Psicológica',
+    totalModules: 4,
+    totalStages: 17,
+    dtPath: 'cursos/avaliacao_personalidade/dt_avaliacao_personalidade.js',
+    qPath: 'cursos/avaliacao_personalidade/q_avaliacao_personalidade.js'
   },
-  psicopatologia: {
-    id: 'psicopatologia',
-    title: 'Psicopatologia',
-    icon: '🧩',
-    accentBg: 'from-emerald-500/25 to-teal-600/20',
-    accentBorder: 'border-emerald-500/40',
-    badgeColor: 'text-emerald-300 bg-emerald-500/20',
-    category: 'Saúde Mental',
-    totalModules: 8,
-    totalStages: 33,
-    dtPath: 'cursos/psicopatologia/dt_psicopatologia.js',
-    qPath: 'cursos/psicopatologia/q_psicopatologia.js'
+  teorias_psicoterapicas: {
+    id: 'teorias_psicoterapicas',
+    season: 'provas_finais',
+    title: 'Teorias e Técnicas Psicoterápicas',
+    icon: '🛋️',
+    accentBg: 'from-violet-500/25 to-fuchsia-600/20',
+    accentBorder: 'border-violet-500/40',
+    badgeColor: 'text-violet-300 bg-violet-500/20',
+    category: 'Clínica',
+    totalModules: 5,
+    totalStages: 21,
+    dtPath: 'cursos/teorias_psicoterapicas/dt_teorias_psicoterapicas.js',
+    qPath: 'cursos/teorias_psicoterapicas/q_teorias_psicoterapicas.js'
+  },
+  processos_basicos: {
+    id: 'processos_basicos',
+    season: 'provas_finais',
+    title: 'Processos Psicológicos Básicos',
+    icon: '⚡',
+    accentBg: 'from-cyan-500/25 to-blue-600/20',
+    accentBorder: 'border-cyan-500/40',
+    badgeColor: 'text-cyan-300 bg-cyan-500/20',
+    category: 'Cognição e Neuro',
+    totalModules: 5,
+    totalStages: 21,
+    dtPath: 'cursos/processos_basicos/dt_processos_basicos.js',
+    qPath: 'cursos/processos_basicos/q_processos_basicos.js'
   }
 };
 
-// Itens iniciais gratuitos (South Park Style v6)
 const DEFAULT_UNLOCKED_ITEMS = [
   '#ffe3d1', '#fcd0b4', '#e8b48a', '#c68642', '#8d5524', '#4b2810',
   '#18181b', '#451a03', '#7f432b', '#eab308',
@@ -90,18 +182,24 @@ const DEFAULT_AVATAR_CONFIG = {
 
 function createDefaultStats() {
   return {
-    lifetimeCoinsEarned: 120, // Sobe sempre que ganha moeda, nunca desce ao gastar!
+    lifetimeCoinsEarned: 120,
     totalQuestionsCorrect: 0,
     totalTopicsRead: 0,
     totalFlashcardsMastered: 0,
     currentStreakDays: 0,
     maxStreakDays: 0,
     lastStudyDateISO: null,
-    claimedAchievementTiers: {}, // { 'ach_xp_tier_0': true }
+    claimedAchievementTiers: {},
     courseStats: {
-      psicofarmacologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      desenvolvimento_humano: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
       epidemiologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
-      psicopatologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 }
+      etica_profissional: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      psicologia_escolar: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      psicopatologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      psicofarmacologia: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      avaliacao_personalidade: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      teorias_psicoterapicas: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 },
+      processos_basicos: { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 }
     }
   };
 }
@@ -110,7 +208,7 @@ window.userState = JSON.parse(localStorage.getItem('docslab_state_v5')) || {
   name: 'Estudante',
   xp: 0,
   coins: 120,
-  activeCourse: 'psicopatologia',
+  activeCourse: 'desenvolvimento_humano',
   studiedDays: [],
   unlockedItems: [...DEFAULT_UNLOCKED_ITEMS],
   stageHistory: {},
@@ -122,9 +220,13 @@ window.userState = JSON.parse(localStorage.getItem('docslab_state_v5')) || {
   avatar: { ...DEFAULT_AVATAR_CONFIG }
 };
 
-// Migração segura caso o usuário já tenha dados salvos de versões anteriores
 if (!window.userState.stats) window.userState.stats = createDefaultStats();
 if (!window.userState.stats.courseStats) window.userState.stats.courseStats = createDefaultStats().courseStats;
+Object.keys(window.CATALOG_COURSES).forEach(courseId => {
+  if (!window.userState.stats.courseStats[courseId]) {
+    window.userState.stats.courseStats[courseId] = { readCount: 0, quizCorrect: 0, flashcardsDone: 0, simuladoDone: 0 };
+  }
+});
 if (!window.userState.stats.claimedAchievementTiers) window.userState.stats.claimedAchievementTiers = {};
 if (typeof window.userState.stats.lifetimeCoinsEarned !== 'number') {
   window.userState.stats.lifetimeCoinsEarned = Math.max(120, window.userState.coins || 120);
@@ -132,7 +234,6 @@ if (typeof window.userState.stats.lifetimeCoinsEarned !== 'number') {
 if (!Array.isArray(window.userState.unlockedItems)) {
   window.userState.unlockedItems = [...DEFAULT_UNLOCKED_ITEMS];
 } else {
-  // Garante que todos os novos itens gratuitos básicos estejam desbloqueados na conta existente
   DEFAULT_UNLOCKED_ITEMS.forEach(itemId => {
     if (!window.userState.unlockedItems.includes(itemId)) {
       window.userState.unlockedItems.push(itemId);
@@ -149,7 +250,6 @@ window.saveUserState = function() {
   window.syncProfileToSupabase();
 };
 
-// Incrementa estatísticas específicas de estudo e verifica conquistas
 window.recordStudyMetric = function(metricType, amount = 1, courseId = null) {
   const targetCourse = courseId || window.userState.activeCourse;
   if (!window.userState.stats.courseStats[targetCourse]) {
@@ -172,7 +272,6 @@ window.recordStudyMetric = function(metricType, amount = 1, courseId = null) {
   window.saveUserState();
 };
 
-// Registra o dia estudado e calcula dias seguidos (Streak sem reset punitivo no calendário, mas rastreado para conquista)
 window.markDayStudied = function() {
   const now = new Date();
   const todayDay = now.getDate();
@@ -228,6 +327,23 @@ window.getCourseProgressInfo = function(courseId) {
   return { percent: pct, completedStages: completedKeys.length, completedModules: completedMods };
 };
 
+window.getSeasonProgressInfo = function(seasonId = 'provas_finais') {
+  const courses = Object.values(window.CATALOG_COURSES).filter(c => c.season === seasonId);
+  if (courses.length === 0) return { percent: 0, completedCourses: 0, totalCourses: 0 };
+  let totalPct = 0;
+  let completedCourses = 0;
+  courses.forEach(c => {
+    const info = window.getCourseProgressInfo(c.id);
+    totalPct += info.percent;
+    if (info.percent >= 100) completedCourses++;
+  });
+  return {
+    percent: Math.round(totalPct / courses.length),
+    completedCourses,
+    totalCourses: courses.length
+  };
+};
+
 window.syncProfileToSupabase = async function() {
   if (!window.supabaseClient || !window.currentSessionUser) return;
   try {
@@ -255,7 +371,7 @@ window.syncProfileToSupabase = async function() {
 };
 
 window.fetchSupabaseLeaderboard = async function() {
-  const meta = window.CATALOG_COURSES[window.userState.activeCourse] || window.CATALOG_COURSES.psicopatologia;
+  const meta = window.CATALOG_COURSES[window.userState.activeCourse] || window.CATALOG_COURSES.desenvolvimento_humano;
   if (window.supabaseClient) {
     try {
       const { data, error } = await window.supabaseClient
