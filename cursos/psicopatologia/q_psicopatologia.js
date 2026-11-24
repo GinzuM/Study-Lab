@@ -1,335 +1,498 @@
 // =========================================================================
-// BANCO DE QUESTÕES E AVALIAÇÃO (q_psicopatologia.js) — Doc's Lab
-// 25 Questões reformuladas com explicações cirúrgicas vinculadas ao Grimório
+// cursos/psicopatologia/q_psicopatologia.js
+// Banco de Questões Comentadas (Quizzes de Módulo e Simulado Global)
 // =========================================================================
 
-const questionsData = {
-  quiz: [
-    {
-      topicId: "conceito_objeto",
-      question: "Sobre a distinção fundamental entre a Psicopatologia e a Psiquiatria, é correto afirmar que:",
-      hint: "Revise o Tópico 1 do Grimório sobre a ciência teórica versus a prática médica.",
-      options: [
-        "São sinônimos perfeitos voltados à prescrição de psicofármacos.",
-        "A Psicopatologia é a ciência teórica e descritiva do sofrimento mental, enquanto a Psiquiatria é a prática médica focada na intervenção e tratamento.",
-        "A Psicopatologia rejeita o estudo da consciência e restringe-se à neuroimagem.",
-        "A Psiquiatria foi criada por Karl Jaspers para substituir a fenomenologia."
-      ],
-      correct: 1,
-      explanation: "Conforme o Tópico 1, a Psicopatologia estuda a natureza teórica do sofrimento mental de forma descritiva, enquanto a Psiquiatria atua no plano pragmático da intervenção clínica e farmacológica."
-    },
-    {
-      topicId: "conceito_objeto",
-      question: "Karl Jaspers, em sua obra de 1913, deixou uma advertência central sobre o paciente psiquiátrico. Qual é ela?",
-      hint: "O ser humano nunca cabe inteiramente em um rótulo.",
-      options: [
-        "Todo comportamento reduz-se a reflexos motores.",
-        "O diagnóstico esgota totalmente a identidade do indivíduo.",
-        "Nunca podemos reduzir inteiramente o ser humano aos conceitos psicopatológicos.",
-        "Apenas os fenômenos inconscientes constituem o objeto de estudo."
-      ],
-      correct: 2,
-      explanation: "A advertência de Jaspers (Tópico 1) estabelece que a pessoa humana sempre transcende o diagnóstico clínico ou os conceitos psicopatológicos."
-    },
-    {
-      topicId: "conceito_objeto",
-      question: "Qual é o objeto de estudo primordial da Psicopatologia segundo Karl Jaspers?",
-      hint: "O que o paciente vivencia em sua consciência.",
-      options: [
-        "A anatomia macroscópica do lobo frontal.",
-        "O acontecimento psíquico consciente e a vivência subjetiva do sujeito.",
-        "A criação de leis penais para internação.",
-        "A eficácia comercial de ansiolíticos."
-      ],
-      correct: 1,
-      explanation: "O objeto central definido por Jaspers no Tópico 1 é o acontecimento psíquico consciente — aquilo que o indivíduo vivencia subjetivamente."
-    },
-    {
-      topicId: "normal_patologico",
-      question: "Definir normalidade com base exclusivamente na média matemática da população geral (curva de Gauss) corresponde ao critério de:",
-      hint: "Baseia-se em frequência estatística.",
-      options: [
-        "Normalidade funcional.",
-        "Normalidade subjetiva.",
-        "Normalidade estatística.",
-        "Normalidade como processo."
-      ],
-      correct: 2,
-      explanation: "O Tópico 2 define o critério estatístico como aquele que equipara o normal ao que é mais frequente na média da população."
-    },
-    {
-      topicId: "normal_patologico",
-      question: "Qual é a principal falha do critério estatístico de normalidade na clínica?",
-      hint: "Nem tudo o que é frequente é saudável, nem tudo o que é raro é patológico.",
-      options: [
-        "Ele impede o uso de gráficos em pesquisas.",
-        "Fenômenos patológicos frequentes (ex: cáries) parecem normais, e traços raros saudáveis (ex: genialidade) parecem anormais.",
-        "Exige psicoterapia psicanalítica obrigatória.",
-        "Considera apenas crianças pequenas como normais."
-      ],
-      correct: 1,
-      explanation: "Conforme o Tópico 2, a falha estatística reside no fato de que condições patológicas comuns entram na média, enquanto genialidades raras são classificadas como desvios."
-    },
-    {
-      topicId: "normal_patologico",
-      question: "Uma criança de 3 anos que faz birra intensa ao ser contrariada apresenta comportamento esperado, mas um adulto de 35 anos que faz o mesmo no escritório apresenta quadro disfuncional. Qual critério explica isso?",
-      hint: "Leva em conta a etapa e a idade do desenvolvimento.",
-      options: [
-        "Normalidade anatômica.",
-        "Normalidade estatística estática.",
-        "Normalidade como processo (dinâmica do desenvolvimento e faixa etária).",
-        "Normalidade subjetiva."
-      ],
-      correct: 2,
-      explanation: "O Tópico 2 mostra que a normalidade como processo avalia o comportamento conforme a faixa etária e a etapa evolutiva do indivíduo."
-    },
-    {
-      topicId: "normal_patologico",
-      question: "O critério de normalidade subjetiva falha particularmente em qual situação clínica?",
-      hint: "Quando o paciente perde a capacidade de reconhecer que está doente.",
-      options: [
-        "Em quadros psicóticos graves ou mania avançada, onde o paciente nega a doença e sente-se 'perfeito'.",
-        "Em fobias simples de altura.",
-        "Em queixas leves de insônia espontâneas.",
-        "Em exames de rotina na atenção básica."
-      ],
-      correct: 0,
-      explanation: "Conforme o Tópico 2, a autopercepção falha em psicoses e mania porque o paciente perde a crítica e sente-se perfeitamente saudável (ausência de crítica)."
-    },
-    {
-      topicId: "forma_conteudo",
-      question: "Na distinção entre Forma e Conteúdo dos sintomas, é correto afirmar que:",
-      hint: "O pote estrutural versus o recheio cultural.",
-      options: [
-        "A forma depende da cultura local e o conteúdo é genético.",
-        "A forma é a estrutura psicopatológica básica universal e o conteúdo é o tema biográfico e cultural que a preenche.",
-        "O conteúdo é o único elemento que define o diagnóstico.",
-        "Forma e conteúdo são idênticos."
-      ],
-      correct: 1,
-      explanation: "O Tópico 3 define a Forma como a estrutura universal (ex: delírio) e o Conteúdo como o tema cultural e biográfico que preenche essa estrutura."
-    },
-    {
-      topicId: "forma_conteudo",
-      question: "Um paciente tem certeza absoluta de que agentes secretos instalaram câmeras em seus dentes. 'Delírio persecutório' e 'polícia secreta nos dentes' são, respectivamente:",
-      hint: "Estrutura clínica versus enredo temático.",
-      options: [
-        "Conteúdo e Forma.",
-        "Sinal e Sintoma.",
-        "Forma e Conteúdo.",
-        "Síndrome e Diagnóstico."
-      ],
-      correct: 2,
-      explanation: "Conforme o Tópico 3, o delírio persecutório é a Forma (pote estrutural), e a polícia secreta nos dentes é o Conteúdo (recheio biográfico)."
-    },
-    {
-      topicId: "forma_conteudo",
-      question: "Por que a Forma do sintoma é mais decisiva para o diagnóstico do que o Conteúdo?",
-      hint: "A estrutura mantém-se constante enquanto o tema muda com a tecnologia e a cultura.",
-      options: [
-        "Porque o conteúdo nunca é relatado.",
-        "Porque a forma reflete a alteração estrutural universal da função psíquica, enquanto o conteúdo varia com a época e a cultura.",
-        "Porque escutar o conteúdo é proibido.",
-        "Porque a forma muda a cada hora."
-      ],
-      correct: 1,
-      explanation: "O Tópico 3 destaca que a Forma é constante e serve para o diagnóstico, ao passo que o conteúdo varia conforme a cultura e a tecnologia da época."
-    },
-    {
-      topicId: "semiologia",
-      question: "Na Semiologia Psicopatológica, como se diferenciam a Semiotécnica e a Semiogênese?",
-      hint: "Técnica de coleta versus origem e mecanismo do sintoma.",
-      options: [
-        "Semiotécnica é a técnica de coleta de dados e entrevista; Semiogênese investiga a origem e os mecanismos dos sintomas.",
-        "Semiotécnica estuda o DNA; Semiogênese prescreve remédios.",
-        "Semiotécnica aplica-se a crianças; Semiogênese a idosos.",
-        "Ambas tratam de exames de sangue."
-      ],
-      correct: 0,
-      explanation: "Conforme o Tópico 4, a Semiotécnica é o método de coleta/entrevista, e a Semiogênese investiga a origem e o mecanismo produtor dos sintomas."
-    },
-    {
-      topicId: "semiologia",
-      question: "Um paciente apresenta tremores visíveis e fala acelerada, e relata sentir um vazio e medo de morrer. Os dados observados e o relato íntimo são, respectivamente:",
-      hint: "Objetivo de fora versus subjetivo de dentro.",
-      options: [
-        "Sintomas e Sinais.",
-        "Sinais objetivos e Sintomas subjetivos.",
-        "Conteúdos e Formas.",
-        "Diagnósticos e Prognósticos."
-      ],
-      correct: 1,
-      explanation: "O Tópico 4 define Sinal como o dado objetivo observável (tremores) e Sintoma como a vivência subjetiva relatada (medo de morrer)."
-    },
-    {
-      topicId: "semiologia",
-      question: "O que define corretamente o conceito de 'Síndrome' na prática clínica?",
-      hint: "Pacote de sinais e sintomas que caminham juntos.",
-      options: [
-        "Uma doença com causa única e comprovada.",
-        "Um agrupamento recorrente de múltiplos sinais e sintomas que ocorrem juntos, podendo ter diversas causas.",
-        "Qualquer sintoma isolado de curta duração.",
-        "A cura definitiva de um transtorno."
-      ],
-      correct: 1,
-      explanation: "Conforme o Tópico 4, Síndrome é o pacote recorrente de sinais e sintomas que aparecem associados, independentemente de terem etiologias variadas."
-    },
-    {
-      topicId: "jaspers_compreender_explicar",
-      question: "Segundo Karl Jaspers, qual a diferença entre 'Explicar' e 'Compreender'?",
-      hint: "Causa biológica de fora versus sentido empático de dentro.",
-      options: [
-        "Explicar é conversar com a família; Compreender é pedir tomografia.",
-        "Explicar busca causas orgânicas de fora para dentro; Compreender capta o sentido empático de dentro para fora.",
-        "Explicar é da Psicanálise; Compreender é da Neurologia.",
-        "Não há diferença."
-      ],
-      correct: 1,
-      explanation: "O Tópico 5 diferencia Explicar (causa orgânica de fora para dentro) de Compreender (sentido empático humano de dentro para fora)."
-    },
-    {
-      topicId: "jaspers_compreender_explicar",
-      question: "Um paciente tem delirium por infecção urinária; outro chora após falecimento do cônjuge. Os casos ilustram, respectivamente:",
-      hint: "Causa orgânica versus sentido psicológico do luto.",
-      options: [
-        "Compreensão e Explicação.",
-        "Explicação causal orgânica e Compreensão psicológica de sentido.",
-        "Auto-organização e Hetero-organização.",
-        "Simulação e Delírio."
-      ],
-      correct: 1,
-      explanation: "Conforme o Tópico 5, a infecção exigiu Explicação causal física, e o luto permitiu Compreensão psicológica do sentido humano."
-    },
-    {
-      topicId: "jaspers_compreender_explicar",
-      question: "Para Karl Jaspers, o 'delírio primário' da esquizofrenia caracteriza-se por ser:",
-      hint: "Incompreensível psicologicamente em sua origem.",
-      options: [
-        "Compreensível a partir de uma tristeza.",
-        "Psicologicamente incompreensível e inderiável, surgindo como ruptura radical na vivência.",
-        "Uma mentira voluntária.",
-        "Exclusivo da infância."
-      ],
-      correct: 1,
-      explanation: "O Tópico 5 aponta que o delírio primário é psicologicamente incompreensível porque surge sem derivar logicamente de uma vivência anterior compreensível."
-    },
-    {
-      topicId: "abordagens",
-      question: "Manuais como DSM-5 e CID-11 baseiam-se predominantemente em qual abordagem?",
-      hint: "Focam na catalogação descritiva de critérios observáveis.",
-      options: [
-        "Abordagem Descritiva e Categorial.",
-        "Abordagem Psicanalítica Lacaniana.",
-        "Abordagem Existencial.",
-        "Antipsiquiatria radical."
-      ],
-      correct: 0,
-      explanation: "Conforme o Tópico 6, os manuais internacionais utilizam a abordagem descritiva e categorial para padronizar diagnósticos."
-    },
-    {
-      topicId: "abordagens",
-      question: "A perspectiva psicodinâmica compreende um sintoma fóbico ou obsessivo como:",
-      hint: "Conflito inconsciente e defesa.",
-      options: [
-        "Um mero erro genético sem sentido.",
-        "Uma formação de compromisso contra conflitos inconscientes, desejos recalcados e defesas.",
-        "Apenas um hábito motor escolar.",
-        "Alteração de canais de cálcio."
-      ],
-      correct: 1,
-      explanation: "O Tópico 6 define a visão psicodinâmica como a leitura do sintoma enquanto formação de compromisso contra conflitos inconscientes."
-    },
-    {
-      topicId: "abordagens",
-      question: "A abordagem Cognitivo-Comportamental em psicopatologia enfatiza principalmente:",
-      hint: "Crenças e esquemas de pensamento.",
-      options: [
-        "Sonhos infantis e complexo de Édipo.",
-        "Crenças disfuncionais, esquemas cognitivos e distorções no processamento da informação.",
-        "Eletroconvulsoterapia obrigatória.",
-        "Negação dos transtornos."
-      ],
-      correct: 1,
-      explanation: "Conforme o Tópico 6, a abordagem cognitivo-comportamental foca nas crenças disfuncionais e distorções cognitivas."
-    },
-    {
-      topicId: "funcoes_psiquicas",
-      question: "Sobre as funções psíquicas (atenção, memória, afeto, pensamento), Dalgalarrondo ressalta que:",
-      hint: "A mente é uma totalidade integrada.",
-      options: [
-        "Funcionam em gavetas isoladas sem comunicação.",
-        "A divisão em funções é didática, pois na prática clínica quem adoece é a pessoa inteira em sua totalidade.",
-        "Apenas memória e inteligência importam.",
-        "A afetividade nunca afeta a atenção."
-      ],
-      correct: 1,
-      explanation: "O Tópico 7 destaca que a divisão em funções psíquicas é puramente didática; o adoecimento compromete a pessoa inteira em sua totalidade integrada."
-    },
-    {
-      topicId: "funcoes_psiquicas",
-      question: "Um paciente com ansiedade grave não consegue se lembrar do que leu porque está hipervigilante. Isso demonstra que:",
-      hint: "As funções mentais interagem em cadeia.",
-      options: [
-        "Ele tem Alzheimer precoce.",
-        "As funções psíquicas são interdependentes: a alteração na afetividade (ansiedade) prejudica a atenção e o registro da memória.",
-        "A memória depende apenas dos músculos.",
-        "A ansiedade melhora sempre a fixação."
-      ],
-      correct: 1,
-      explanation: "Conforme o Tópico 7, a alteração na afetividade (ansiedade) prejudica a atenção, o que consequentemente compromete a fixação da memória."
-    },
-    {
-      topicId: "avaliacao_exame",
-      question: "Qual a diferença fundamental entre Anamnese e Exame do Estado Mental?",
-      hint: "Filme longitudinal versus fotografia transversal.",
-      options: [
-        "Anamnese é o corte longitudinal da história de vida; o Exame Psíquico é o corte transversal do estado mental atual na consulta.",
-        "Anamnese avalia sangue; Exame Psíquico avalia infância.",
-        "O Exame Psíquico é feito só com a família.",
-        "A Anamnese dispensa o exame psíquico."
-      ],
-      correct: 0,
-      explanation: "O Tópico 8 diferencia Anamnese (longitudinal/filme da vida) de Exame do Estado Mental (transversal/fotografia do presente na consulta)."
-    },
-    {
-      topicId: "avaliacao_exame",
-      question: "Qual elemento pertence especificamente ao Exame do Estado Mental (corte transversal)?",
-      hint: "Dado observado ou testado agora na entrevista.",
-      options: [
-        "Histórico de complicações no parto.",
-        "Relato de depressão do avô.",
-        "Paciente consciente, orientado, com humor hipotímico e pensamento lentificado na consulta.",
-        "Lista de empregos anteriores."
-      ],
-      correct: 2,
-      explanation: "Conforme o Tópico 8, avaliar o estado atual de consciência, orientação, humor e pensamento na consulta pertence ao Exame do Estado Mental."
-    },
-    {
-      topicId: "avaliacao_exame",
-      question: "Por que é indispensável considerar o contexto cultural e a escolaridade na avaliação psicopatológica?",
-      hint: "Evitar patologizar crenças legítimas ou diferenças educacionais.",
-      options: [
-        "Para cobrar valores diferentes.",
-        "Para não patologizar crenças culturais legítimas ou confundir baixa escolaridade com déficits demenciais.",
-        "Porque quem tem alta escolaridade nunca adoece.",
-        "Porque a cultura altera reflexos pupilares."
-      ],
-      correct: 1,
-      explanation: "O Tópico 8 alerta que o contexto cultural e educacional deve ser considerado para evitar erros diagnósticos decorrentes de diferenças socioculturais."
-    },
-    {
-      topicId: "avaliacao_exame",
-      question: "Quando o profissional avalia a capacidade de o paciente reconhecer que seus sintomas são frutos de um transtorno mental, investiga-se:",
-      hint: "Crítica da morbidade ou insight.",
-      options: [
-        "Orientação autopsíquica.",
-        "Memória remota.",
-        "Juízo crítico de realidade e consciência de morbidade (insight).",
-        "Psicomotricidade."
-      ],
-      correct: 2,
-      explanation: "Conforme o Tópico 8, a consciência de morbidade (insight) corresponde à capacidade do paciente de reconhecer que vivencia uma condição patológica."
-    }
-  ],
-  simulado: []
-};
+window.QUESTIONS_DB = [
+  // ===================== MÓDULO 1 =====================
+  {
+    id: 1,
+    modulo: "Módulo 1: Conceitos de Psicopatologia, História da Loucura e Século XIX",
+    nivel: "Fácil",
+    enunciado: "Na semiologia psicopatológica, qual alternativa diferencia corretamente Sinal, Sintoma e Síndrome?",
+    opcoes: [
+      "Sinal é subjetivo e relatado pelo paciente; Sintoma é objetivo e visto pelo clínico.",
+      "Sinal é um dado objetivo observável pelo clínico; Sintoma é uma vivência subjetiva relatada pelo paciente; Síndrome é um conjunto recorrente de sinais e sintomas.",
+      "Síndrome é um único sintoma isolado que dura menos de 1 hora.",
+      "Sinal e sintoma são sinônimos exatos para diagnóstico definitivo."
+    ],
+    correta: 1,
+    explicacao: "Correta: Sinais são observáveis objetivamente (ex.: tremor, choro), sintomas são vivências subjetivas relatadas (ex.: angústia, vozes) e síndromes agrupam sinais e sintomas recorrentes."
+  },
+  {
+    id: 2,
+    modulo: "Módulo 1: Conceitos de Psicopatologia, História da Loucura e Século XIX",
+    nivel: "Médio",
+    enunciado: "Segundo Michel Foucault em 'História da Loucura', o fenômeno conhecido como 'A Grande Internação' (século XVII, com a criação dos Hospitais Gerais) caracterizou-se por:",
+    opcoes: [
+      "Tratamento psicanalítico gratuito em comunidades abertas.",
+      "Confinamento policial e moral que isolava loucos junto a mendigos, desempregados e transgressores para manter a ordem urbana, sem finalidade médica curativa.",
+      "Descoberta dos primeiros medicamentos antipsicóticos modernos.",
+      "Abolição definitiva de todos os asilos na Europa."
+    ],
+    correta: 1,
+    explicacao: "Correta: Na Idade Clássica (século XVII), os Hospitais Gerais tinham caráter de exclusão social e disciplinamento moral/policial, não sendo ainda instituições médicas psiquiátricas."
+  },
+  {
+    id: 3,
+    modulo: "Módulo 1: Conceitos de Psicopatologia, História da Loucura e Século XIX",
+    nivel: "Fácil",
+    enunciado: "No final do século XVIII e início do século XIX, Philippe Pinel inaugurou a psiquiatria moderna ao definir a loucura como alienação mental e instituir como principal forma de tratamento:",
+    opcoes: [
+      "A psicoterapia breve comunitária nos bairros.",
+      "O isolamento terapêutico no asilo e o Tratamento Moral (baseado em disciplina, ordem, trabalho e autoridade médica).",
+      "A prescrição de inibidores seletivos da recaptação de serotonina.",
+      "O fechamento imediato de todos os hospitais psiquiátricos."
+    ],
+    correta: 1,
+    explicacao: "Correta: Pinel separou os loucos de criminosos e fundamentou o saber médico psiquiátrico sobre o asilo e o Tratamento Moral, modelo que depois degenerou em manicômios cronificadores."
+  },
+  {
+    id: 4,
+    modulo: "Módulo 1: Conceitos de Psicopatologia, História da Loucura e Século XIX",
+    nivel: "Médio",
+    enunciado: "Qual psiquiatra alemão do final do século XIX lançou as bases da nosografia psiquiátrica moderna ao classificar os transtornos pelo curso e evolução, diferenciando 'demência precoce' de 'psicose maníaco-depressiva'?",
+    opcoes: [
+      "Sigmund Freud.",
+      "Emil Kraepelin.",
+      "Franco Basaglia.",
+      "Georges Canguilhem."
+    ],
+    correta: 1,
+    explicacao: "Correta: Emil Kraepelin sistematizou a nosografia descritiva que originou a distinção clássica entre esquizofrenia (demência precoce) e transtorno bipolar (psicose maníaco-depressiva)."
+  },
+  {
+    id: 5,
+    modulo: "Módulo 1: Conceitos de Psicopatologia, História da Loucura e Século XIX",
+    nivel: "Médio",
+    enunciado: "O sociólogo Erving Goffman utilizou o conceito de 'Instituições Totais' para analisar os manicômios do século XIX e XX porque eles:",
+    opcoes: [
+      "Ofereciam total liberdade de ir e vir aos pacientes.",
+      "Controlavam todos os aspectos da vida cotidiana do interno em ambiente fechado, promovendo a 'mortificação do eu', perda de autonomia e exclusão social.",
+      "Integravam toda a família e a comunidade no cuidado diário.",
+      "Eram administrados pelos próprios usuários."
+    ],
+    correta: 1,
+    explicacao: "Correta: Em 'Manicômios, Prisões e Conventos', Goffman demonstrou como as instituições totais anulam a identidade civil e cronificam o sujeito."
+  },
+  {
+    id: 6,
+    modulo: "Módulo 1: Conceitos de Psicopatologia, História da Loucura e Século XIX",
+    nivel: "Difícil",
+    enunciado: "Qual marco farmacológico ocorrido em 1952 contribuiu tecnicamente para viabilizar o manejo de sintomas psicóticos fora dos muros dos manicômios?",
+    opcoes: [
+      "A criação da lobotomia pré-frontal.",
+      "A descoberta da clorpromazina (primeiro antipsicótico).",
+      "O uso da malarioterapia.",
+      "A invenção do coma insulínico."
+    ],
+    correta: 1,
+    explicacao: "Correta: A clorpromazina (1952) permitiu reduzir agitação e sintomas psicóticos sem contenção física permanente, somando-se às críticas éticas e políticas que impulsionaram a Reforma Psiquiátrica."
+  },
+
+  // ===================== MÓDULO 2 =====================
+  {
+    id: 7,
+    modulo: "Módulo 2: Reforma Psiquiátrica, Normal/Patológico e Sintoma",
+    nivel: "Fácil",
+    enunciado: "Qual experiência internacional de Reforma Psiquiátrica — liderada por Franco Basaglia e consolidada na Lei 180 (1978) — inspirou mais diretamente o movimento antimanicomial brasileiro?",
+    opcoes: [
+      "A Psiquiatria Preventiva norte-americana.",
+      "A Psiquiatria Democrática Italiana (desinstitucionalização em Gorizia e Trieste).",
+      "O Tratamento Moral francês do século XVIII.",
+      "A Psicometria inglesa do século XIX."
+    ],
+    correta: 1,
+    explicacao: "Correta: Franco Basaglia propôs colocar a doença entre parênteses para enxergar o sujeito cidadão, fechando manicômios e criando serviços substitutivos territoriais."
+  },
+  {
+    id: 8,
+    modulo: "Módulo 2: Reforma Psiquiátrica, Normal/Patológico e Sintoma",
+    nivel: "Médio",
+    enunciado: "Sobre a Lei nº 10.216/2001 (Lei da Reforma Psiquiátrica no Brasil), assinale a alternativa correta:",
+    opcoes: [
+      "Proíbe de forma absoluta qualquer tipo de internação psiquiátrica no país.",
+      "Assegura direitos às pessoas com transtornos mentais, proíbe internações em instituições asilares, restringe a internação ao último recurso e define as modalidades voluntária, involuntária (aviso ao MP em 72h) e compulsória.",
+      "Determina a construção de grandes hospitais psiquiátricos afastados das cidades.",
+      "Retira o direito dos pacientes de receberem visitas familiares."
+    ],
+    correta: 1,
+    explicacao: "Correta: A Lei nº 10.216/2001 redireciona o modelo assistencial para serviços comunitários (RAPS/CAPS), proíbe manicômios asilares e regulamenta rigorosamente as três modalidades de internação."
+  },
+  {
+    id: 9,
+    modulo: "Módulo 2: Reforma Psiquiátrica, Normal/Patológico e Sintoma",
+    nivel: "Médio",
+    enunciado: "No pensamento crítico sobre as noções de normal e patológico, como Georges Canguilhem define a saúde (normalidade real)?",
+    opcoes: [
+      "Como obediência exata à média estatística da população.",
+      "Como 'normatividade' — a capacidade dinâmica e flexível do sujeito de enfrentar crises e criar novas normas de vida diante das mudanças do meio.",
+      "Como ausência eterna de qualquer tristeza ou doença física.",
+      "Como conformidade passiva a todas as regras sociais sem questionamento."
+    ],
+    correta: 1,
+    explicacao: "Correta: Para Canguilhem, o patológico é o estreitamento rígido das normas de vida; a saúde é a capacidade normativa de se adaptar e criar novas possibilidades diante das adversidades."
+  },
+  {
+    id: 10,
+    modulo: "Módulo 2: Reforma Psiquiátrica, Normal/Patológico e Sintoma",
+    nivel: "Fácil",
+    enunciado: "Por que o critério puramente ESTATÍSTICO (normal = o que ocorre na maioria das pessoas) é criticado quando usado isoladamente na Psicopatologia?",
+    opcoes: [
+      "Porque não permite fazer cálculos matemáticos.",
+      "Porque fenômenos raros podem ser saudáveis (como genialidade) e fenômenos muito frequentes podem ser patológicos (como cáries ou ansiedade crônica).",
+      "Porque apenas o critério estatístico considera a cultura.",
+      "Porque ele classifica todo ser humano como psicótico."
+    ],
+    correta: 1,
+    explicacao: "Correta: Frequência estatística não equivale a saúde ou doença; a avaliação psicopatológica crítica exige considerar sofrimento, funcionalidade, liberdade subjetiva e contexto cultural."
+  },
+  {
+    id: 11,
+    modulo: "Módulo 2: Reforma Psiquiátrica, Normal/Patológico e Sintoma",
+    nivel: "Médio",
+    enunciado: "Qual alternativa expressa corretamente a diferença entre a concepção de SINTOMA na Psiquiatria contemporânea (DSM/CID) e na Psicanálise?",
+    opcoes: [
+      "Na Psiquiatria contemporânea, o sintoma é um sinal descritivo de disfunção a ser classificado e eliminado; na Psicanálise, o sintoma é uma formação de compromisso portadora de sentido inconsciente singular.",
+      "Na Psicanálise, o sintoma não tem nenhum significado e deve ser silenciado apenas com remédios.",
+      "A Psiquiatria contemporânea rejeita o uso de critérios descritivos observáveis.",
+      "Não existe nenhuma diferença teórica entre as duas concepções."
+    ],
+    correta: 0,
+    explicacao: "Correta: Enquanto o modelo DSM/CID adota uma postura descritiva focada na remissão sintomática, a Psicanálise escuta o sintoma como expressão cifrada de um conflito inconsciente singular."
+  },
+  {
+    id: 12,
+    modulo: "Módulo 2: Reforma Psiquiátrica, Normal/Patológico e Sintoma",
+    nivel: "Difícil",
+    enunciado: "Na Reforma Psiquiátrica, qual é a diferença fundamental entre 'desospitalização' e 'desinstitucionalização'?",
+    opcoes: [
+      "São sinônimos exatos que significam apenas dar alta médica.",
+      "Desospitalização é apenas a saída física do hospital (que sem suporte gera abandono); desinstitucionalização envolve desmontar a lógica manicomial e construir uma rede comunitária substitutiva (CAPS, SRTs, trabalho e cidadania).",
+      "Desinstitucionalização significa construir hospitais psiquiátricos maiores.",
+      "Desospitalização refere-se exclusivamente a hospitais veterinários."
+    ],
+    correta: 1,
+    explicacao: "Correta: Basaglia e a Reforma Brasileira enfatizam a desinstitucionalização como transformação cultural, clínica e social com rede substitutiva real, não o simples fechamento de leitos sem assistência."
+  },
+
+  // ===================== MÓDULO 3 =====================
+  {
+    id: 13,
+    modulo: "Módulo 3: Exame do Estado Mental (EEM) e Funções Psíquicas",
+    nivel: "Fácil",
+    enunciado: "No Exame do Estado Mental (EEM), qual é a diferença fundamental entre ILUSÃO e ALUCINAÇÃO?",
+    opcoes: [
+      "Ilusão ocorre apenas à noite e Alucinação apenas durante o dia.",
+      "Ilusão é a percepção distorcida de um objeto real presente; Alucinação é uma percepção sensorial vívida sem nenhum objeto externo real presente.",
+      "Alucinação é uma alteração do conteúdo do pensamento e Ilusão é perda de memória.",
+      "Ambas são alterações exclusivas da linguagem escrita."
+    ],
+    correta: 1,
+    explicacao: "Correta: Tanto ilusão quanto alucinação são alterações da sensopercepção, diferenciando-se pela presença (ilusão) ou ausência (alucinação) de um estímulo externo real."
+  },
+  {
+    id: 14,
+    modulo: "Módulo 3: Exame do Estado Mental (EEM) e Funções Psíquicas",
+    nivel: "Fácil",
+    enunciado: "Um paciente afirma com certeza absoluta e inabalável que seus vizinhos instalaram satélites para roubar seus pensamentos. No Exame do Estado Mental, esse fenômeno é classificado como alteração de qual função psíquica?",
+    opcoes: [
+      "Sensopercepção (alucinação tátil).",
+      "Conteúdo do pensamento (delírio persecutório / de controle).",
+      "Orientação autopsíquica.",
+      "Memória procedural."
+    ],
+    correta: 1,
+    explicacao: "Correta: Delírios são crenças falsas, irredutíveis à argumentação lógica e fora do contexto cultural, classificadas como alterações do CONTEÚDO DO PENSAMENTO."
+  },
+  {
+    id: 15,
+    modulo: "Módulo 3: Exame do Estado Mental (EEM) e Funções Psíquicas",
+    nivel: "Médio",
+    enunciado: "Um idoso internado por pneumonia fica subitamente confuso, sonolento, agitado à noite e sem saber o dia nem o local onde está. Esse quadro de rebaixamento/flutuação da consciência e desorientação alopsíquica é característico de:",
+    opcoes: [
+      "Delirium (estado confusional agudo de provável causa orgânica).",
+      "Transtorno de Personalidade Obsessivo-Compulsiva.",
+      "Fobia específica.",
+      "Eutimia com insight preservado."
+    ],
+    correta: 0,
+    explicacao: "Correta: Alteração aguda e flutuante do nível de consciência com desorientação caracteriza o delirium, exigindo investigação clínica/orgânica imediata."
+  },
+  {
+    id: 16,
+    modulo: "Módulo 3: Exame do Estado Mental (EEM) e Funções Psíquicas",
+    nivel: "Médio",
+    enunciado: "Assinale a alternativa que associa corretamente os termos do Exame do Estado Mental aos seus respectivos significados:",
+    opcoes: [
+      "Anedonia = fala acelerada; Logorreia = falta de prazer.",
+      "Taquipsiquismo = aceleração do curso do pensamento; Hipobulia = redução da vontade/iniciativa; Anedonia = perda da capacidade de sentir prazer.",
+      "Embotamento afetivo = choro intenso e constante; Eutimia = depressão grave.",
+      "Orientação autopsíquica = saber o ano atual; Alopsíquica = saber o próprio nome."
+    ],
+    correta: 1,
+    explicacao: "Correta: Taquipsiquismo refere-se ao pensamento acelerado, hipobulia à queda da volição e anedonia à perda do prazer em atividades antes gratificantes."
+  },
+  {
+    id: 17,
+    modulo: "Módulo 3: Exame do Estado Mental (EEM) e Funções Psíquicas",
+    nivel: "Médio",
+    enunciado: "No Exame do Estado Mental, como se diferenciam 'Humor' e 'Afeto'?",
+    opcoes: [
+      "Humor é o estado emocional basal e sustentado ao longo do tempo ('clima'); Afeto é a expressão emocional observável no momento da entrevista ('tempo agora').",
+      "Afeto é sempre positivo e Humor é sempre negativo.",
+      "Humor só pode ser avaliado por exames de sangue.",
+      "Não existe distinção entre os dois termos na semiologia psiquiátrica."
+    ],
+    correta: 0,
+    explicacao: "Correta: O humor reflete o tônus afetivo de fundo mais duradouro (eutímico, hipotímico, hipertímico), enquanto o afeto é a modulação emocional visível durante o encontro."
+  },
+  {
+    id: 18,
+    modulo: "Módulo 3: Exame do Estado Mental (EEM) e Funções Psíquicas",
+    nivel: "Difícil",
+    enunciado: "O que avalia o item 'Juízo Crítico de Morbidade (Insight)' no Exame do Estado Mental?",
+    opcoes: [
+      "O nível de escolaridade formal e o QI matemático do paciente.",
+      "A capacidade do paciente de reconhecer que está apresentando alterações psíquicas/sofrimento e compreender a necessidade de cuidado.",
+      "A velocidade com que o paciente pronuncia palavras difíceis.",
+      "A capacidade de lembrar o nome dos presidentes do país."
+    ],
+    correta: 1,
+    explicacao: "Correta: O insight (consciência de morbidade) indica se o paciente percebe seu estado como um adoecimento/sofrimento passível de ajuda (preservado, parcial ou ausente)."
+  },
+
+  // ===================== MÓDULO 4 =====================
+  {
+    id: 19,
+    modulo: "Módulo 4: Transtornos do Humor: Depressivos e Bipolar",
+    nivel: "Fácil",
+    enunciado: "Segundo o DSM-5-TR, o diagnóstico de Episódio Depressivo Maior exige a presença de pelo menos 5 sintomas durante no mínimo 2 semanas, sendo obrigatória a presença de:",
+    opcoes: [
+      "Alucinações visuais e fuga de ideias.",
+      "Humor deprimido (ou irritável em crianças/adolescentes) e/ou perda acentuada de interesse ou prazer (anedonia).",
+      "Redução da necessidade de sono com energia exagerada.",
+      "Medo exclusivo de lugares fechados."
+    ],
+    correta: 1,
+    explicacao: "Correta: Humor deprimido e/ou anedonia são os critérios nucleares obrigatórios do Transtorno Depressivo Maior."
+  },
+  {
+    id: 20,
+    modulo: "Módulo 4: Transtornos do Humor: Depressivos e Bipolar",
+    nivel: "Médio",
+    enunciado: "Um adulto relata sentir-se persistentemente triste, desanimado, com baixa autoestima e fadiga quase todos os dias há 3 anos seguidos, sem nunca ter tido episódios de mania ou hipomania. Esse quadro crônico corresponde ao:",
+    opcoes: [
+      "Transtorno Bipolar Tipo I.",
+      "Transtorno Depressivo Persistente (Distimia).",
+      "Transtorno Psicótico Breve.",
+      "Transtorno de Estresse Agudo."
+    ],
+    correta: 1,
+    explicacao: "Correta: O Transtorno Depressivo Persistente (Distimia) caracteriza-se por humor deprimido crônico por pelo menos 2 anos em adultos (1 ano em jovens)."
+  },
+  {
+    id: 21,
+    modulo: "Módulo 4: Transtornos do Humor: Depressivos e Bipolar",
+    nivel: "Fácil",
+    enunciado: "Qual critério diferencia fundamentalmente o Transtorno Bipolar Tipo I do Transtorno Bipolar Tipo II?",
+    opcoes: [
+      "O Tipo I exige pelo menos 1 Episódio Maníaco (>= 7 dias ou hospitalização/psicose); o Tipo II exige pelo menos 1 Episódio Hipomaníaco (>= 4 dias, sem psicose/hospitalização) e pelo menos 1 Episódio Depressivo Maior.",
+      "O Tipo I ocorre apenas em mulheres e o Tipo II apenas em homens.",
+      "O Tipo II é caracterizado por sintomas psicóticos graves e internações obrigatórias.",
+      "O Tipo I nunca apresenta episódios depressivos na vida."
+    ],
+    correta: 0,
+    explicacao: "Correta: A presença de ao menos um Episódio Maníaco pleno define o Bipolar Tipo I; a combinação de Hipomania + Depressão Maior (sem mania prévia) define o Bipolar Tipo II."
+  },
+  {
+    id: 22,
+    modulo: "Módulo 4: Transtornos do Humor: Depressivos e Bipolar",
+    nivel: "Médio",
+    enunciado: "Durante a avaliação de um paciente em episódio depressivo, por que é fundamental investigar se ele já vivenciou episódios prévios de mania ou hipomania?",
+    opcoes: [
+      "Apenas por curiosidade biográfica sem impacto clínico.",
+      "Para diferenciar depressão unipolar de depressão bipolar, pois o uso de antidepressivo isolado no Transtorno Bipolar pode desencadear virada maníaca ou ciclagem rápida.",
+      "Porque pacientes bipolares não podem fazer psicoterapia.",
+      "Porque a hipomania cura definitivamente a depressão."
+    ],
+    correta: 1,
+    explicacao: "Correta: Muitos pacientes bipolares procuram ajuda na fase depressiva; o diagnóstico diferencial correto é vital para orientar estabilizadores de humor e evitar virada maníaca."
+  },
+  {
+    id: 23,
+    modulo: "Módulo 4: Transtornos do Humor: Depressivos e Bipolar",
+    nivel: "Médio",
+    enunciado: "Sobre a diferenciação clínica entre Luto Normal e Transtorno Depressivo Maior, assinale a alternativa correta:",
+    opcoes: [
+      "Qualquer pessoa que chora por mais de 2 semanas após a morte de um filho tem obrigatoriamente Depressão Maior.",
+      "No luto normal, a dor costuma vir em ondas ligadas à lembrança da perda e a autoestima permanece preservada; no TDM, o humor deprimido é pervasivo com sentimentos intensos de inutilidade e culpa.",
+      "No luto normal nunca há tristeza nem alteração do sono.",
+      "Luto e Depressão Maior são idênticos e exigem exatamente a mesma medicação imediata."
+    ],
+    correta: 1,
+    explicacao: "Correta: O luto é uma reação humana adaptativa à perda, distinguindo-se do TDM pela preservação da autoestima e pela dor centrada na saudade/ausência do ente querido."
+  },
+  {
+    id: 24,
+    modulo: "Módulo 4: Transtornos do Humor: Depressivos e Bipolar",
+    nivel: "Difícil",
+    enunciado: "Durante um episódio de elevação do humor com duração de 5 dias, um paciente passa a apresentar delírios de grandeza (acredita ser o salvador do planeta) e precisa ser internado por risco físico. Esse episódio deve ser classificado como:",
+    opcoes: [
+      "Hipomania (pois durou menos de 7 dias).",
+      "Episódio Maníaco (pois a presença de sintomas psicóticos ou necessidade de hospitalização define automaticamente Mania, independentemente de ter durado menos de 7 dias).",
+      "Ciclotimia leve.",
+      "Eutimia."
+    ],
+    correta: 1,
+    explicacao: "Correta: Pelos critérios do DSM-5-TR, qualquer episódio com sintomas psicóticos ou necessidade de internação hospitalar caracteriza Mania plena (Transtorno Bipolar Tipo I)."
+  },
+
+  // ===================== MÓDULO 5 =====================
+  {
+    id: 25,
+    modulo: "Módulo 5: Transtornos de Ansiedade, TOC e Relacionados a Traumas",
+    nivel: "Fácil",
+    enunciado: "Preocupação excessiva, difusa e difícil de controlar sobre múltiplos eventos cotidianos (trabalho, saúde, finanças) durante pelo menos 6 meses, acompanhada de tensão muscular, inquietação e fadiga, caracteriza:",
+    opcoes: [
+      "Fobia específica.",
+      "Transtorno de Ansiedade Generalizada (TAG).",
+      "Transtorno de Estresse Agudo.",
+      "Transtorno Dissociativo de Identidade."
+    ],
+    correta: 1,
+    explicacao: "Correta: O TAG caracteriza-se pela preocupação crônica e abrangente (>= 6 meses) associada a sintomas somáticos de hiperativação e tensão."
+  },
+  {
+    id: 26,
+    modulo: "Módulo 5: Transtornos de Ansiedade, TOC e Relacionados a Traumas",
+    nivel: "Fácil",
+    enunciado: "Ataques abruptos de medo intenso com pico em poucos minutos (palpitações, falta de ar, tontura, sensação de morte iminente), recorrentes e inesperados, seguidos de medo persistente de ter novos ataques, definem:",
+    opcoes: [
+      "Transtorno de Pânico.",
+      "Transtorno de Acumulação.",
+      "Distimia.",
+      "Transtorno Esquizoide."
+    ],
+    correta: 0,
+    explicacao: "Correta: O Transtorno de Pânico exige ataques de pânico recorrentes e inesperados associados a preocupação persistente com novos ataques ou esquiva."
+  },
+  {
+    id: 27,
+    modulo: "Módulo 5: Transtornos de Ansiedade, TOC e Relacionados a Traumas",
+    nivel: "Médio",
+    enunciado: "No Transtorno Obsessivo-Compulsivo (TOC), qual é a função psicológica imediata das compulsões (rituais comportamentais ou mentais)?",
+    opcoes: [
+      "Aumentar o prazer social em festas.",
+      "Tentar neutralizar ou aliviar temporariamente a ansiedade intensa gerada pelas obsessões intrusivas, o que acaba reforçando e mantendo o transtorno no longo prazo.",
+      "Curar definitivamente o pensamento obsessivo em um único dia.",
+      "Servir apenas como hábito prazeroso sem relação com angústia."
+    ],
+    correta: 1,
+    explicacao: "Correta: As compulsões aliviam a angústia obsessiva por alguns instantes (reforço negativo), mas perpetuam o ciclo do TOC; por isso a técnica de Exposição e Prevenção de Resposta (EPR) é tão eficaz."
+  },
+  {
+    id: 28,
+    modulo: "Módulo 5: Transtornos de Ansiedade, TOC e Relacionados a Traumas",
+    nivel: "Médio",
+    enunciado: "No DSM-5-TR, além do próprio TOC, quais quadros integram o capítulo de 'Transtorno Obsessivo-Compulsivo e Transtornos Relacionados'?",
+    opcoes: [
+      "Esquizofrenia, Bipolar Tipo I e Bulimia.",
+      "Transtorno Dismórfico Corporal, Transtorno de Acumulação, Tricotilomania e Transtorno de Escoriação.",
+      "Agorafobia, Ansiedade Social e Fobia Específica.",
+      "Amnésia Dissociativa e Despersonalização."
+    ],
+    correta: 1,
+    explicacao: "Correta: Todos esses transtornos compartilham preocupações repetitivas e/ou comportamentos compulsivos focados no corpo ou em objetos."
+  },
+  {
+    id: 29,
+    modulo: "Módulo 5: Transtornos de Ansiedade, TOC e Relacionados a Traumas",
+    nivel: "Médio",
+    enunciado: "Quais são os quatro agrupamentos de sintomas que caracterizam o Transtorno de Estresse Pós-Traumático (TEPT)?",
+    opcoes: [
+      "Euforia, logorreia, grandiosidade e fuga de ideias.",
+      "Intrusão/revivescência (flashbacks/pesadelos), evitação, alterações negativas na cognição/humor e alterações na excitabilidade/reatividade (hipervigilância).",
+      "Compulsão alimentar, vômitos, distorção corporal e baixo peso.",
+      "Apenas tristeza leve sem relação com eventos traumáticos."
+    ],
+    correta: 1,
+    explicacao: "Correta: O TEPT manifesta-se por esses 4 clusters sintomáticos com duração superior a 1 mês após exposição a evento traumático grave."
+  },
+  {
+    id: 30,
+    modulo: "Módulo 5: Transtornos de Ansiedade, TOC e Relacionados a Traumas",
+    nivel: "Difícil",
+    enunciado: "Quinze dias após sobreviver a um grave acidente automobilístico, um paciente apresenta flashbacks, pesadelos, evitação de carros e hipervigilância intensa. Considerando o critério temporal do DSM-5-TR, qual é a hipótese diagnóstica mais adequada neste momento?",
+    opcoes: [
+      "Transtorno de Estresse Pós-Traumático (TEPT).",
+      "Transtorno de Estresse Agudo (pois os sintomas ocorrem entre 3 dias e 1 mês após o trauma).",
+      "Transtorno de Ansiedade Generalizada.",
+      "Transtorno Depressivo Persistente."
+    ],
+    correta: 1,
+    explicacao: "Correta: Até 1 mês após o evento traumático (de 3 dias a 1 mês), o diagnóstico é Transtorno de Estresse Agudo; somente se os sintomas persistirem por mais de 1 mês fecha-se critério para TEPT."
+  },
+
+  // ===================== MÓDULO 6 =====================
+  {
+    id: 31,
+    modulo: "Módulo 6: Espectro da Esquizofrenia e Outros Transtornos Psicóticos",
+    nivel: "Fácil",
+    enunciado: "Na Esquizofrenia, qual alternativa exemplifica corretamente SINTOMAS POSITIVOS e SINTOMAS NEGATIVOS, respectivamente?",
+    opcoes: [
+      "Positivos: embotamento afetivo e avolição; Negativos: delírios e alucinações.",
+      "Positivos: delírios e alucinações auditivas; Negativos: embotamento afetivo, alogia, avolição e retraimento social.",
+      "Positivos: bom humor e empatia; Negativos: tristeza e medo.",
+      "Positivos: apenas febre; Negativos: apenas insônia."
+    ],
+    correta: 1,
+    explicacao: "Correta: Sintomas positivos representam acréscimos/distorções da realidade (delírios e alucinações); sintomas negativos representam perdas/reduções de funções normais (afeto, fala, vontade e sociabilidade)."
+  },
+  {
+    id: 32,
+    modulo: "Módulo 6: Espectro da Esquizofrenia e Outros Transtornos Psicóticos",
+    nivel: "Médio",
+    enunciado: "Segundo o DSM-5-TR, qual é a duração total mínima contínua de perturbação exigida para o diagnóstico de Esquizofrenia (incluindo fases prodrômica, ativa e residual)?",
+    opcoes: [
+      "2 semanas.",
+      "1 mês.",
+      "6 meses (com pelo menos 1 mês de sintomas da fase ativa).",
+      "2 anos."
+    ],
+    correta: 2,
+    explicacao: "Correta: A Esquizofrenia exige pelo menos 6 meses de sinais contínuos (com >= 1 mês de sintomas ativos). Entre 1 e 6 meses = Esquizofreniforme; menos de 1 mês = Psicótico Breve."
+  },
+  {
+    id: 33,
+    modulo: "Módulo 6: Espectro da Esquizofrenia e Outros Transtornos Psicóticos",
+    nivel: "Médio",
+    enunciado: "Uma mulher apresenta alucinações auditivas e delírios persecutórios intensos durante 10 dias após o parto, recuperando-se completamente ao seu funcionamento habitual após esse período. Qual transtorno do espectro psicótico melhor descreve esse quadro?",
+    opcoes: [
+      "Esquizofrenia crônica.",
+      "Transtorno Psicótico Breve.",
+      "Transtorno Delirante.",
+      "Transtorno Esquizotípico."
+    ],
+    correta: 1,
+    explicacao: "Correta: Sintomas psicóticos com duração de 1 dia a menos de 1 mês e retorno pleno ao funcionamento prévio definem o Transtorno Psicótico Breve (com especificador 'com início no periparto')."
+  },
+  {
+    id: 34,
+    modulo: "Módulo 6: Espectro da Esquizofrenia e Outros Transtornos Psicóticos",
+    nivel: "Médio",
+    enunciado: "O que caracteriza o Transtorno Delirante em comparação com a Esquizofrenia?",
+    opcoes: [
+      "Presença de um ou mais delírios por >= 1 mês, sem desorganização severa nem sintomas negativos marcantes, mantendo o funcionamento cotidiano relativamente preservado fora do tema delirante.",
+      "Ausência total de delírios e presença exclusiva de alucinações visuais.",
+      "Duração máxima de 48 horas.",
+      "Ocorrência exclusiva em crianças menores de 5 anos."
+    ],
+    correta: 0,
+    explicacao: "Correta: No Transtorno Delirante o sistema delirante é o sintoma central, preservando-se de modo geral a aparência, a fala organizada e o desempenho fora da temática do delírio."
+  },
+  {
+    id: 35,
+    modulo: "Módulo 6: Espectro da Esquizofrenia e Outros Transtornos Psicóticos",
+    nivel: "Difícil",
+    enunciado: "Qual critério é
