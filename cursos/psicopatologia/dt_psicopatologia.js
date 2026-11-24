@@ -336,4 +336,224 @@ window.DT_MODULES = [
           "Antidepressivos ISRS são primeira linha farmacológica nos quadros ansiosos, TOC e TEPT.",
           "O acolhimento seguro e sem revitimização é indispensável no manejo de pacientes com TEPT."
         ],
-        exemplo: "No tratamento do TOC por EPR, o paciente toca em uma maçaneta considerada 'contaminada' com apoio terapêutico e permanece sem lavar as mãos até perceber que a ansiedade dimin
+        exemplo: "No tratamento do TOC por EPR, o paciente toca em uma maçaneta considerada 'contaminada' com apoio terapêutico e permanece sem lavar as mãos até perceber que a ansiedade diminui naturalmente (habituação).",
+        alerta: "Nunca force uma exposição abrupta em pacientes com trauma grave (TEPT) sem estabilização emocional e aliança terapêutica sólida."
+      }
+    ],
+    flashcards: [
+      { frente: "Qual é a principal diferença entre TAG e Transtorno de Pânico?", verso: "O TAG envolve preocupação crônica, difusa e persistente (>= 6 meses); o Transtorno de Pânico envolve ataques súbitos e inesperados de terror intenso acompanhados de medo de novos ataques." },
+      { frente: "Diferencie Obsessão de Compulsão no TOC.", verso: "Obsessão é um pensamento, imagem ou impulso intrusivo que gera angústia; Compulsão é um comportamento repetitivo ou ato mental executado para aliviar essa angústia." },
+      { frente: "Quais são os 4 grupos de sintomas do TEPT?", verso: "1) Intrusão/revivescência (flashbacks/pesadelos); 2) Evitação; 3) Alterações negativas na cognição e humor; 4) Alterações na excitabilidade/reatividade (hipervigilância)." },
+      { frente: "Qual o critério temporal que diferencia Transtorno de Estresse Agudo de TEPT?", verso: "Estresse Agudo dura de 3 dias a 1 mês após o trauma; TEPT tem duração superior a 1 mês." },
+      { frente: "Cite 3 transtornos classificados no capítulo de 'TOC e transtornos relacionados' no DSM-5.", verso: "Transtorno Dismórfico Corporal, Transtorno de Acumulação, Tricotilomania e Transtorno de Escoriação." },
+      { frente: "Por que a esquiva e as compulsões pioram os quadros ansiosos no longo prazo?", verso: "Porque oferecem alívio imediato (reforço negativo), impedindo o cérebro de aprender que a situação é tolerável e mantendo o ciclo do medo." }
+    ]
+  },
+  {
+    id: 6,
+    modulo: "Módulo 6",
+    titulo: "Espectro da Esquizofrenia e Outros Transtornos Psicóticos",
+    icone: "fa-eye-low-vision",
+    cor: "purple",
+    topicos: [
+      {
+        subtopico: "6.1 Espectro da Esquizofrenia: Definição e Critérios",
+        resumo: "A Esquizofrenia é um transtorno psicótico complexo que afeta o contato com a realidade, o pensamento, a percepção, a afetividade e o funcionamento global.",
+        explicacao: "O termo <strong>Esquizofrenia</strong> (criado por <strong>Eugen Bleuler</strong> em 1911 — 'mente cindida', referindo-se à cisão entre pensamento, afeto e realidade, e NÃO à 'dupla personalidade') designa o principal quadro do <strong>Espectro da Esquizofrenia e Outros Transtornos Psicóticos</strong>.<br><br>Segundo o DSM-5-TR, o diagnóstico de Esquizofrenia exige:<br>1) Presença de <strong>pelo menos 2 sintomas característicos</strong> por no mínimo <strong>1 mês</strong> na fase ativa — sendo obrigatório ao menos um dos três primeiros: <strong>delírios, alucinações ou discurso desorganizado</strong> (os outros dois são comportamento grosseiramente desorganizado/catatônico e sintomas negativos).<br>2) Sinais contínuos da perturbação persistindo por <strong>pelo menos 6 meses</strong> (incluindo fases prodrômica e residual).<br>3) Prejuízo significativo no funcionamento social, acadêmico ou ocupacional.<br>4) Exclusão de efeitos de substâncias, condições médicas ou transtornos do humor.",
+        pontosChave: [
+          "Esquizofrenia NÃO é dupla personalidade (isso corresponde ao Transtorno Dissociativo de Identidade).",
+          "Exige >= 2 sintomas ativos por >= 1 mês (sendo ao menos 1: delírio, alucinação ou discurso desorganizado).",
+          "Duração total contínua mínima de 6 meses (incluindo pródromo/residual) + queda funcional.",
+          "Início típico ocorre no final da adolescência e início da vida adulta (18–25 anos em homens; um pouco mais tardio em mulheres)."
+        ],
+        exemplo: "Um jovem de 21 anos começa a se isolar e cair no rendimento da faculdade (pródromo); após alguns meses passa a ouvir vozes comentando seus atos e acredita que vizinhos implantaram chips em sua cabeça por mais de 6 meses.",
+        alerta: "Pegadinha clássica: Duração mínima total para Esquizofrenia é de 6 MESES (com pelo menos 1 mês de sintomas ativos)."
+      },
+      {
+        subtopico: "6.2 Sintomas Positivos, Negativos, Desorganizados e Cognitivos",
+        resumo: "Os sintomas da esquizofrenia dividem-se em positivos (excesso/distorção da realidade), negativos (perda de funções normais), desorganizados e déficits cognitivos.",
+        explicacao: "Na Psicopatologia moderna, os sintomas da Esquizofrenia são agrupados em dimensões clínicas que têm impacto direto no prognóstico:<br><br>• <strong>Sintomas Positivos ('acréscimos' à experiência normal):</strong> <strong>Delírios</strong> (persecutórios, de controle/inserção de pensamento, de referência) e <strong>Alucinações</strong> (predominantemente <strong>auditivas</strong> — vozes que dialogam entre si ou comentam o comportamento). Costumam responder melhor aos antipsicóticos.<br>• <strong>Sintomas Negativos ('redução/ausência' de funções normais):</strong> Os '5 As' — <strong>Embotamento Afetivo</strong> (expressão emocional diminuída), <strong>Alogia</strong> (pobreza da fala/pensamento), <strong>Avolição/Abulia</strong> (falta de iniciativa), <strong>Anedonia</strong> (redução do prazer) e <strong>Associalidade</strong> (retraimento social). São os mais difíceis de tratar com remédios e os maiores causadores de incapacidade funcional.<br>• <strong>Sintomas Desorganizados:</strong> Discurso incoerente (afrouxamento dos nexos, tangencialidade, salada de palavras) e comportamento motor bizarro ou catatônico.<br>• <strong>Sintomas Cognitivos:</strong> Prejuízos na memória de trabalho, atenção, velocidade de processamento e cognição social.",
+        pontosChave: [
+          "Sintomas Positivos = delírios e alucinações (não significa 'bons', mas sim 'presentes em excesso').",
+          "Sintomas Negativos = embotamento afetivo, alogia, avolição, anedonia e retraimento social (perda de funções).",
+          "Sintomas positivos respondem melhor à medicação; sintomas negativos exigem forte reabilitação psicossocial.",
+          "Alucinações auditivas (vozes) são as mais frequentes na esquizofrenia."
+        ],
+        exemplo: "Após controlar as vozes e os delírios com medicação, o paciente permanece muito quieto, sem iniciativa para sair de casa e com expressão facial neutra — manifestação típica de sintomas negativos residuais.",
+        alerta: "Nunca interprete 'sintomas positivos' como algo benéfico e 'sintomas negativos' como algo ruim: na psicopatologia, positivo = excesso/acréscimo e negativo = déficit/falta."
+      },
+      {
+        subtopico: "6.3 Outros Transtornos Psicóticos do Espectro",
+        resumo: "Os demais transtornos psicóticos diferenciam-se da Esquizofrenia sobretudo pela duração, pela ausência de desorganização global ou pela combinação com transtorno do humor.",
+        explicacao: "Além da Esquizofrenia, o espectro psicótico no DSM-5-TR inclui quadros importantes para o diagnóstico diferencial:<br><br>• <strong>Transtorno Psicótico Breve:</strong> Presença de sintomas psicóticos (delírios, alucinações ou discurso desorganizado) com duração de <strong>pelo menos 1 dia e menos de 1 mês</strong>, com retorno completo ao nível prévio de funcionamento (frequentemente após estressor grave ou no pós-parto).<br>• <strong>Transtorno Esquizofreniforme:</strong> Sintomas idênticos aos da Esquizofrenia, porém com duração total entre <strong>1 mês e menos de 6 meses</strong>.<br>• <strong>Transtorno Delirante:</strong> Presença de <strong>1 ou mais delírios por >= 1 mês</strong> (ex.: persecutório, ciúme, erotomaníaco, grandioso ou somático), <strong>SEM</strong> desorganização severa, sem sintomas negativos marcantes e com funcionamento cotidiano relativamente preservado fora da área do delírio.<br>• <strong>Transtorno Esquizoafetivo:</strong> Combinação de um episódio de humor maior (depressivo ou maníaco) simultâneo aos critérios da esquizofrenia, exigindo porém <strong>pelo menos 2 semanas de delírios ou alucinações na AUSÊNCIA de sintomas de humor</strong> (para diferenciá-lo de depressão ou mania com sintomas psicóticos).",
+        pontosChave: [
+          "Psicótico Breve: 1 dia a < 1 mês (recuperação total).",
+          "Esquizofreniforme: 1 mês a < 6 meses; Esquizofrenia: >= 6 meses.",
+          "Transtorno Delirante: delírio estruturado >= 1 mês com preservação relativa do funcionamento global.",
+          "Esquizoafetivo: psicose + episódio de humor, com >= 2 semanas de psicose isolada sem alteração de humor."
+        ],
+        exemplo: "Um homem trabalha normalmente e cuida dos filhos, mas mantém há 1 ano a convicção inabalável e sem provas de que a esposa o trai com todos os vizinhos, sem alucinações nem discurso desorganizado — quadro compatível com Transtorno Delirante (tipo ciúme).",
+        alerta: "Decore a régua temporal das psicoses: < 1 mês = Psicótico Breve; 1 a 6 meses = Esquizofreniforme; >= 6 meses = Esquizofrenia."
+      },
+      {
+        subtopico: "6.4 Intervenção Psicossocial e Manejo Clínico nas Psicoses",
+        resumo: "O tratamento contemporâneo das psicoses integra antipsicóticos, psicoterapia, apoio familiar, CAPS e combate ao estigma, promovendo autonomia e cidadania.",
+        explicacao: "A intervenção clínica nas psicoses rompeu com a ideia antiga de 'deterioração inevitável' e de isolamento perpétuo. O cuidado integral e baseado na Reforma Psiquiátrica envolve:<br>• <strong>Manejo na Entrevista com o Paciente Delirante:</strong> O psicólogo <strong>não deve confrontar agressivamente</strong> o delírio (o que gera hostilidade e rompe o vínculo) nem <strong>alimentar/confirmar</strong> a crença delirante; deve validar o <em>sentimento</em> real vivido pelo sujeito ('vejo o quanto você está assustado com isso') e construir vínculo seguro.<br>• <strong>Acompanhamento Multiprofissional (CAPS / RAPS):</strong> Combina antipsicóticos (atípicos/típicos), psicoterapia individual e grupal, oficinas terapêuticas, terapia ocupacional e inserção comunitária.<br>• <strong>Psicoeducação e Suporte Familiar:</strong> Reduzir a 'Emoção Expressa' elevada (críticas constantes e hostilidade familiar) diminui drasticamente as taxas de recaída e reinternação.",
+        pontosChave: [
+          "Não confrontar brutalmente nem confirmar o delírio: validar a emoção real e sustentar o vínculo.",
+          "Tratamento eficaz une farmacoterapia + psicoterapia + reabilitação psicossocial (CAPS) + suporte familiar.",
+          "Psicoeducação familiar reduz recaídas ao diminuir críticas excessivas e sobrecarga dos cuidadores.",
+          "O estigma que associa pessoas com esquizofrenia à violência é um preconceito falso; elas são muito mais frequentemente vítimas do que autoras de violência."
+        ],
+        exemplo: "Ao ouvir um paciente dizer 'estão me vigiando pelas câmeras da rua', o psicólogo responde: 'Deve ser exaustivo viver com essa sensação constante de perigo; quero entender como você tem passado os últimos dias e como podemos te ajudar a se sentir mais seguro'.",
+        alerta: "A adesão ao tratamento contínuo e o suporte social são os maiores preditores de estabilidade e qualidade de vida nas psicoses."
+      }
+    ],
+    flashcards: [
+      { frente: "Qual a régua temporal que diferencia Transtorno Psicótico Breve, Esquizofreniforme e Esquizofrenia?", verso: "Psicótico Breve: 1 dia a < 1 mês; Esquizofreniforme: 1 a < 6 meses; Esquizofrenia: >= 6 meses." },
+      { frente: "Qual a diferença entre sintomas positivos e sintomas negativos na Esquizofrenia?", verso: "Positivos são acréscimos/distorções da realidade (delírios, alucinações); Negativos são perdas/reduções de funções normais (embotamento, avolição, alogia, anedonia, associalidade)." },
+      { frente: "Qual o critério decisivo para diferenciar Transtorno Esquizoafetivo de Depressão/Mania com psicose?", verso: "No Esquizoafetivo, deve haver pelo menos 2 semanas de delírios ou alucinações na AUSÊNCIA de episódio de humor maior." },
+      { frente: "O que caracteriza o Transtorno Delirante em comparação à Esquizofrenia?", verso: "Delírio(s) por >= 1 mês sem desorganização severa nem sintomas negativos marcantes, com funcionamento cotidiano relativamente preservado." },
+      { frente: "Como o psicólogo deve manejar verbalmente o discurso delirante de um paciente?", verso: "Sem confrontar agressivamente e sem confirmar o delírio: validar o sofrimento/afeto real e preservar a aliança terapêutica." },
+      { frente: "A Esquizofrenia significa ter 'múltiplas personalidades'?", verso: "Não! Esse é um mito popular. Múltiplas identidades referem-se ao Transtorno Dissociativo de Identidade (TDI)." }
+    ]
+  },
+  {
+    id: 7,
+    modulo: "Módulo 7",
+    titulo: "Transtornos Dissociativos e Transtornos Alimentares",
+    icone: "fa-utensils",
+    cor: "amber",
+    topicos: [
+      {
+        subtopico: "7.1 Transtornos Dissociativos e Transtorno Dissociativo de Identidade",
+        resumo: "Os Transtornos Dissociativos caracterizam-se pela ruptura involuntária na integração normal da consciência, memória, identidade, percepção e controle motor.",
+        explicacao: "A <strong>dissociação</strong> é um mecanismo psíquico frequentemente ativado diante de traumas severos e insuportáveis, funcionando como uma 'desconexão protetiva' da experiência. Quando crônica e desintegradora, configura os <strong>Transtornos Dissociativos</strong>.<br><br>O quadro mais complexo é o <strong>Transtorno Dissociativo de Identidade (TDI)</strong> (antigo 'transtorno de múltiplas personalidades'), caracterizado por:<br>1) Ruptura da identidade caracterizada pela presença de <strong>dois ou mais estados de personalidade distintos</strong> (com mudanças marcantes no senso de self, afeto, comportamento, memória e cognição).<br>2) <strong>Lacunas recorrentes na recordação</strong> de eventos cotidianos, informações pessoais importantes ou eventos traumáticos (incompatíveis com esquecimento normal).<br>3) Forte associação histórica com <strong>traumas graves e crônicos na infância</strong> (abuso físico, emocional ou sexual precoce). Deve-se sempre excluir práticas culturais/religiosas aceitas no grupo do sujeito e efeitos de substâncias.",
+        pontosChave: [
+          "Dissociação = ruptura na integração normal entre consciência, memória, identidade e percepção.",
+          "TDI envolve >= 2 estados de personalidade distintos + amnésia dissociativa recorrente.",
+          "Possui altíssima correlação com traumas graves e repetidos na infância.",
+          "Experiências cultural ou religiosamente normativas (como transes espirituais) NÃO constituem transtorno dissociativo."
+        ],
+        exemplo: "Uma paciente com histórico de abuso severo na infância descobre roupas novas em casa e mensagens enviadas de seu celular das quais não possui nenhuma memória, enquanto pessoas próximas relatam mudanças abruptas em sua voz e postura.",
+        alerta: "Nunca confunda Transtorno Dissociativo de Identidade (ruptura de identidade/memória ligada a trauma) com Esquizofrenia (transtorno psicótico)."
+      },
+      {
+        subtopico: "7.2 Amnésia Dissociativa e Transtorno de Despersonalização/Desrealização",
+        resumo: "Englobam perdas de memória autobiográfica de origem traumática e sensações persistentes de distanciamento do próprio corpo ou do ambiente.",
+        explicacao: "Os outros dois grandes quadros dos <strong>Transtornos Dissociativos</strong> são:<br><br>• <strong>Amnésia Dissociativa:</strong> Incapacidade de recordar informações autobiográficas importantes, geralmente de natureza <strong>traumática ou estressante</strong>, que não pode ser explicada por esquecimento comum nem por lesão neurológica/substância. Pode ser <em>localizada</em> (um período específico), <em>seletiva</em> (partes de um evento) ou, mais raramente, <em>generalizada</em>. Quando acompanhada de viagem aparentemente intencional ou perambulação desnorteada, usa-se o especificador <strong>com fuga dissociativa</strong>.<br>• <strong>Transtorno de Despersonalização/Desrealização:</strong> Episódios persistentes ou recorrentes de:<br>  - <strong>Despersonalização:</strong> Sensação de estranhamento ou distanciamento em relação a si mesmo, ao próprio corpo ou pensamentos (como se fosse um 'observador externo' ou estivesse em um sonho).<br>  - <strong>Desrealização:</strong> Sensação de irrealidade ou estranhamento em relação ao ambiente externo (pessoas ou objetos parecem artificiais, nebulosos ou sem vida).<br>  <em>Ponto crucial:</em> Durante os episódios, o <strong>teste de realidade permanece INTACTO</strong> (a pessoa sabe que aquilo é uma sensação estranha e não um fato literal).",
+        pontosChave: [
+          "Amnésia Dissociativa: perda de memória autobiográfica ligada a trauma/estresse (sem causa orgânica).",
+          "Fuga dissociativa: deslocamento geográfico súbito associado à amnésia da própria identidade.",
+          "Despersonalização = estranhamento de si mesmo; Desrealização = estranhamento do mundo externo.",
+          "Na Despersonalização/Desrealização o teste de realidade está PRESERVADO (não é psicose)."
+        ],
+        exemplo: "Após um período de estresse extremo, um jovem relata sentir-se 'olhando para si mesmo de fora do corpo, como se estivesse dentro de um filme', sabendo perfeitamente que isso não é real — quadro típico de Despersonalização.",
+        alerta: "Pegadinha clássica: Na Despersonalização/Desrealização o teste de realidade está INTACTO — o paciente diz 'parece que estou em um sonho', e não 'eu morri e fui substituído por um robô' (que seria delírio)."
+      },
+      {
+        subtopico: "7.3 Transtornos Alimentares: Anorexia Nervosa e Bulimia Nervosa",
+        resumo: "Os Transtornos Alimentares envolvem grave perturbação do comportamento alimentar e da imagem corporal, com alto risco clínico e necessidade de equipe multiprofissional.",
+        explicacao: "Os <strong>Transtornos Alimentares</strong> apresentam elevada gravidade médica e psíquica, marcados por profunda distorção da autoavaliação corporal:<br><br>• <strong>Anorexia Nervosa (AN):</strong> Caracteriza-se por três critérios centrais: 1) <strong>Restrição persistente da ingestão calórica</strong> levando a <strong>peso corporal significativamente baixo</strong>; 2) <strong>Medo intenso de ganhar peso</strong> ou comportamento persistente que interfere no ganho de peso; 3) <strong>Distorção grave da imagem corporal</strong> (a pessoa se vê acima do peso mesmo em desnutrição severa) ou falta de reconhecimento da gravidade do baixo peso. Subtipos: <em>restritivo</em> e <em>compulsão alimentar purgativa</em>. Possui uma das maiores taxas de mortalidade entre os transtornos mentais (por complicações cardíacas/metabólicas e suicídio).<br>• <strong>Bulimia Nervosa (BN):</strong> Caracteriza-se por: 1) <strong>Episódios recorrentes de compulsão alimentar</strong> (comer quantidade muito grande em curto período com sensação de perda de controle); 2) <strong>Comportamentos compensatórios inapropriados recorrentes</strong> para evitar ganho de peso (vômitos autoinduzidos, laxantes, diuréticos, jejuns extremos ou exercício compulsivo); 3) Ocorrência mínima de <strong>1 vez por semana durante 3 meses</strong>; 4) Autoavaliação indevidamente influenciada pelo peso/forma. <em>Diferença chave:</em> Na Bulimia, o peso corporal costuma estar <strong>normal ou levemente acima</strong> (não significativamente baixo como na Anorexia).",
+        pontosChave: [
+          "Anorexia Nervosa = peso significativamente baixo + medo intenso de engordar + distorção grave da imagem corporal.",
+          "Bulimia Nervosa = compulsão alimentar + comportamentos compensatórios/purgativos (>= 1x/semana por 3 meses) + peso geralmente normal.",
+          "A Anorexia Nervosa apresenta alto risco de morte clínica (desnutrição, arritmias) e exige monitoramento médico rigoroso.",
+          "Sinais físicos comuns na Bulimia: desgaste do esmalte dentário, sinal de Russell (calosidades nos dedos) e alterações eletrolíticas."
+        ],
+        exemplo: "Uma adolescente com IMC muito abaixo do normal recusa refeições, faz 3 horas diárias de exercício e chora ao olhar no espelho dizendo estar 'enorme' — quadro típico de Anorexia Nervosa.",
+        alerta: "Questão clássica de diagnóstico diferencial: Se o paciente tem compulsão + purgação E está com peso significativamente baixo, o diagnóstico é Anorexia Nervosa (subtipo purgativo), e NÃO Bulimia."
+      },
+      {
+        subtopico: "7.4 Transtorno de Compulsão Alimentar e Fatores Socioculturais",
+        resumo: "O Transtorno de Compulsão Alimentar (TCA) apresenta episódios de descontrole alimentar sem métodos compensatórios, refletindo também pressões culturais sobre o corpo.",
+        explicacao: "O <strong>Transtorno de Compulsão Alimentar (TCA)</strong> caracteriza-se por episódios recorrentes de compulsão alimentar (comer rapidamente até sentir desconforto físico, sem fome física, sozinho por vergonha, seguido de intensa culpa/nojo de si mesmo), ocorrendo pelo menos <strong>1 vez por semana por 3 meses</strong>, <strong>SEM comportamentos compensatórios regulares</strong> (sem vômitos ou uso sistemático de laxantes — principal diferença frente à Bulimia).<br><br><strong>Fatores Socioculturais e Manejo Clínico:</strong> Além de vulnerabilidades biológicas e emocionais (dificuldade de regulação afetiva, perfeccionismo, traumas), os transtornos alimentares são fortemente atravessados pela <strong>cultura da magreza, gordofobia e redes sociais</strong> que transformam o corpo em objeto de controle e valor moral. O tratamento padrão-ouro exige <strong>equipe interdisciplinar</strong>: psicólogo (psicoterapia focada em imagem corporal, emoções e família), nutricionista comportamental (sem dietas punitivas), clínico/endocrinologista e psiquiatra.",
+        pontosChave: [
+          "TCA = compulsão alimentar recorrente (>= 1x/semana por 3 meses) com intenso sofrimento/culpa, SEM purgação regular.",
+          "Diferença Bulimia vs. TCA: Bulimia TEM comportamentos compensatórios; TCA NÃO tem.",
+          "Fatores socioculturais (padrões estéticos rígidos, gordofobia, mídias) atuam como importantes desencadeadores e mantenedores.",
+          "Tratamento exige equipe interdisciplinar: Psicologia, Nutrição, Medicina Clínica e Psiquiatria."
+        ],
+        exemplo: "Um adulto come grandes volumes de comida escondido à noite quando está ansioso, sente enorme vergonha e culpa depois, mas nunca provoca vômitos nem usa laxantes — quadro compatível com TCA.",
+        alerta: "Dietas restritivas radicais frequentemente funcionam como gatilho direto para iniciar ou agravar ciclos de compulsão alimentar."
+      }
+    ],
+    flashcards: [
+      { frente: "Qual a diferença entre Despersonalização e Desrealização?", verso: "Despersonalização é a sensação de estranhamento/distanciamento em relação a si mesmo; Desrealização é a sensação de irrealidade em relação ao ambiente externo (ambas com teste de realidade intacto)." },
+      { frente: "O que diferencia Anorexia Nervosa de Bulimia Nervosa?", verso: "A Anorexia Nervosa caracteriza-se obrigatoriamente por peso corporal significativamente baixo e distorção corporal grave; na Bulimia há compulsão + purgação com peso geralmente normal ou acima." },
+      { frente: "O que diferencia Bulimia Nervosa de Transtorno de Compulsão Alimentar (TCA)?", verso: "A presença de comportamentos compensatórios recorrentes (vômitos, laxantes, jejuns extremos) na Bulimia, os quais estão AUSENTES no TCA." },
+      { frente: "O que é o Transtorno Dissociativo de Identidade (TDI)?", verso: "Ruptura da identidade com 2 ou mais estados de personalidade distintos e lacunas recorrentes de memória, fortemente associada a traumas severos na infância." },
+      { frente: "Na Anorexia Nervosa com vômitos e peso significativamente baixo, qual é o diagnóstico correto?", verso: "Anorexia Nervosa — subtipo compulsão alimentar purgativa (o baixo peso significativo prevalece sobre o diagnóstico de Bulimia)." },
+      { frente: "Por que o tratamento dos Transtornos Alimentares deve ser multiprofissional?", verso: "Porque envolvem simultaneamente riscos clínicos/metabólicos graves, distorção da imagem corporal, sofrimento emocional e relação disfuncional com a alimentação." }
+    ]
+  },
+  {
+    id: 8,
+    modulo: "Módulo 8",
+    titulo: "Transtornos de Personalidade (Grupos A, B e C)",
+    icone: "fa-masks-theater",
+    cor: "emerald",
+    topicos: [
+      {
+        subtopico: "8.1 Conceito Geral e Critérios dos Transtornos de Personalidade",
+        resumo: "Transtornos de Personalidade são padrões duradouros, inflexíveis e invasivos de experiência interna e comportamento que causam sofrimento ou prejuízo significativo.",
+        explicacao: "A personalidade corresponde ao estilo relativamente estável de pensar, sentir e se relacionar de cada indivíduo. Um <strong>Transtorno de Personalidade (TP)</strong> só se caracteriza quando esse padrão se torna <strong>marcadamente inflexível, invasivo (presente em múltiplos contextos) e desadaptativo</strong>, desviando-se das expectativas culturais em pelo menos duas de quatro áreas: <strong>cognição</strong> (forma de perceber a si e aos outros), <strong>afetividade</strong>, <strong>funcionamento interpessoal</strong> e <strong>controle de impulsos</strong>.<br><br>Características essenciais:<br>• <strong>Início precoce e curso estável:</strong> Geralmente remonta à adolescência ou início da vida adulta (evita-se fechar diagnóstico em menores de 18 anos, exceto em situações muito persistentes, e NUNCA para TP Antissocial antes dos 18).<br>• <strong>Frequentememente egossintônicos:</strong> Muitos pacientes percebem seu modo de agir como 'normal' e atribuem o conflito apenas aos outros (o que pode dificultar a busca inicial por terapia).<br>• No DSM-5-TR, organizam-se em <strong>3 Grupos (Clusters): A, B e C</strong>.",
+        pontosChave: [
+          "TP = padrão duradouro, rígido, invasivo (múltiplos contextos) e gerador de sofrimento ou prejuízo.",
+          "Afeta >= 2 áreas: cognição, afetividade, relações interpessoais e controle de impulsos.",
+          "Padrão frequentemente egossintônico (o sujeito identifica os traços como parte natural de si).",
+          "Dividem-se em Cluster A (excêntricos), Cluster B (dramáticos/emotivos) e Cluster C (ansiosos/temerosos)."
+        ],
+        exemplo: "Um traço pontual de ciúme em um relacionamento difícil não é TP; um padrão rígido desde os 19 anos de desconfiar de absolutamente todos os amigos, colegas e parceiros, gerando isolamento total, sugere TP.",
+        alerta: "Ter 'traços' de personalidade (como ser perfeccionista ou reservado) é comum e saudável; o Transtorno de Personalidade exige rigidez extrema e prejuízo significativo duradouro."
+      },
+      {
+        subtopico: "8.2 Grupo A (Excêntricos/Estranhos): Paranoide, Esquizoide e Esquizotípico",
+        resumo: "O Cluster A reúne padrões marcados por desconfiança extrema, distanciamento emocional ou excentricidades cognitivo-perceptivas.",
+        explicacao: "O <strong>Grupo A</strong> agrupa transtornos caracterizados por comportamento excêntrico, retraimento social e desconfiança:<br><br>• <strong>TP Paranoide:</strong> Desconfiança e suspeita difusas e injustificadas em relação aos outros, interpretando gestos neutros ou amigáveis como maliciosos, guardando rancores persistentes e temendo traições constantes (sem delírios psicóticos fixos).<br>• <strong>TP Esquizoide:</strong> Padrão difuso de <strong>distanciamento das relações sociais</strong> e faixa restrita de expressão emocional. A pessoa genuinamente <strong>não deseja nem sente prazer em relacionamentos íntimos</strong>, prefere atividades solitárias e mostra frieza/indiferença a elogios ou críticas.<br>• <strong>TP Esquizotípico:</strong> Desconforto agudo em relações íntimas aliado a <strong>distorções cognitivas ou perceptivas e excentricidades</strong> (pensamento mágico, superstições estranhas, discurso vago/metafórico, aparência peculiar, ideias de referência — fazendo fronteira com o espectro da esquizofrenia, mas sem psicose franca contínua).",
+        pontosChave: [
+          "TP Paranoide: desconfiança generalizada e interpretação maliciosa das intenções alheias.",
+          "TP Esquizoide: indiferença e falta de desejo por vínculos sociais + frieza emocional.",
+          "TP Esquizotípico: pensamento mágico, crenças bizarras, excentricidades e desconforto social.",
+          "Diferença chave: Esquizoide NÃO quer vínculos; Evitativo (Grupo C) QUER vínculos, mas tem medo de rejeição."
+        ],
+        exemplo: "Um homem que vive sozinho há 15 anos, não tem amigos nem parceiros, trabalha em turno solitário e afirma sinceramente não sentir falta nenhuma de convívio social exemplifica o padrão do TP Esquizoide.",
+        alerta: "Pegadinha clássica: Diferencie Esquizoide (não tem desejo de se relacionar) de Evitativo (deseja muito se relacionar, mas evita por terror de rejeição)."
+      },
+      {
+        subtopico: "8.3 Grupo B (Dramáticos/Emotivos): Antissocial, Borderline, Histriônico e Narcisista",
+        resumo: "O Cluster B envolve intensa instabilidade emocional, impulsividade, busca por atenção/admiração ou violação sistemática dos direitos dos outros.",
+        explicacao: "O <strong>Grupo B</strong> abrange os transtornos mais frequentes na clínica e no debate social:<br><br>• <strong>TP Antissocial:</strong> Padrão difuso de <strong>desrespeito e violação dos direitos dos outros</strong> desde os 15 anos (exige idade >= 18 anos e evidência de Transtorno da Conduta antes dos 15): engano/manipulação, impulsividade, agressividade, irresponsabilidade persistente e <strong>ausência de remorso</strong>.<br>• <strong>TP Borderline (Limítrofe):</strong> Padrão difuso de <strong>instabilidade intensa</strong> nas relações interpessoais (oscilando entre idealização e desvalorização), na autoimagem e nos afetos, com <strong>esforços frenéticos para evitar abandono real ou imaginado</strong>, sentimento crônico de vazio, raiva intensa, impulsividade autodestrutiva e <strong>comportamentos suicidas ou de automutilação recorrentes</strong>.<br>• <strong>TP Histriônico:</strong> Emotividade excessiva e <strong>busca constante de atenção</strong> (desconforto quando não é o centro das atenções, teatralidade, comportamento sedutor inapropriado, emoções superficiais e rapidamente mutáveis).<br>• <strong>TP Narcisista:</strong> Padrão de <strong>grandiosidade</strong> (em fantasia ou comportamento), <strong>necessidade excessiva de admiração</strong>, senso de direito especial, exploração interpessoal e <strong>falta de empatia</strong> (frequentemente encobrindo autoestima frágil).",
+        pontosChave: [
+          "Antissocial: violação de direitos, manipulação, falta de remorso (exige >= 18 anos e histórico de conduta < 15).",
+          "Borderline: medo intenso de abandono, vazio crônico, instabilidade afetiva/relacional e autolesão/impulsividade.",
+          "Histriônico: teatralidade, busca incessante de ser o centro das atenções e emotividade superficial.",
+          "Narcisista: grandiosidade, necessidade de admiração e déficit de empatia."
+        ],
+        exemplo: "Uma jovem alterna entre amar intensamente o parceiro e odiá-lo diante de um atraso de 10 minutos na mensagem, entrando em desespero por medo de abandono e recorrendo a cortes nos braços para aliviar o vazio — quadro característico de TP Borderline.",
+        alerta: "O TP Borderline tem ótimo potencial de melhora clínica ao longo dos anos com psicoterapias especializadas (como Terapia Comportamental Dialética — DBT — e Terapia Baseada em Mentalização), desfazendo o estigma de 'caso sem jeito'."
+      },
+      {
+        subtopico: "8.4 Grupo C (Ansiosos/Temerosos) e Manejo Terapêutico",
+        resumo: "O Cluster C reúne padrões dominados por ansiedade, inibição, dependência excessiva ou perfeccionismo rígido; o manejo clínico exige aliança sólida e respeito ético.",
+        explicacao: "O <strong>Grupo C</strong> caracteriza-se por ansiedade, temor e busca por controle/segurança:<br><br>• <strong>TP Evitativa (Esquiva):</strong> Inibição social extrema, sentimentos de inadequação e <strong>hipersensibilidade à avaliação negativa</strong>. Diferente do esquizoide, a pessoa <em>deseja profundamente afeto e aceitação</em>, mas evita contatos por medo paralisante de crítica ou rejeição.<br>• <strong>TP Dependente:</strong> Necessidade difusa e excessiva de ser cuidado, levando a comportamento submisso, medo intenso de separação, dificuldade extrema em tomar decisões cotidianas sem aprovação alheia e tolerância a relações abusivas para não ficar só.<br>• <strong>TP Obsessivo-Compulsiva (TPOC):</strong> Preocupação excessiva e rígida com <strong>ordem, perfeccionismo e controle</strong> às custas da flexibilidade e eficiência (teimosia, dedicação excessiva ao trabalho, dificuldade de delegar). Diferente do TOC, é <em>egossintônico</em> e não apresenta obsessões intrusivas nem rituais compulsivos verdadeiros.<br><br><strong>Manejo Terapêutico dos TPs:</strong> A psicoterapia é o tratamento principal (ex.: DBT, Terapia do Esquema, Psicoterapia Psicodinâmica/Mentalização), exigindo <strong>contrato claro, constância do setting, validação emocional sem reforçar comportamentos destrutivos</strong> e manejo cuidadoso da contratransferência.",
+        pontosChave: [
+          "Evitativa: inibição social e medo intenso de rejeição apesar do desejo de vínculo.",
+          "Dependente: submissão extrema, medo de ficar só e necessidade constante de outro para decidir.",
+          "TPOC: perfeccionismo rígido, controle e ordem (egossintônico — diferente do TOC).",
+          "Psicoterapia estruturada e aliança terapêutica consistente são a base do cuidado nos Transtornos de Personalidade."
+        ],
+        exemplo: "Um gerente que refaz sozinho todas as planilhas da equipe até de madrugada porque 'ninguém faz com a perfeição exata que ele exige', perdendo lazer e amizades mas achando que seu jeito é o único correto, ilustra o TP Obsessivo-Compulsivo.",
+        alerta: "Nunca utilize diagnósticos de Transtorno de Personalidade (especialmente Borderline ou Antissocial) de forma pejorativa ou para recusar cuidado ético ao paciente."
+      }
+    ],
+    flashcards: [
+      { frente: "Como os Transtornos de Personalidade são divididos nos 3 Grupos (Clusters) do DSM-5?", verso: "Grupo A (excêntricos): Paranoide, Esquizoide, Esquizotípico; Grupo B (dramáticos): Antissocial, Borderline, Histriônico, Narcisista; Grupo C (ansiosos): Evitativa, Dependente, Obsessivo-Compulsiva." },
+      { frente: "Qual a diferença entre TP Esquizoide (Grupo A) e TP Evitativa (Grupo C)?", verso: "O Esquizoide não deseja nem sente prazer em relações íntimas; o Evitativo deseja vínculos, mas se isola por medo intenso de crítica e rejeição." },
+      { frente: "Quais os principais traços do Transtorno de Personalidade Borderline?", verso: "Medo intenso de abandono, instabilidade afetiva/relacional, sensação crônica de vazio, impulsividade e comportamentos autolesivos/suicidas recorrentes." },
+      { frente: "Qual a diferença entre TOC e Transtorno de Personalidade Obsessivo-Compulsiva (TPOC)?", verso: "O TOC tem obsessões intrusivas e compulsões (egodistônico); o TPOC é um padrão rígido de perfeccionismo, ordem e controle sem obsessões/compulsões verdadeiras (egossintônico)." },
+      { frente: "Qual requisito de idade e histórico é exigido para o diagnóstico de TP Antissocial?", verso: "Idade mínima de 18 anos e evidência de Transtorno da Conduta iniciado antes dos 15 anos de idade." },
+      { frente: "Qual é a abordagem psicoterápica amplamente reconhecida como referência para o TP Borderline?", verso: "Terapia Comportamental Dialética (DBT), além da Terapia Baseada em Mentalização e Terapia do Esquema." }
+    ]
+  }
+];
